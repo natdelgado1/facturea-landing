@@ -1,12 +1,18 @@
 /* ===== HERO TYPEWRITER ANIMATIONS - CSS CONDICIONAL ===== */
 /* Este archivo se carga solo cuando las animaciones de typewriter están habilitadas */
 
-/* Estilos para el efecto typewriter */
+/* Estilos base para el efecto typewriter */
 .typewriter-text {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
   border-right: 2px solid transparent;
+  /* Sin animación por defecto */
+}
+
+/* Cursor parpadeante solo cuando está escribiendo */
+.typewriter-text.typing {
+  border-right: 2px solid #6356e5;
   animation: blink 0.75s step-end infinite;
 }
 
@@ -14,11 +20,6 @@
 @keyframes blink {
   from, to { border-color: transparent; }
   50% { border-color: #6356e5; }
-}
-
-/* Efecto de escritura */
-.typewriter-text.typing {
-  animation: typing 0.05s steps(1, end);
 }
 
 /* Optimización para dispositivos que prefieren menos movimiento */
@@ -38,9 +39,10 @@
   opacity: 0.7;
 }
 
+/* Estado completado - sin cursor */
 .typewriter-text.complete {
-  border-right: none;
-  animation: none;
+  border-right: 2px solid transparent !important;
+  animation: none !important;
 }
 
 /* Efectos de transición suaves */
@@ -51,7 +53,12 @@
 /* Optimización para pantallas táctiles */
 @media (hover: none) and (pointer: coarse) {
   .typewriter-text {
-    border-right: none;
+    border-right: 2px solid transparent;
+    animation: none;
+  }
+  
+  .typewriter-text.typing {
+    border-right: 2px solid transparent;
     animation: none;
   }
 } 

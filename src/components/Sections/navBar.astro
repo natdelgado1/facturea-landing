@@ -23,7 +23,7 @@ const navBar = [
 ---
   
   <!-- NAVBAR RESPONSIVO -->
-   <nav class="shadow-lg">
+  <nav class="fixed top-0 left-0 right-0 z-50 w-full border-b backdrop-blur-sm bg-white/95 border-lightGray">
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 sm:h-18 md:h-20">
             
@@ -76,7 +76,7 @@ const navBar = [
     </div>
     
     <!-- MENÚ MÓVIL (Oculto por defecto) -->
-    <div id="mobile-menu" class="hidden md:hidden menu-transition">
+    <div id="mobile-menu" class="hidden md:hidden menu-transition bg-white border-t border-gray-200">
         <div class="px-2 pt-2 pb-3 space-y-1 h-screen sm:px-3">
             {navBar.map((item) => (
                 <a

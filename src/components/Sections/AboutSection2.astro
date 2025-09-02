@@ -331,23 +331,23 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 <script>
     // ✅ SOLUCIÓN SIN TYPESCRIPT - JavaScript puro que SÍ funciona
     
-    // Declaraciones de tipos para GSAP
+    // Declaraciones de tipos
     declare global {
         interface Window {
             gsap: any;
-            ScrollTrigger: any;
         }
+        var emailjs: any;
     }
     
     // Variables globales simples
     let animationsReady = false;
     let animationsInitialized = false;
     
-    // ✅ OPTIMIZACIÓN: Lazy loading de GSAP con prefetch
+    // ✅ OPTIMIZACIÓN: Lazy loading de GSAP (solo core, sin ScrollTrigger)
     function loadGSAP(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             // Cache check
-            if (window.gsap && window.ScrollTrigger) {
+            if (window.gsap) {
                 resolve();
                 return;
             }
@@ -358,26 +358,20 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             link.href = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
             document.head.appendChild(link);
             
-            // Carga dinámica optimizada
+            // Carga dinámica optimizada (solo GSAP core)
             const gsapScript = document.createElement('script');
             gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
             gsapScript.async = true; // Carga asíncrona
-            gsapScript.onload = () => {
-                const scrollTriggerScript = document.createElement('script');
-                scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
-                scrollTriggerScript.async = true;
-                scrollTriggerScript.onload = () => resolve();
-                document.head.appendChild(scrollTriggerScript);
-            };
+            gsapScript.onload = () => resolve();
             document.head.appendChild(gsapScript);
         });
     }
 
-    // Función principal - SIN TypeScript
-    async function initGSAPAnimations() {
+    // Función principal - Solo hover effects y animaciones inmediatas
+    async function initSimpleAnimations() {
         try {
             // ✅ Cargar GSAP si no está disponible
-            if (typeof window.gsap === 'undefined' || typeof window.ScrollTrigger === 'undefined') {
+            if (typeof window.gsap === 'undefined') {
                 console.log('⏳ Cargando GSAP...');
                 await loadGSAP();
             }
@@ -387,124 +381,21 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
                 console.log('⚠️ Animaciones ya inicializadas');
                 return;
             }
-
-            // ✅ Registrar ScrollTrigger
-                window.gsap.registerPlugin(window.ScrollTrigger);
                 
-            console.log('🚀 Iniciando animaciones GSAP...');
+            console.log('🚀 Iniciando animaciones simples (sin ScrollTrigger)...');
+
+            // ===== ANIMACIONES INMEDIATAS SIN SCROLL TRIGGER =====
             
-            // Limpiar animaciones previas
-            window.ScrollTrigger.getAll().forEach(function(trigger: any) {
-                        trigger.kill();
+            // Mostrar todos los elementos inmediatamente con animación de entrada suave
+            window.gsap.set('.gsap-badge, .gsap-title, .gsap-subtitle, .gsap-card, .gsap-cta', {
+                opacity: 1,
+                y: 0,
+                scale: 1
             });
-
-            // ===== ANIMACIONES BÁSICAS QUE SÍ FUNCIONAN =====
-            
-            // 1. ✅ Badge entrada
-            window.gsap.fromTo('.gsap-badge', 
-                { opacity: 0, y: -30, scale: 0.8 },
-                        {
-                            opacity: 1,
-                            y: 0,
-                            scale: 1,
-                            duration: 0.8,
-                    ease: 'power2.out',
-                            scrollTrigger: {
-                        trigger: '#por-que-facturea',
-                        start: 'top 80%',
-                        toggleActions: 'play none none reverse'
-                    }
-                }
-            );
-
-            // 2. ✅ Título con efecto
-            window.gsap.fromTo('.gsap-title', 
-                { opacity: 0, y: 50 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 1,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: '.gsap-title',
-                        start: 'top 85%',
-                        toggleActions: 'play none none reverse'
-                    }
-                }
-            );
-
-            // 3. ✅ Subtítulo
-            window.gsap.fromTo('.gsap-subtitle', 
-                { opacity: 0, y: 30 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 0.8,
-                    ease: 'power2.out',
-                    delay: 0.2,
-                    scrollTrigger: {
-                        trigger: '.gsap-subtitle',
-                        start: 'top 85%',
-                        toggleActions: 'play none none reverse'
-                    }
-                }
-            );
-
-            // 4. ✅ Cards con stagger - ANIMACIÓN COMPLETA DE ENTRADA
-            window.gsap.fromTo('.gsap-card', 
-                { opacity: 0, y: 60, scale: 0.95 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1,
-                    duration: 0.8,
-                    ease: 'power2.out',
-                    stagger: 0.15,
-                    scrollTrigger: {
-                        trigger: '.gsap-card',
-                        start: 'top 85%',
-                        toggleActions: 'play none none reverse'
-                    }
-                }
-            );
-            
-            // 4.5. ✅ Iconos de las cards (separados)
-            window.gsap.fromTo('.gsap-card .icon-container', 
-                { opacity: 0, scale: 0.5 },
-                { 
-                    opacity: 1, 
-                    scale: 1, 
-                    rotation: 0,
-                    duration: 0.8,
-                    ease: 'back.out(1.7)',
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: '.gsap-card',
-                        start: 'top 85%',
-                        toggleActions: 'play none none reverse'
-                    }
-                }
-            );
-
-            // 5. ✅ CTA buttons
-            window.gsap.fromTo('.gsap-cta', 
-                { opacity: 0, y: 40 },
-                { 
-                    opacity: 1, 
-                    y: 0, 
-                    duration: 0.8,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: '.gsap-cta',
-                        start: 'top 85%',
-                        toggleActions: 'play none none reverse'
-                    }
-                }
-            );
 
           
 
-            // 7. ✅ Contadores animados - VERSIÓN SIMPLIFICADA Y DEBUG
+            // ✅ Contadores animados - SIN SCROLL TRIGGER
             const counters = document.querySelectorAll('.gsap-counter');
             console.log('🔍 Contadores encontrados:', counters.length);
             
@@ -512,57 +403,30 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
                 const target = parseInt(counter.getAttribute('data-target') || '0');
                 const valueElement = counter.querySelector('.counter-value');
                 
-                console.log(`🔍 Contador ${index + 1}:`, {
-                    target: target,
-                    valueElement: valueElement,
-                    counterHTML: counter.innerHTML
-                });
-                
                 if (valueElement) {
-                    // Versión simple sin ScrollTrigger primero
-                    window.gsap.to(valueElement, {
-                        innerHTML: target,
-                        duration: 3,
-                        ease: 'power2.out',
-                        snap: { innerHTML: 1 },
-                        scrollTrigger: {
-                            trigger: counter,
-                            start: 'top 80%',
-                            toggleActions: 'play none none reverse'
-                        },
-                        onStart: function() {
-                            console.log(`🚀 Iniciando contador ${index + 1} con valor ${target}`);
-                        },
-                        onUpdate: function() {
-                            console.log(`📊 Contador ${index + 1} valor actual:`, valueElement.innerHTML);
-                        }
-                    });
-                } else {
-                    console.error(`❌ No se encontró .counter-value en contador ${index + 1}`);
+                    // Iniciar contador inmediatamente después de un pequeño delay
+                    setTimeout(() => {
+                        window.gsap.to(valueElement, {
+                            innerHTML: target,
+                            duration: 2,
+                            ease: 'power2.out',
+                            snap: { innerHTML: 1 },
+                            delay: index * 0.2 // Stagger entre contadores
+                        });
+                    }, 1000); // Delay inicial de 1 segundo
                 }
             });
 
-            // 8. ✅ Elementos flotantes - Movimiento suave
+            // ✅ Elementos flotantes - Solo movimiento suave (sin parallax)
             document.querySelectorAll('.floating-element').forEach(function(element, index) {
-                // Movimiento flotante infinito
+                // Movimiento flotante infinito simple
                 window.gsap.to(element, {
                     y: 15 + index * 5,
                     rotation: 5 + index * 2,
-                    duration: 3 + index * 0.5,
+                    duration: 4 + index * 0.5,
                     ease: 'power1.inOut',
                     yoyo: true,
                     repeat: -1
-                });
-
-                // Parallax ligero
-                window.gsap.to(element, {
-                    y: -30 - index * 10,
-                    scrollTrigger: {
-                        trigger: '#por-que-facturea',
-                        start: 'top bottom',
-                        end: 'bottom top',
-                        scrub: true
-                    }
                 });
             });
 
@@ -611,27 +475,18 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             animationsInitialized = true;
             animationsReady = true;
             
-            console.log('✅ Todas las animaciones GSAP inicializadas correctamente!');
-            console.log('🔍 Debug: Contadores encontrados:', document.querySelectorAll('.gsap-counter').length);
-            console.log('🔍 Debug: Cards encontradas:', document.querySelectorAll('.gsap-card').length);
-            
-            // Debug: Verificar que los contadores tengan los valores correctos
-            document.querySelectorAll('.gsap-counter').forEach(function(counter, index) {
-                const target = counter.getAttribute('data-target');
-                const valueElement = counter.querySelector('.counter-value');
-                console.log(`🔍 Contador ${index + 1}: target=${target}, valueElement=`, valueElement);
-            });
+            console.log('✅ Animaciones simples inicializadas correctamente (sin ScrollTrigger)!');
 
         } catch (error) {
-            console.error('❌ Error en GSAP:', error);
+            console.error('❌ Error en animaciones:', error);
         }
     }
 
-    // ===== SISTEMA DE INICIALIZACIÓN ROBUSTO =====
+    // ===== SISTEMA DE INICIALIZACIÓN SIMPLE =====
     
     function tryInitAnimations() {
         if (!animationsReady) {
-            initGSAPAnimations();
+            initSimpleAnimations();
         }
     }
 
@@ -654,13 +509,8 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
         setTimeout(tryInitAnimations, 200);
     });
 
-    // Cleanup para navegación SPA
+    // Cleanup para navegación SPA (simplificado)
     document.addEventListener('astro:before-preparation', function() {
-        if (typeof window.ScrollTrigger !== 'undefined') {
-            window.ScrollTrigger.getAll().forEach(function(trigger: any) {
-                trigger.kill();
-            });
-        }
         animationsInitialized = false;
         animationsReady = false;
     });

@@ -1,18 +1,23 @@
 ---
 // Componente de Analytics para tracking y métricas
 // Incluye Google Analytics, Google Tag Manager y métricas personalizadas
+
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+const hotjarId = import.meta.env.PUBLIC_HOTJAR_ID;
+const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
 ---
 
 <!-- Google Analytics 4 -->
-{import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+{gaId && (
   <>
     <!-- Google tag (gtag.js) -->
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '{import.meta.env.PUBLIC_GA_MEASUREMENT_ID}', {
+      gtag('config', `${gaId}`, {
         page_title: document.title,
         page_location: window.location.href,
         send_page_view: true
@@ -22,25 +27,25 @@
 )}
 
 <!-- Google Tag Manager -->
-{import.meta.env.PUBLIC_GTM_ID && (
+{gtmId && (
   <>
     <script>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','{import.meta.env.PUBLIC_GTM_ID}');
+      })(window,document,'script','dataLayer',`${gtmId}`);
     </script>
   </>
 )}
 
 <!-- Hotjar (opcional) -->
-{import.meta.env.PUBLIC_HOTJAR_ID && (
+{hotjarId && (
   <>
     <script>
       (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:{import.meta.env.PUBLIC_HOTJAR_ID},hjsv:6};
+        h._hjSettings={hjid:`${hotjarId}`,hjsv:6};
         a=o.getElementsByTagName('head')[0];
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
@@ -51,7 +56,7 @@
 )}
 
 <!-- Facebook Pixel (opcional) -->
-{import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID && (
+{facebookPixelId && (
   <>
     <script>
       !function(f,b,e,v,n,t,s)
@@ -62,12 +67,12 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '{import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID}');
+      fbq('init', `${facebookPixelId}`);
       fbq('track', 'PageView');
     </script>
     <noscript>
       <img height="1" width="1" style="display:none"
-        src={`https://www.facebook.com/tr?id=${import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
+        src={`https://www.facebook.com/tr?id=${facebookPixelId}&ev=PageView&noscript=1`}
       />
     </noscript>
   </>
@@ -193,10 +198,10 @@
 </script>
 
 <!-- Google Tag Manager (noscript) -->
-{import.meta.env.PUBLIC_GTM_ID && (
+{gtmId && (
   <noscript>
     <iframe 
-      src={`https://www.googletagmanager.com/ns.html?id=${import.meta.env.PUBLIC_GTM_ID}`}
+      src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
       height="0" 
       width="0" 
       style="display:none;visibility:hidden">

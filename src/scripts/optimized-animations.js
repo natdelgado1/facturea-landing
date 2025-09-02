@@ -6,7 +6,6 @@ var observer = null;
 var isScrolling = false;
 var idleCallbackId = null;
 var gsapLoaded = false;
-var scrollTriggerLoaded = false;
 var lenisLoaded = false;
 
 // ✅ Función para cargar librerías progresivamente con prioridad ultra-optimizada
@@ -26,15 +25,7 @@ function loadLibrariesProgressively() {
   }
 }
 
-// ✅ Función para cargar ScrollTrigger solo cuando sea necesario
-function loadScrollTrigger() {
-  if (scrollTriggerLoaded || typeof ScrollTrigger !== 'undefined') return;
-  
-  loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js', function() {
-    scrollTriggerLoaded = true;
-    setupGSAPAnimations();
-  });
-}
+// ✅ Función eliminada - Ya no usamos ScrollTrigger
 
 // ✅ Función para cargar Lenis solo cuando el usuario haga scroll
 function loadLenis() {
@@ -129,19 +120,9 @@ function setupCSSAnimations() {
   }
 }
 
-// ✅ Animaciones avanzadas solo cuando ScrollTrigger esté disponible
+// ✅ Animaciones simples sin ScrollTrigger
 function initAdvancedAnimations() {
-  if (typeof ScrollTrigger === 'undefined') {
-    // Cargar ScrollTrigger solo si es necesario
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadScrollTrigger, { timeout: 2000 });
-    } else {
-      setTimeout(loadScrollTrigger, 1000);
-    }
-    return;
-  }
-  
-  gsap.registerPlugin(ScrollTrigger);
+  // Ya no usamos ScrollTrigger, solo animaciones básicas
   
   // Usar requestIdleCallback para animaciones no críticas
   if ('requestIdleCallback' in window) {
@@ -151,9 +132,9 @@ function initAdvancedAnimations() {
   }
 }
 
-// ✅ Configurar animaciones GSAP ultra-optimizadas
+// ✅ Configurar animaciones GSAP simples (sin ScrollTrigger)
 function setupGSAPAnimations() {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (typeof gsap === 'undefined') return;
   
   var sections = ['beneficios', 'como-funciona', 'formulario', 'faq'];
   
@@ -164,22 +145,11 @@ function setupGSAPAnimations() {
     
     var elements = section.querySelectorAll('.grid > div, .space-y-4 > div, form');
     
-    gsap.fromTo(elements, 
-      { y: 30, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 0.2, // Ultra-reducido
-        stagger: 0.02, // Ultra-reducido
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
+    // Mostrar elementos inmediatamente sin ScrollTrigger
+    gsap.set(elements, { 
+      y: 0, 
+      opacity: 1
+    });
   }
 }
 

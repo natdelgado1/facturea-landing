@@ -252,11 +252,10 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 <script>
     // ✅ SOLUCIÓN SIN TYPESCRIPT - JavaScript puro que SÍ funciona
     
-    // Declaraciones de tipos para GSAP
+    // Declaraciones de tipos para GSAP (sin ScrollTrigger)
     declare global {
         interface Window {
             gsap: any;
-            ScrollTrigger: any;
         }
     }
     
@@ -264,11 +263,11 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
     let animationsReady = false;
     let animationsInitialized = false;
     
-    // ✅ OPTIMIZACIÓN: Lazy loading de GSAP con prefetch
+    // ✅ OPTIMIZACIÓN: Lazy loading de GSAP (solo core, sin ScrollTrigger)
     function loadGSAP(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             // Cache check
-            if (window.gsap && window.ScrollTrigger) {
+            if (window.gsap) {
                 resolve();
                 return;
             }
@@ -279,17 +278,11 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             link.href = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
             document.head.appendChild(link);
             
-            // Carga dinámica optimizada
+            // Carga dinámica optimizada (solo GSAP core)
             const gsapScript = document.createElement('script');
             gsapScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
             gsapScript.async = true; // Carga asíncrona
-            gsapScript.onload = () => {
-                const scrollTriggerScript = document.createElement('script');
-                scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
-                scrollTriggerScript.async = true;
-                scrollTriggerScript.onload = () => resolve();
-                document.head.appendChild(scrollTriggerScript);
-            };
+            gsapScript.onload = () => resolve();
             document.head.appendChild(gsapScript);
         });
     }
