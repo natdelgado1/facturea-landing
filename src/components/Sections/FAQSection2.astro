@@ -1,0 +1,184 @@
+---
+import TitleSecundary from "../UI/TitleSecundary.astro";
+import { faq } from "../../../data/faq";
+---
+
+<!-- FAQ - Estilo moderno v2 con acordeones interactivos -->
+<section class="overflow-hidden relative py-32 bg-white">
+  <!-- Elementos decorativos flotantes -->
+  <div class="overflow-hidden absolute inset-0 pointer-events-none">
+    <div
+      class="absolute left-16 top-24 w-32 h-32 bg-gradient-to-br rounded-full blur-3xl from-primary/25 to-accent/15"
+    >
+    </div>
+    <div
+      class="absolute right-12 top-72 w-40 h-40 bg-gradient-to-br rounded-full blur-2xl from-accent/30 to-secondary/20"
+    >
+    </div>
+    <div
+      class="absolute bottom-48 left-1/4 w-28 h-28 bg-gradient-to-br rounded-full blur-xl from-secondary/25 to-primary/15"
+    >
+    </div>
+    <div
+      class="absolute bottom-24 right-1/4 w-36 h-36 bg-gradient-to-br rounded-full blur-3xl from-primary/20 to-accent/15"
+    >
+    </div>
+  </div>
+
+  <div class="container relative z-10 px-6 mx-auto">
+    <div class="mx-auto max-w-5xl text-center">
+      <!-- Badge superior -->
+      <div
+        class="inline-flex items-center px-6 py-3 mb-8 bg-gradient-to-r rounded-full border from-secondary/10 to-accent/10 border-secondary/20 progressive-reveal-element" data-delay="0"
+      >
+        <div
+          class="mr-3 w-2 h-2 bg-gradient-to-r rounded-full animate-pulse from-secondary to-accent"
+        >
+        </div>
+        <span class="text-sm font-semibold text-secondary"
+          >{faq.badgeText}</span
+        >
+      </div>
+
+      <!-- Título principal con gradiente -->
+      <TitleSecundary text={faq.title} boldText={faq.boldText} />
+
+      <!-- Subtítulo -->
+      <p
+        class="mx-auto mb-20 max-w-4xl text-xl leading-relaxed text-gray-600 md:text-2xl progressive-reveal-element" data-delay="400"
+      >
+        {faq.description} <span class="font-semibold text-secondary">{faq.descriptionBold1}</span>
+        {faq.descriptionAnd} <span class="font-semibold text-primary">{faq.descriptionBold2}</span> {faq.descriptionEnd}
+      </p>
+
+      <!-- Acordeones FAQ -->
+      <div class="mx-auto space-y-6 max-w-4xl progressive-reveal-element" data-delay="600">
+        {
+          faq.faqs.map((item, index) => (
+            <div class="overflow-hidden bg-gradient-to-br from-white to-gray-50 rounded-2xl border border-gray-200 shadow-sm transition-all duration-500 faq-item hover:shadow-xl progressive-reveal-element" data-delay={700 + (index * 50)}>
+              <button class="flex justify-between items-center px-8 py-6 w-full text-xl font-bold text-left text-gray-900 transition-all duration-300 faq-question hover:bg-gray-50 focus:outline-none focus:bg-gray-50">
+                <span>{item.question}</span>
+                <!-- Icono cruz (+) por defecto -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6 transition-all duration-300 faq-icon-plus text-secondary"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5v14" />
+                </svg>
+                <!-- Icono línea horizontal (-) cuando está activo -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="hidden w-6 h-6 transition-all duration-300 faq-icon-minus text-primary"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14" />
+                </svg>
+              </button>
+              <div class="hidden px-8 pb-6 mt-3 faq-answer">
+                <div class="pl-6 border-l-4 border-secondary">
+                  <p class="text-lg leading-relaxed text-gray-700 text-start">
+                    {item.answer}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- CTA inferior -->
+      <div class="mt-20 text-center progressive-reveal-element" data-delay="1200">
+        <div
+          class="p-12 bg-gradient-to-r via-white rounded-3xl border from-primary/5 to-accent/5 border-primary/10"
+        >
+          <h3 class="mb-4 text-3xl font-bold text-gray-900">
+            {faq.cta.title}
+          </h3>
+          <p class="mx-auto mb-8 max-w-2xl text-xl text-gray-600">
+            {faq.cta.description}
+          </p>
+          <div class="flex flex-col gap-4 justify-center sm:flex-row">
+            <button
+              class="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r rounded-2xl transition-all duration-300 from-primary to-secondary hover:shadow-2xl hover:scale-105"
+            >
+              {faq.cta.buttons.support}
+            </button>
+            <button
+              class="px-8 py-4 text-lg font-semibold rounded-2xl border-2 transition-all duration-300 border-primary text-primary hover:bg-primary hover:text-white hover:scale-105"
+            >
+              {faq.cta.buttons.whatsapp}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-item.active {
+    @apply shadow-xl scale-105;
+  }
+
+  .faq-item.active .faq-question {
+    @apply bg-primary/5;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach((item) => {
+      const question = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      const iconPlus = item.querySelector(".faq-icon-plus");
+      const iconMinus = item.querySelector(".faq-icon-minus");
+
+      if (question && answer && iconPlus && iconMinus) {
+        question.addEventListener("click", function () {
+          const isActive = item.classList.contains("active");
+
+          // Close all other FAQ items
+          faqItems.forEach((otherItem) => {
+            if (otherItem !== item) {
+              otherItem.classList.remove("active");
+              const otherAnswer = otherItem.querySelector(".faq-answer");
+              const otherIconPlus = otherItem.querySelector(".faq-icon-plus");
+              const otherIconMinus = otherItem.querySelector(".faq-icon-minus");
+              if (otherAnswer) otherAnswer.classList.add("hidden");
+              if (otherIconPlus) (otherIconPlus as HTMLElement).classList.remove("hidden");
+              if (otherIconMinus) (otherIconMinus as HTMLElement).classList.add("hidden");
+            }
+          });
+
+          // Toggle current item
+          if (isActive) {
+            item.classList.remove("active");
+            answer.classList.add("hidden");
+            (iconPlus as HTMLElement).classList.remove("hidden");
+            (iconMinus as HTMLElement).classList.add("hidden");
+          } else {
+            item.classList.add("active");
+            answer.classList.remove("hidden");
+            (iconPlus as HTMLElement).classList.add("hidden");
+            (iconMinus as HTMLElement).classList.remove("hidden");
+          }
+        });
+      }
+    });
+  });
+</script>
+

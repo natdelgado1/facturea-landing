@@ -1,0 +1,205 @@
+---
+// Componente de Analytics para tracking y métricas
+// Incluye Google Analytics, Google Tag Manager y métricas personalizadas
+---
+
+<!-- Google Analytics 4 -->
+{import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+  <>
+    <!-- Google tag (gtag.js) -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{import.meta.env.PUBLIC_GA_MEASUREMENT_ID}', {
+        page_title: document.title,
+        page_location: window.location.href,
+        send_page_view: true
+      });
+    </script>
+  </>
+)}
+
+<!-- Google Tag Manager -->
+{import.meta.env.PUBLIC_GTM_ID && (
+  <>
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','{import.meta.env.PUBLIC_GTM_ID}');
+    </script>
+  </>
+)}
+
+<!-- Hotjar (opcional) -->
+{import.meta.env.PUBLIC_HOTJAR_ID && (
+  <>
+    <script>
+      (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:{import.meta.env.PUBLIC_HOTJAR_ID},hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+  </>
+)}
+
+<!-- Facebook Pixel (opcional) -->
+{import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID && (
+  <>
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '{import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID}');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+        src={`https://www.facebook.com/tr?id=${import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
+      />
+    </noscript>
+  </>
+)}
+
+<!-- Métricas personalizadas de performance -->
+<script>
+  // Métricas de Core Web Vitals
+  if ('PerformanceObserver' in window) {
+    // LCP (Largest Contentful Paint)
+    new PerformanceObserver((entryList) => {
+      const entries = entryList.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      console.log('LCP:', lastEntry.startTime);
+      
+      // Enviar a analytics si está disponible
+      if (window.gtag) {
+        gtag('event', 'LCP', {
+          value: Math.round(lastEntry.startTime),
+          event_category: 'Web Vitals',
+          event_label: 'LCP'
+        });
+      }
+    }).observe({entryTypes: ['largest-contentful-paint']});
+
+    // FID (First Input Delay)
+    new PerformanceObserver((entryList) => {
+      const entries = entryList.getEntries();
+      entries.forEach((entry) => {
+        console.log('FID:', entry.processingStart - entry.startTime);
+        
+        if (window.gtag) {
+          gtag('event', 'FID', {
+            value: Math.round(entry.processingStart - entry.startTime),
+            event_category: 'Web Vitals',
+            event_label: 'FID'
+          });
+        }
+      });
+    }).observe({entryTypes: ['first-input']});
+
+    // CLS (Cumulative Layout Shift)
+    new PerformanceObserver((entryList) => {
+      let clsValue = 0;
+      const entries = entryList.getEntries();
+      entries.forEach((entry) => {
+        if (!entry.hadRecentInput) {
+          clsValue += entry.value;
+        }
+      });
+      console.log('CLS:', clsValue);
+      
+      if (window.gtag) {
+        gtag('event', 'CLS', {
+          value: Math.round(clsValue * 1000) / 1000,
+          event_category: 'Web Vitals',
+          event_label: 'CLS'
+        });
+      }
+    }).observe({entryTypes: ['layout-shift']});
+  }
+
+  // Tracking de eventos personalizados
+  function trackEvent(eventName, eventCategory, eventLabel, eventValue) {
+    if (window.gtag) {
+      gtag('event', eventName, {
+        event_category: eventCategory,
+        event_label: eventLabel,
+        value: eventValue
+      });
+    }
+    
+    // También enviar a dataLayer para GTM
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: eventName,
+        event_category: eventCategory,
+        event_label: eventLabel,
+        event_value: eventValue
+      });
+    }
+  }
+
+  // Tracking de formularios
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function() {
+        trackEvent('form_submit', 'Contact', 'Contact Form', 1);
+      });
+    }
+
+    // Tracking de clicks en botones principales
+    const ctaButtons = document.querySelectorAll('button[class*="bg-gradient"], a[class*="bg-gradient"]');
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const buttonText = this.textContent?.trim() || 'CTA Button';
+        trackEvent('button_click', 'Engagement', buttonText, 1);
+      });
+    });
+
+    // Tracking de scroll
+    let scrollDepth = 0;
+    window.addEventListener('scroll', function() {
+      const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      
+      if (scrollPercent > scrollDepth && scrollPercent % 25 === 0) {
+        scrollDepth = scrollPercent;
+        trackEvent('scroll_depth', 'Engagement', `${scrollPercent}%`, scrollPercent);
+      }
+    });
+
+    // Tracking de tiempo en página
+    let startTime = Date.now();
+    window.addEventListener('beforeunload', function() {
+      const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+      trackEvent('time_on_page', 'Engagement', 'Page View', timeOnPage);
+    });
+  });
+
+  // Exponer función global para tracking manual
+  window.trackEvent = trackEvent;
+</script>
+
+<!-- Google Tag Manager (noscript) -->
+{import.meta.env.PUBLIC_GTM_ID && (
+  <noscript>
+    <iframe 
+      src={`https://www.googletagmanager.com/ns.html?id=${import.meta.env.PUBLIC_GTM_ID}`}
+      height="0" 
+      width="0" 
+      style="display:none;visibility:hidden">
+    </iframe>
+  </noscript>
+)} 

@@ -1,0 +1,37 @@
+---
+export interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  priority?: boolean;
+}
+
+const { 
+  src, 
+  alt, 
+  width = 800, 
+  height = 600, 
+  class: className = '',
+  loading = 'lazy',
+  priority = false 
+} = Astro.props;
+
+// Determinar el loading basado en priority
+const finalLoading = priority ? 'eager' : loading;
+---
+
+<img 
+  src={src} 
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={finalLoading}
+  decoding="async"
+  style={`aspect-ratio: ${width}/${height}; object-fit: cover;`}
+  onload="this.style.opacity='1'"
+  style="opacity: 0; transition: opacity 0.3s ease-in-out;"
+/> 

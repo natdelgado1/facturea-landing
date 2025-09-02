@@ -1,0 +1,154 @@
+---
+// CSS crítico inline para mejor performance
+import "../../styles/hero-critical.css";
+// CSS no crítico cargado de forma asíncrona
+import "../../styles/hero.css";
+const cdn =
+  "https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js";
+const heroAnimation =
+  "https://lottie.host/e872003e-2131-4525-951d-a12847083467/u2ZFVYHs4r.lottie";
+import { heroData } from "../../../data/hero";
+---
+
+<script defer  src={cdn} type="module"></script>
+
+<!-- Hero Section - Versión 2: Inspirada en diseño moderno -->
+<section
+  id="inicio"
+  class="flex overflow-hidden relative flex-col items-center pt-28 h-screen bg-gradient-to-b from-gray-50 to-white hero-section sm:pt-28 md:pt-32 lg:flex-row"
+>
+  <div class="container top-0 px-4 sm:px-6 h-fit">
+    <div class="mx-auto max-w-5xl text-center lg:text-start">
+      <!-- Título principal estilo moderno - Optimizado para móviles -->
+      <h1
+        class="mb-6 text-4xl font-black tracking-tight leading-none text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-8xl sm:mb-8"
+      >
+        <span class="typewriter-text" data-text={heroData.text1}></span>
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent typewriter-text"
+          data-text={heroData.text2}></span><br />
+        <span class="typewriter-text" data-text={heroData.text3}></span>
+        <span
+          class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-primary to-secondary typewriter-text"
+          data-text={heroData.text4}></span>
+      </h1>
+
+      <!-- Descripción centrada y minimalista -->
+      <p class="px-4 mx-auto mb-12 max-w-3xl text-lg font-light leading-relaxed text-gray-500 sm:text-xl md:text-xl lg:text-2xl xl:text-2xl sm:mb-16 sm:px-0 xl:mx-0">
+        {heroData.text5}<br class="hidden sm:block" />
+        <span class="sm:hidden"> </span>{heroData.text6}
+      </p>
+
+      <!-- Botón principal con gradiente - Responsive -->
+      <div class="mb-16 sm:mb-20 fade-in-button">
+        <button
+          class="flex gap-2 justify-center items-center px-6 py-4 mx-auto w-full max-w-sm text-lg font-bold text-white bg-gradient-to-r rounded-xl transition-all duration-500 transform from-primary via-secondary to-accent sm:px-6 md:px-12 sm:py-4 md:py-5 sm:rounded-2xl sm:text-lg lg:text-xl hover:shadow-2xl hover:scale-105 hover:-translate-y-1 lg:mx-0 group sm:w-auto sm:max-w-none"
+        >
+          <span>{heroData.text7}</span>
+          <div
+            class="flex justify-center items-center w-8 h-8 rounded-full transition-all duration-300 sm:w-10 sm:h-10 bg-white/20 group-hover:bg-white/30"
+          >
+            <svg
+              class="w-4 h-4 sm:w-5 sm:h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <dotlottie-wc
+    src={heroAnimation}
+    class="hero-animation"
+    speed="0.8"
+    autoplay
+    loading="eager"
+    loop
+    intermission="0"
+    direction="1"
+    style="will-change: transform;"></dotlottie-wc>
+
+  <!-- Elementos flotantes estilo moderno - Responsive -->
+  <!-- Círculo grande superior derecha -->
+  <div
+    class="absolute right-4 top-10 w-40 h-40 bg-gradient-to-br rounded-full opacity-40 blur-2xl pointer-events-none sm:top-16 md:top-20 sm:right-12 md:right-20 sm:w-60 sm:h-60 md:w-80 md:h-80 from-primary/20 via-secondary/10 to-accent/20 sm:blur-3xl sm:opacity-60 parallax-element"
+    data-speed="0.3"
+  >
+  </div>
+
+  <!-- Círculo mediano inferior izquierda -->
+  <div
+    class="absolute left-2 bottom-20 w-32 h-32 bg-gradient-to-tr rounded-full opacity-30 blur-xl pointer-events-none sm:bottom-28 md:bottom-32 sm:left-8 md:left-16 sm:w-48 sm:h-48 md:w-64 md:h-64 from-accent/25 via-primary/15 to-secondary/20 sm:blur-2xl sm:opacity-50 parallax-element"
+    data-speed="0.5"
+  >
+  </div>
+
+  <!-- Círculo pequeño superior izquierda -->
+  <div
+    class="absolute left-4 top-32 w-20 h-20 bg-gradient-to-br rounded-full opacity-25 blur-lg pointer-events-none sm:top-36 md:top-40 sm:left-16 md:left-32 sm:w-24 sm:h-24 md:w-32 md:h-32 from-secondary/30 to-primary/20 sm:blur-xl sm:opacity-40 parallax-element"
+    data-speed="0.7"
+  >
+  </div>
+
+  <!-- Círculo pequeño inferior derecha -->
+  <div
+    class="absolute right-6 bottom-12 w-24 h-24 bg-gradient-to-tl rounded-full opacity-30 blur-lg pointer-events-none sm:bottom-16 md:bottom-20 sm:right-16 md:right-32 sm:w-32 sm:h-32 md:w-40 md:h-40 from-accent/20 to-secondary/30 sm:blur-xl sm:opacity-45 parallax-element"
+    data-speed="0.4"
+  >
+  </div>
+
+  <!-- Elementos decorativos adicionales - Solo en pantallas grandes -->
+  <div
+    class="hidden absolute top-1/3 right-1/4 w-20 h-20 bg-gradient-to-r to-transparent rounded-full opacity-30 blur-lg pointer-events-none md:block from-primary/40 parallax-element"
+    data-speed="0.6"
+  >
+  </div>
+  <div
+    class="hidden absolute bottom-1/3 left-1/4 w-24 h-24 bg-gradient-to-l to-transparent rounded-full opacity-25 blur-lg pointer-events-none md:block from-accent/30 parallax-element"
+    data-speed="0.8"
+  >
+  </div>
+
+  <script>
+    import { initHeroAnimations } from "../../scripts/hero-typewriter";
+
+    // Función para cargar CSS de typewriter de forma condicional
+    function loadTypewriterCSS() {
+      // Verificar si el usuario prefiere menos movimiento
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return; // No cargar animaciones si el usuario prefiere menos movimiento
+      }
+
+      // Cargar CSS de typewriter solo si es necesario
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/src/styles/hero-typewriter.css';
+      link.media = 'print';
+      link.onload = function() {
+        link.media = 'all';
+      };
+      document.head.appendChild(link);
+    }
+
+    // Efecto Typewriter simple y robusto
+    document.addEventListener("DOMContentLoaded", function () {
+      const typewriterTexts = document.querySelectorAll(".typewriter-text");
+
+      if (typewriterTexts.length > 0) {
+        // Cargar CSS de typewriter
+        loadTypewriterCSS();
+        // Inicializar el efecto typewriter
+        initHeroAnimations();
+      }
+    });
+  </script>
+</section>

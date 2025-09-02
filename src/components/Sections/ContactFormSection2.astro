@@ -1,0 +1,783 @@
+---
+import { contact } from "../../../data/contact";
+import Badge from "../UI/Badge.astro";
+import TitleSecundary from "../UI/TitleSecundary.astro";
+---
+
+<!-- Scripts necesarios -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld3L44rAAAAAFx1NlnmlugKLAZ_r2sRbl48KQ3d" async defer></script>
+
+<!-- Formulario de Contacto - Diseño Original -->
+<section class="overflow-hidden relative pt-8 bg-gradient-to-b from-gray-50 to-white sm:pt-12 md:pt-16 lg:pt-20">
+  <!-- Elementos decorativos flotantes -->
+  <div class="overflow-hidden absolute inset-0 pointer-events-none">
+    <div class="absolute left-2 top-8 w-12 h-12 bg-gradient-to-br rounded-full blur-lg opacity-15 sm:left-4 sm:top-12 sm:w-16 sm:h-16 md:left-8 md:top-16 md:w-20 md:h-20 lg:w-24 lg:h-24 from-primary/20 to-accent/10 sm:blur-xl sm:opacity-20 md:blur-2xl md:opacity-30"></div>
+    <div class="absolute right-4 top-16 w-10 h-10 bg-gradient-to-br rounded-full opacity-20 blur-md sm:right-8 sm:top-20 sm:w-12 sm:h-12 md:right-12 md:top-24 md:w-16 md:h-16 lg:right-16 lg:w-20 lg:h-20 from-accent/25 to-secondary/15 sm:blur-lg sm:opacity-25 md:blur-xl md:opacity-35"></div>
+    <div class="absolute bottom-8 left-1/4 w-12 h-12 bg-gradient-to-br rounded-full blur-md opacity-15 sm:bottom-12 sm:left-1/3 sm:w-14 sm:h-14 md:bottom-16 md:w-16 md:h-16 lg:bottom-20 lg:w-20 lg:h-20 from-secondary/20 to-primary/10 sm:blur-lg sm:opacity-20 md:blur-xl md:opacity-25"></div>
+  </div>
+
+  <div class="container relative z-10 px-4 mx-auto sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl">
+      <div class="mx-auto w-full">
+        <!-- Badge superior -->
+        <Badge text={contact.badgeText} />
+
+        <!-- Título principal -->
+        <TitleSecundary text={contact.title} boldText={contact.titleBold} />
+
+        <!-- Subtítulo -->
+        <p class="mb-4 text-sm leading-relaxed text-center text-gray-600 sm:text-base sm:mb-5 md:text-lg md:mb-6 progressive-reveal-element" data-delay="400">
+          {contact.description} <span class="font-semibold text-primary">{contact.descriptionBold}</span> 
+          {contact.description2} <span class="font-semibold text-secondary">{contact.descriptionBold2}</span>
+        </p>
+      </div>
+
+      <!-- Layout de 2 columnas -->
+      <div class="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0 xl:gap-12">
+        <!-- Columna del formulario -->
+        <div class="lg:order-1">
+          <div class="progressive-reveal-element" data-delay="600">
+            <form id="contactForm" class="overflow-hidden relative p-4 bg-gradient-to-br from-white to-gray-50 rounded-lg border border-gray-200 shadow-lg sm:p-5 sm:rounded-xl md:p-6">
+              <!-- Efecto de fondo -->
+              <div class="absolute inset-0 bg-gradient-to-br opacity-50 from-primary/5 to-accent/5"></div>
+
+              <div class="relative z-10 space-y-4">
+                <!-- Selector de tipo de usuario -->
+                <div class="mb-4">
+                  <label class="block mb-2 text-sm font-semibold text-gray-900 sm:text-base">
+                    {contact.form.userTypeLabel} *
+                  </label>
+                  <div class="flex gap-2 sm:gap-3">
+                    <!-- Opción Facturador -->
+                    <label class="flex-1 cursor-pointer">
+                      <input type="radio" name="userType" value="empresa" class="hidden user-type-input" required />
+                      <div class="flex justify-center items-center p-2.5 bg-white rounded-lg border-2 border-gray-300 transition-all duration-300 sm:p-3 group-hover:border-primary group-hover:shadow-md user-type-option">
+                        <svg class="mr-2 w-4 h-4 text-gray-400 sm:w-5 sm:h-5 sm:mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-gray-700 sm:text-base">{contact.form.userTypes.empresa.label}</span>
+                      </div>
+                    </label>
+
+                    <!-- Opción Inversor -->
+                    <label class="flex-1 cursor-pointer">
+                      <input type="radio" name="userType" value="inversor" class="hidden user-type-input" required />
+                      <div class="flex justify-center items-center p-2.5 bg-white rounded-lg border-2 border-gray-300 transition-all duration-300 sm:p-3 group-hover:border-secondary group-hover:shadow-md user-type-option">
+                        <svg class="mr-2 w-4 h-4 text-gray-400 sm:w-5 sm:h-5 sm:mr-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                        <span class="text-sm font-medium text-gray-700 sm:text-base">{contact.form.userTypes.inversor.label}</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Campos del formulario -->
+                <div class="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                  <!-- Nombre completo -->
+                  <div class="form-group">
+                    <label class="block mb-1.5 text-sm font-semibold text-gray-900 sm:text-base">{contact.form.fields.fullName.label} *</label>
+                    <div class="relative">
+                      <input type="text" id="fullName" name="fullName" class="px-3 py-2.5 w-full text-sm bg-white rounded-lg border-2 border-gray-300 transition-all duration-300 outline-none form-input sm:px-4 sm:py-3 sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 sm:text-base" placeholder={contact.form.fields.fullName.placeholder} required />
+                      <div class="flex absolute inset-y-0 right-0 items-center pr-3">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Email -->
+                  <div class="form-group">
+                    <label class="block mb-1.5 text-sm font-semibold text-gray-900 sm:text-base">{contact.form.fields.email.label} *</label>
+                    <div class="relative">
+                      <input type="email" id="email" name="email" class="px-3 py-2.5 w-full text-sm bg-white rounded-lg border-2 border-gray-300 transition-all duration-300 outline-none form-input sm:px-4 sm:py-3 sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 sm:text-base" placeholder={contact.form.fields.email.placeholder} required />
+                      <div class="flex absolute inset-y-0 right-0 items-center pr-3">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mensaje personalizado -->
+                <div class="mb-4">
+                  <label class="block mb-1.5 text-sm font-semibold text-gray-900 sm:text-base">{contact.form.fields.message.label}</label>
+                  <textarea id="message" name="message" class="px-3 py-2.5 w-full text-sm bg-white rounded-lg border-2 border-gray-300 transition-all duration-300 outline-none resize-none form-input sm:px-4 sm:py-3 sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 sm:text-base" rows="2" placeholder={contact.form.fields.message.placeholder}></textarea>
+                </div>
+
+           
+                </div>
+
+                                  <!-- reCAPTCHA v3 (invisible) -->
+                  <div class="flex justify-center mb-4">
+                    <div id="recaptcha-container"></div>
+                  </div>
+
+                <!-- Botón de envío -->
+                <div class="text-center">
+                  <button type="submit" id="submitBtn" class="overflow-hidden relative px-6 py-3 w-full text-base font-bold text-white bg-gradient-to-r rounded-lg transition-all duration-300 sm:px-8 sm:py-3.5 sm:rounded-xl sm:text-lg hover:shadow-xl hover:scale-105 group from-primary to-secondary disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span class="relative z-10">{contact.form.submitButton}</span>
+                    <div class="absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 from-secondary to-primary group-hover:opacity-100"></div>
+                    <div class="absolute inset-0 rounded-xl transition-transform duration-500 scale-0 bg-white/20 group-hover:scale-100"></div>
+                  </button>
+
+                  <p class="mt-2 text-xs text-gray-500 sm:text-sm">{contact.form.confirmationMessage}</p>
+                </div>
+
+                <!-- Mensajes de estado -->
+                <div id="messageContainer" class="hidden">
+                  <div id="successMessage" class="hidden p-3 text-sm text-green-800 bg-green-100 rounded-lg border border-green-200 sm:text-base">
+                    ¡Gracias! Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto contigo pronto.
+                  </div>
+                  <div id="errorMessage" class="hidden p-3 text-sm text-red-800 bg-red-100 rounded-lg border border-red-200 sm:text-base">
+                    Hubo un error al enviar tu mensaje. Por favor, inténtalo de nuevo.
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <!-- Información adicional -->
+            <div class="grid gap-2 mt-4 sm:grid-cols-2 sm:gap-3 sm:mt-6">
+              <!-- Contacto directo -->
+              <div class="p-2 text-center bg-white rounded-lg border border-gray-200 transition-all duration-300 sm:p-3 sm:rounded-xl hover:shadow-lg">
+                <div class="flex justify-center items-center mx-auto mb-1 w-6 h-6 rounded-lg sm:w-8 sm:h-8 bg-primary/10 sm:rounded-xl sm:mb-2">
+                  <svg class="w-3 h-3 sm:w-4 sm:h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <h4 class="mb-0.5 text-xs font-bold text-gray-900 sm:mb-1 sm:text-sm">{contact.contactInfo.email.label}</h4>
+                <p class="text-xs text-gray-600 sm:text-sm">{contact.contactInfo.email.value}</p>
+              </div>
+
+            
+
+              <!-- Ubicación -->
+              <div class="p-2 text-center bg-white rounded-lg border border-gray-200 transition-all duration-300 sm:p-3 sm:rounded-xl hover:shadow-lg">
+                <div class="flex justify-center items-center mx-auto mb-1 w-6 h-6 rounded-lg sm:w-8 sm:h-8 bg-accent/10 sm:rounded-xl sm:mb-2">
+                  <svg class="w-3 h-3 sm:w-4 sm:h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <h4 class="mb-0.5 text-xs font-bold text-gray-900 sm:mb-1 sm:text-sm">{contact.contactInfo.location.label}</h4>
+                <p class="text-xs text-gray-600 sm:text-sm">{contact.contactInfo.location.value}</p>
+              </div>
+            </div>
+          </div>
+          <!-- Columna de animación -->
+          <div class="flex justify-center items-center lg:order-2">
+            <div class="relative mx-auto w-full max-w-sm lg:max-w-md">
+              <!-- Animación Lottie centrada -->
+              <dotlottie-wc 
+                src="https://lottie.host/c5d71d5d-2303-48c9-bdf4-59a08a90eb0f/30JqYNBqCa.lottie" 
+                style="contact-animation"
+                speed="1" 
+                autoplay 
+                loop></dotlottie-wc>
+              
+              <!-- Texto descriptivo debajo de la animación -->
+              <div class="mt-3 text-center sm:mt-4 md:mt-5">
+                <h3 class="mb-1 text-sm font-semibold text-gray-900 sm:text-base md:text-lg">{contact.animation.title}</h3>
+                <p class="text-xs text-gray-600 sm:text-sm md:text-base">{contact.animation.description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .user-type-option input:checked + div {
+    @apply border-primary bg-gradient-to-br from-primary/5 to-accent/5 shadow-md scale-105;
+  }
+
+  .user-type-option input:checked + div svg {
+    @apply text-primary;
+  }
+
+  .user-type-option input:checked + div span {
+    @apply text-primary font-semibold;
+  }
+
+  .form-input:focus {
+    @apply transform scale-105;
+  }
+
+  .form-group:focus-within label {
+    @apply text-primary;
+  }
+
+  /* Estilos para reCAPTCHA responsive */
+  .g-recaptcha {
+    transform: scale(0.77);
+    -webkit-transform: scale(0.77);
+    transform-origin: 0 0;
+  }
+
+  @media (min-width: 640px) {
+    .g-recaptcha {
+      transform: scale(1);
+      -webkit-transform: scale(1);
+    }
+  }
+
+  /* Mobile-First Responsive Design */
+
+  /* Base styles (móvil) */
+  .container {
+    @apply px-4;
+  }
+
+  .contact-animation {
+    width: 400px;
+    height: 400px;
+  }
+
+  /* Small screens (sm: 640px+) */
+  @media (min-width: 640px) {
+    .container {
+      @apply px-6;
+    }
+  }
+
+  /* Medium screens (md: 768px+) */
+  @media (min-width: 768px) {
+    .container {
+      @apply px-6;
+    }
+    .contact-animation {
+      width: 350px;
+      height: 350px;
+    }
+  }
+
+  /* Large screens (lg: 1024px+) */
+  @media (min-width: 1024px) {
+    .container {
+      @apply px-8;
+    }
+    .contact-animation {
+      width: 500px;
+      height: 500px;
+    }
+    /* Layout de 2 columnas en desktop */
+    .lg\:grid {
+      display: grid;
+    }
+
+    .lg\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* Extra large screens (xl: 1280px+) */
+  @media (min-width: 1280px) {
+    .container {
+      @apply px-8;
+    }
+  }
+
+  /* 2XL screens (2xl: 1536px+) */
+  @media (min-width: 1536px) {
+    .container {
+      @apply px-8;
+    }
+  }
+</style>
+
+<script>
+  // Interfaz global para TypeScript
+  interface Window {
+    grecaptcha: any;
+    emailjs: any;
+    onRecaptchaCallback: () => void;
+    onRecaptchaExpired: () => void;
+  }
+
+  // Variables globales para reCAPTCHA
+  let recaptchaResponse: string | null = null;
+
+  // Configuración de EmailJS con valores por defecto
+  const EMAILJS_CONFIG = {
+    serviceId: "service_7itbzvb",
+    templateId: "template_j6l8bi9",
+    publicKey: "BGqmhQGFDVXPevxYQ"
+  };
+
+  // Configuración de reCAPTCHA con fallback
+  const RECAPTCHA_SITE_KEY = import.meta.env.RECAPTCHA_SITE_KEY || "6Ld3L44rAAAAAFx1NlnmlugKLAZ_r2sRbl48KQ3d";
+
+  // Funciones de callback para reCAPTCHA (deben ser globales)
+  window.onRecaptchaCallback = function() {
+    recaptchaResponse = window.grecaptcha.getResponse();
+    console.log('reCAPTCHA completado exitosamente');
+    
+    // Remover cualquier mensaje de error de reCAPTCHA
+    const errorMsg = document.getElementById('recaptcha-error');
+    if (errorMsg) {
+      errorMsg.remove();
+    }
+  };
+
+  window.onRecaptchaExpired = function() {
+    recaptchaResponse = null;
+    console.log('reCAPTCHA expirado - se requiere nueva verificación');
+    
+    // Mostrar mensaje de expiración
+    showRecaptchaError('El reCAPTCHA ha expirado. Por favor, complétalo nuevamente.');
+  };
+
+  // Función para mostrar errores de reCAPTCHA
+  function showRecaptchaError(message: string) {
+    const recaptchaContainer = document.getElementById('recaptcha-container');
+    if (recaptchaContainer) {
+      // Remover mensaje anterior si existe
+      const existingError = document.getElementById('recaptcha-error');
+      if (existingError) {
+        existingError.remove();
+      }
+
+      // Crear nuevo mensaje de error
+      const errorDiv = document.createElement('div');
+      errorDiv.id = 'recaptcha-error';
+      errorDiv.className = 'mt-2 text-sm text-red-600 text-center';
+      errorDiv.textContent = message;
+      
+      recaptchaContainer.parentNode?.insertBefore(errorDiv, recaptchaContainer.nextSibling);
+    }
+  }
+
+  // Función para enviar email con EmailJS
+  async function sendEmail(formData: any) {
+    try {
+      // Verificar que EmailJS esté disponible
+      if (typeof emailjs === 'undefined') {
+        console.error('EmailJS no está disponible');
+        return { success: false, message: 'Error: EmailJS no está disponible. Por favor, recarga la página.' };
+      }
+
+      // Inicializar EmailJS
+      try {
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+        console.log('EmailJS inicializado correctamente');
+      } catch (initError) {
+        console.error('Error al inicializar EmailJS:', initError);
+        return { success: false, message: 'Error al inicializar EmailJS. Por favor, recarga la página.' };
+      }
+
+      // Agregar token de reCAPTCHA a los datos
+      const emailData = {
+        ...formData,
+        'g-recaptcha-response': recaptchaResponse
+      };
+
+      console.log('Enviando email con datos:', emailData);
+      console.log('Service ID:', EMAILJS_CONFIG.serviceId);
+      console.log('Template ID:', EMAILJS_CONFIG.templateId);
+
+      // Enviar email usando emailjs directamente
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        emailData
+      );
+
+      console.log('Email enviado exitosamente:', response);
+      return { success: true, message: 'Email enviado correctamente' };
+    } catch (error) {
+      console.error('Error detallado al enviar email:', error);
+      
+      // Mensajes de error más específicos
+      let errorMessage = 'Error al enviar email. Por favor, inténtalo de nuevo.';
+      
+      if (error.message) {
+        if (error.message.includes('Invalid template')) {
+          errorMessage = 'Error: Template de email inválido. Contacta al administrador.';
+        } else if (error.message.includes('Invalid service')) {
+          errorMessage = 'Error: Servicio de email inválido. Contacta al administrador.';
+        } else if (error.message.includes('Invalid public key')) {
+          errorMessage = 'Error: Clave pública inválida. Contacta al administrador.';
+        } else if (error.message.includes('Network Error')) {
+          errorMessage = 'Error de conexión. Verifica tu conexión a internet.';
+        }
+      }
+      
+      return { success: false, message: errorMessage };
+    }
+  }
+
+  // Función para mostrar mensajes de estado
+  function showMessage(message: string, isSuccess: boolean = true) {
+    const messageContainer = document.getElementById('messageContainer');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    if (messageContainer && successMessage && errorMessage) {
+      messageContainer.classList.remove('hidden');
+      
+      if (isSuccess) {
+        successMessage.classList.remove('hidden');
+        errorMessage.classList.add('hidden');
+        successMessage.textContent = message;
+      } else {
+        successMessage.classList.add('hidden');
+        errorMessage.classList.remove('hidden');
+        errorMessage.textContent = message;
+      }
+
+      // Scroll suave hacia el mensaje
+      messageContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      // Ocultar mensaje después de 8 segundos
+      setTimeout(() => {
+        messageContainer.classList.add('hidden');
+      }, 8000);
+    }
+  }
+
+  // Función para inicializar reCAPTCHA v3
+  function initializeRecaptcha() {
+    if (window.grecaptcha && window.grecaptcha.ready) {
+      try {
+        window.grecaptcha.ready(function() {
+          window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'})
+            .then(function(token: string) {
+              recaptchaResponse = token;
+              console.log('reCAPTCHA v3 ejecutado exitosamente');
+            })
+            .catch(function(error: any) {
+              console.error('Error al ejecutar reCAPTCHA v3:', error);
+            });
+        });
+        console.log('reCAPTCHA v3 inicializado correctamente');
+      } catch (error) {
+        console.error('Error al inicializar reCAPTCHA v3:', error);
+      }
+    }
+  }
+
+  // Función para resetear reCAPTCHA v3
+  function resetRecaptcha() {
+    recaptchaResponse = null;
+    console.log('reCAPTCHA v3 reseteado');
+  }
+
+  // Función para enviar formulario con reCAPTCHA v3
+  async function submitFormWithRecaptcha() {
+    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+    const originalText = submitBtn.innerHTML;
+
+    // Deshabilitar botón y mostrar estado de carga
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="relative z-10">
+        <svg class="inline mr-3 -ml-1 w-4 h-4 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Enviando...
+      </span>
+    `;
+
+    try {
+      // Validar campos requeridos
+      const form = document.getElementById("contactForm") as HTMLFormElement;
+      const requiredFields = form.querySelectorAll("[required]");
+      let allValid = true;
+      const missingFields: string[] = [];
+
+      requiredFields.forEach((field: Element) => {
+        const input = field as HTMLInputElement;
+        const fieldName = input.name || input.id;
+        
+        // Validación especial para radio buttons
+        if (input.type === 'radio') {
+          const radioGroup = form.querySelectorAll(`input[name="${input.name}"]:checked`);
+          if (radioGroup.length === 0) {
+            allValid = false;
+            missingFields.push('Tipo de usuario');
+            // Marcar todos los radio buttons del grupo
+            form.querySelectorAll(`input[name="${input.name}"]`).forEach(radio => {
+              const radioDiv = (radio as HTMLElement).nextElementSibling as HTMLElement;
+              if (radioDiv) {
+                radioDiv.classList.add("border-red-500");
+              }
+            });
+          } else {
+            // Remover error si está seleccionado
+            form.querySelectorAll(`input[name="${input.name}"]`).forEach(radio => {
+              const radioDiv = (radio as HTMLElement).nextElementSibling as HTMLElement;
+              if (radioDiv) {
+                radioDiv.classList.remove("border-red-500");
+              }
+            });
+          }
+        }
+        // Validación para otros campos
+        else if (!input.value.trim()) {
+          allValid = false;
+          input.classList.add("border-red-500");
+          
+          // Nombres amigables para los campos
+          const friendlyNames: {[key: string]: string} = {
+            'fullName': 'Nombre completo',
+            'email': 'Email',
+            'terms': 'Aceptación de términos'
+          };
+          missingFields.push(friendlyNames[fieldName] || fieldName);
+        } else {
+          input.classList.remove("border-red-500");
+        }
+      });
+
+      if (!allValid) {
+        const message = missingFields.length > 0 
+          ? `Por favor, completa los siguientes campos: ${missingFields.join(', ')}`
+          : 'Por favor, completa todos los campos requeridos';
+        showMessage(message, false);
+        return;
+      }
+
+      // Validación adicional de email
+      const emailInput = form.querySelector('#email') as HTMLInputElement;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailInput && !emailRegex.test(emailInput.value)) {
+        emailInput.classList.add("border-red-500");
+        showMessage('Por favor, ingresa un email válido', false);
+        return;
+      }
+
+      // Recopilar datos del formulario
+      const formData = {
+        userType: (form.querySelector('input[name="userType"]:checked') as HTMLInputElement)?.value || '',
+        fullName: (form.querySelector('#fullName') as HTMLInputElement)?.value.trim() || '',
+        email: (form.querySelector('#email') as HTMLInputElement)?.value.trim() || '',
+        message: (form.querySelector('#message') as HTMLTextAreaElement)?.value.trim() || '',
+        timestamp: new Date().toLocaleString('es-ES'),
+        userAgent: navigator.userAgent
+      };
+
+      // Enviar email
+      const result = await sendEmail(formData);
+
+      if (result.success) {
+        showMessage('¡Gracias! Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto contigo pronto.', true);
+        
+        // Limpiar formulario
+        form.reset();
+        
+        // Resetear reCAPTCHA
+        resetRecaptcha();
+        
+        // Remover cualquier mensaje de error de reCAPTCHA
+        const errorMsg = document.getElementById('recaptcha-error');
+        if (errorMsg) {
+          errorMsg.remove();
+        }
+
+        // Resetear estilos de radio buttons
+        const userTypeInputs = document.querySelectorAll(".user-type-input");
+        userTypeInputs.forEach((input) => {
+          const div = (input as HTMLElement).nextElementSibling as HTMLElement;
+          if (div) {
+            div.classList.remove(
+              "border-primary",
+              "bg-gradient-to-br",
+              "from-primary/5",
+              "to-accent/5",
+              "shadow-md",
+              "scale-105"
+            );
+            div.classList.add("border-gray-300");
+
+            const icon = div.querySelector("svg");
+            const text = div.querySelector("span");
+            if (icon) {
+              icon.classList.remove("text-primary", "text-secondary");
+              icon.classList.add("text-gray-400");
+            }
+            if (text) {
+              text.classList.remove("text-primary", "font-semibold");
+              text.classList.add("text-gray-700", "font-medium");
+            }
+          }
+        });
+
+      } else {
+        showMessage(result.message, false);
+      }
+
+    } catch (error) {
+      console.error('Error en el envío del formulario:', error);
+      showMessage('Error inesperado al enviar el formulario. Por favor, inténtalo de nuevo.', false);
+    } finally {
+      // Restaurar botón
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Verificar que EmailJS se cargue correctamente
+    const checkEmailJS = setInterval(() => {
+      if (typeof emailjs !== 'undefined') {
+        clearInterval(checkEmailJS);
+        console.log('✅ EmailJS cargado correctamente');
+        
+        // Intentar inicializar EmailJS inmediatamente
+        try {
+          emailjs.init(EMAILJS_CONFIG.publicKey);
+          console.log('✅ EmailJS inicializado correctamente');
+        } catch (error) {
+          console.error('❌ Error al inicializar EmailJS:', error);
+        }
+      }
+    }, 100);
+
+    // Timeout para EmailJS
+    setTimeout(() => {
+      clearInterval(checkEmailJS);
+      if (typeof emailjs === 'undefined') {
+        console.error('❌ EmailJS no se pudo cargar');
+        showMessage('Error al cargar EmailJS. Por favor, recarga la página.', false);
+      }
+    }, 15000);
+
+    // Inicializar reCAPTCHA cuando esté disponible
+    const checkRecaptcha = setInterval(() => {
+      if (window.grecaptcha && window.grecaptcha.render) {
+        clearInterval(checkRecaptcha);
+        initializeRecaptcha();
+      }
+    }, 100);
+
+    // Timeout para evitar bucle infinito
+    setTimeout(() => {
+      clearInterval(checkRecaptcha);
+      if (!window.grecaptcha) {
+        console.error('reCAPTCHA no se pudo cargar');
+        showMessage('Error al cargar reCAPTCHA. Por favor, recarga la página.', false);
+      }
+    }, 10000);
+
+    // Efecto de typing animation en el placeholder
+    const inputs = document.querySelectorAll(".form-input");
+
+    inputs.forEach((input) => {
+      input.addEventListener("focus", function () {
+        this.parentElement?.classList.add("focused");
+      });
+
+      input.addEventListener("blur", function () {
+        this.parentElement?.classList.remove("focused");
+      });
+    });
+
+    // Efectos en los radio buttons para la nueva estructura
+    const userTypeInputs = document.querySelectorAll(".user-type-input");
+    userTypeInputs.forEach((input) => {
+      input.addEventListener("change", function () {
+        // Remove active class from all options
+        userTypeInputs.forEach((otherInput) => {
+          const otherDiv = (otherInput as HTMLElement).nextElementSibling as HTMLElement;
+          if (otherDiv) {
+            otherDiv.classList.remove(
+              "border-primary",
+              "bg-gradient-to-br",
+              "from-primary/5",
+              "to-accent/5",
+              "shadow-md",
+              "scale-105"
+            );
+            otherDiv.classList.add("border-gray-300");
+
+            // Reset icon and text colors
+            const icon = otherDiv.querySelector("svg");
+            const text = otherDiv.querySelector("span");
+            if (icon) icon.classList.remove("text-primary", "text-secondary");
+            if (icon) icon.classList.add("text-gray-400");
+            if (text) text.classList.remove("text-primary", "font-semibold");
+            if (text) text.classList.add("text-gray-700", "font-medium");
+          }
+        });
+
+        // Add active class to selected option
+        if ((this as HTMLInputElement).checked) {
+          const selectedDiv = (this as HTMLElement).nextElementSibling as HTMLElement;
+          if (selectedDiv) {
+            selectedDiv.classList.remove("border-gray-300");
+            selectedDiv.classList.add(
+              "border-primary",
+              "bg-gradient-to-br",
+              "from-primary/5",
+              "to-accent/5",
+              "shadow-md",
+              "scale-105"
+            );
+
+            // Change icon and text colors based on value
+            const icon = selectedDiv.querySelector("svg");
+            const text = selectedDiv.querySelector("span");
+            if (icon) {
+              icon.classList.remove("text-gray-400");
+              if ((this as HTMLInputElement).value === "empresa") {
+                icon.classList.add("text-primary");
+              } else if ((this as HTMLInputElement).value === "inversor") {
+                icon.classList.add("text-secondary");
+              }
+            }
+            if (text) {
+              text.classList.remove("text-gray-700", "font-medium");
+              text.classList.add("text-primary", "font-semibold");
+            }
+          }
+        }
+      });
+    });
+
+    // Form submission con EmailJS y reCAPTCHA v3
+    const form = document.getElementById("contactForm") as HTMLFormElement;
+    if (form) {
+      form.addEventListener("submit", async function (e: Event) {
+        e.preventDefault();
+
+        // Ejecutar reCAPTCHA v3 automáticamente
+        if (!recaptchaResponse) {
+          try {
+            window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'})
+              .then(function(token: string) {
+                recaptchaResponse = token;
+                // Continuar con el envío del formulario
+                submitFormWithRecaptcha();
+              })
+              .catch(function(error: any) {
+                console.error('Error al ejecutar reCAPTCHA v3:', error);
+                showRecaptchaError('Error al verificar reCAPTCHA. Por favor, inténtalo de nuevo.');
+              });
+          } catch (error) {
+            console.error('Error al ejecutar reCAPTCHA v3:', error);
+            showRecaptchaError('Error al verificar reCAPTCHA. Por favor, inténtalo de nuevo.');
+          }
+          return;
+        }
+
+        // Si ya tenemos token, enviar directamente
+        submitFormWithRecaptcha();
+      });
+    }
+
+    // Limpiar errores cuando el usuario empiece a escribir
+    const allInputs = form?.querySelectorAll('input, textarea');
+    allInputs?.forEach(input => {
+      input.addEventListener('input', function() {
+        (this as HTMLElement).classList.remove('border-red-500');
+      });
+    });
+  });
+</script>

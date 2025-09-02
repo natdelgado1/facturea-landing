@@ -1,0 +1,305 @@
+---
+import logoColor from '../../assets/logo_primary_color.svg';
+
+const navBar = [
+    {
+        name: 'Inicio',
+        href: '#inicio',
+    },
+    {
+        name: 'Sobre Facturea',
+        href: '#por-que-facturea',
+    },
+    {
+        name: 'Contacto',
+        href: '#contacto',
+    },
+    {
+        name: 'FAQ',
+        href: '#faq',
+    }
+];
+
+---
+  
+  <!-- NAVBAR RESPONSIVO -->
+   <nav class="shadow-lg">
+    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 sm:h-18 md:h-20">
+            
+            <!-- LOGO (Siempre visible) -->
+            <div class="flex flex-shrink-0 items-center">
+                <img src={logoColor.src} alt="Logo Facturea.io" class="w-auto h-6"   loading="eager"/>
+            </div>
+            
+            <!-- MENÚ DESKTOP (Oculto en móvil) -->
+            <div class="hidden md:block">
+                <div class="flex items-baseline ml-10 space-x-4 sm:ml-6">
+                    {
+                        navBar.map((item: { name: string; href: string }) => (
+                            <a 
+                                href={item.href}  
+                                class="relative px-3 py-2 font-medium rounded-md nav-link sm:px-2 sm:py-2 sm:text-md lg:text-base xl:text-xl 2xl:text-2xl"
+                                data-href={item.href}
+                            >
+                                {item.name}
+                                <!-- Sprite del subrayado activo (invisible por defecto) -->
+                                <div class="nav-underline"></div>
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+            
+            <!-- BOTÓN CTA DESKTOP (Oculto en móvil) -->
+            <div class="hidden md:block">
+                <p class="hidden mb-4 text-sm text-gray-600">¿Listo para empezar?</p>
+                <a   href="https://app.facturea.io/"
+                target="_blank" class="flex gap-2 justify-center items-center px-6 py-3 mx-auto w-full font-medium text-center text-white bg-gradient-to-r rounded-lg transition-colors duration-300 from-primary via-secondary to-accent sm:px-3 sm:py-2 sm:text-sm lg:text-lg lg:py-2.5 lg:px-5 hover:bg-secondary">
+                    Iniciar sesión
+                    <svg xmlns="http://www.w3.org/2000/svg" class="hidden w-4 h-4 lg:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right-icon lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+                </a>
+            </div>
+            
+            <!-- BOTÓN HAMBURGUESA (Solo móvil) -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="focus:outline-none">
+                    <!-- Icono hamburguesa -->
+                    <svg id="hamburger-icon" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- Icono - -->
+                    <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden w-6 h-6 text-gray-700" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus-icon lucide-minus"><path d="M5 12h14"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MENÚ MÓVIL (Oculto por defecto) -->
+    <div id="mobile-menu" class="hidden md:hidden menu-transition">
+        <div class="px-2 pt-2 pb-3 space-y-1 h-screen sm:px-3">
+            {navBar.map((item) => (
+                <a
+                    href={item.href}
+                    class="block px-3 py-2 font-medium text-gray-700 rounded-md transition-colors duration-200 hover:text-primary nav-link"
+                    data-href={item.href}
+                >
+                    {item.name}
+                </a>
+            ))}
+            <div class="pt-4 pb-2 border-t border-gray-200">
+                <p class="px-3 mb-4 text-sm text-gray-600">¿Listo para empezar?</p>
+                <a
+                    href="https://app.facturea.io/"
+                    target="_blank"
+                    class=`flex items-center justify-center gap-2 w-full bg-gradient-to-r from-primary via-secondary to-accent text-white  text-center py-3 px-6 rounded-lg font-medium hover:bg-secondary transition-colors duration-300 nav-link hover:cursor-pointer  `
+                    data-href="#contacto"
+                    aria-current={Astro.url.hash === '#contacto' ? 'page' : undefined}
+                    >
+                    Iniciar sesión
+                <svg xmlns="http://www.w3.org/2000/svg"  width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right-icon lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style is:inline>
+        /* Sprite CSS para el subrayado activo (similar a Facebook) */
+        .nav-link {
+            position: relative;
+            color: #000;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #6356e5;
+        }
+
+        .nav-link.active {
+            color: #6356e5;
+            font-weight: 600;
+        }
+
+        /* Sprite del subrayado - invisible por defecto */
+        .nav-underline {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #6356e5 0%, #6356e5 100%);
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Mostrar el subrayado cuando el enlace está activo */
+        .nav-link.active .nav-underline {
+            opacity: 1;
+        }
+
+        /* Efecto hover del subrayado */
+        .nav-link:hover .nav-underline {
+            opacity: 0.5;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .nav-underline {
+                bottom: -6px;
+                height: 2px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .nav-underline {
+                bottom: -8px;
+                height: 3px;
+            }
+        }
+
+        /* Menú móvil styles */
+        .menu-transition {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-link {
+            transition: colors 0.2s ease;
+        }
+    </style>
+
+    <script is:inline>
+        console.log('🚀 Navbar script loaded!');
+        
+        // Función para actualizar el estado activo de los enlaces
+        function updateActiveNavLink() {
+            const hash = window.location.hash || '#inicio';
+            console.log('Current hash:', hash);
+            
+            // Remover clase activa de todos los enlaces
+            const allLinks = document.querySelectorAll('.nav-link');
+            allLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Agregar clase activa al enlace correspondiente
+            const activeLink = document.querySelector(`[data-href="${hash}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+                console.log(`✅ Activated: ${activeLink.textContent.trim()}`);
+            }
+        }
+
+        // Función para manejar el scroll y actualizar navegación activa
+        function handleScrollNavigation() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link[data-href^="#"]');
+            
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    currentSection = `#${sectionId}`;
+                }
+            });
+
+            // Actualizar navegación activa
+            navLinks.forEach(link => {
+                const href = link.getAttribute('data-href');
+                if (href === currentSection) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+    
+        mobileMenuButton?.addEventListener('click', () => {
+            mobileMenu?.classList.toggle('hidden');
+            hamburgerIcon?.classList.toggle('hidden');
+            closeIcon?.classList.toggle('hidden');
+        });
+    
+        const mobileLinks = mobileMenu?.querySelectorAll('a');
+        mobileLinks?.forEach((link) => {
+            link.addEventListener('click', () => {
+                mobileMenu?.classList.add('hidden');
+                hamburgerIcon?.classList.remove('hidden');
+                closeIcon?.classList.add('hidden');
+                
+                // Actualizar navegación después del scroll
+                setTimeout(() => {
+                    updateActiveNavLink();
+                    handleScrollNavigation();
+                }, 500);
+            });
+        });
+    
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                mobileMenu?.classList.add('hidden');
+                hamburgerIcon?.classList.remove('hidden');
+                closeIcon?.classList.add('hidden');
+            }
+        });
+
+        // Smooth scrolling para enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = anchor.getAttribute('href');
+                if (href) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+                        const targetPosition = target.offsetTop - headerHeight - 20;
+
+                        window.location.hash = href;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📱 DOM loaded!');
+            updateActiveNavLink();
+        });
+        
+        // Escuchar cambios de hash
+        window.addEventListener('hashchange', () => {
+            console.log('🔗 Hash changed!');
+            updateActiveNavLink();
+        });
+
+        // Escuchar scroll para navegación activa
+        window.addEventListener('scroll', () => {
+            handleScrollNavigation();
+        });
+
+        // Funciones globales para debug
+        window.updateActiveNavLink = updateActiveNavLink;
+        window.handleScrollNavigation = handleScrollNavigation;
+        console.log('🔧 Debug functions ready: updateActiveNavLink() and handleScrollNavigation()');
+    </script>
+</nav>
+
+

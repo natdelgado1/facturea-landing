@@ -1,0 +1,596 @@
+{
+  "timestamp": "2025-08-19T06:27:40.531Z",
+  "environment": "development",
+  "baseUrl": "http://localhost:4321",
+  "summary": {
+    "totalPages": 7,
+    "averageScore": 95,
+    "errors": 0,
+    "warnings": 0
+  },
+  "results": {
+    "/": {
+      "page": "/",
+      "score": 75,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": false,
+          "score": 15,
+          "maxScore": 20,
+          "details": {
+            "title": "Facturea.io - Adelanto de Facturas Electrónicas en Paraguay | Liquidez Inmediata",
+            "length": 80,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": false,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "description": "La primera fintech de adelanto de facturas electrónicas en Paraguay. Obtené liquidez inmediata sin historial crediticio o invertí en facturas verificadas.",
+            "length": 154,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "factoring Paraguay, adelanto de facturas, liquidez inmediata, inversión en facturas, facturas electrónicas, PYMES Paraguay",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Facturea.io - Adelanto de Facturas Electrónicas en Paraguay",
+              "og:description": "Conectamos PYMES que necesitan liquidez con inversores que buscan rentabilidad, 100% digital.",
+              "og:type": "website",
+              "og:url": "https://facturea.io"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 94
+    },
+    "/terminos": {
+      "page": "/terminos",
+      "score": 75,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "title": "Términos y Condiciones - Facturea.io",
+            "length": 36,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": false,
+          "score": 15,
+          "maxScore": 20,
+          "details": {
+            "description": "Términos y condiciones de uso de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+            "length": 115,
+            "checks": {
+              "exists": true,
+              "minLength": false,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "términos y condiciones, facturea, factoring Paraguay, políticas de privacidad",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Términos y Condiciones - Facturea.io",
+              "og:description": "Términos y condiciones de uso de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+              "og:type": "website",
+              "og:url": "https://facturea.io/terminos"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 94
+    },
+    "/privacidad": {
+      "page": "/privacidad",
+      "score": 80,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "title": "Políticas de Privacidad - Facturea.io",
+            "length": 37,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "description": "Políticas de privacidad y protección de datos de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+            "length": 131,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "políticas de privacidad, protección de datos, facturea, factoring Paraguay, datos personales",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Políticas de Privacidad - Facturea.io",
+              "og:description": "Políticas de privacidad y protección de datos de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+              "og:type": "website",
+              "og:url": "https://facturea.io/privacidad"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 100
+    },
+    "/es/terminos": {
+      "page": "/es/terminos",
+      "score": 75,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "title": "Términos y Condiciones - Facturea.io",
+            "length": 36,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": false,
+          "score": 15,
+          "maxScore": 20,
+          "details": {
+            "description": "Términos y condiciones de uso de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+            "length": 115,
+            "checks": {
+              "exists": true,
+              "minLength": false,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "términos y condiciones, facturea, factoring Paraguay, políticas de privacidad",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Términos y Condiciones - Facturea.io",
+              "og:description": "Términos y condiciones de uso de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+              "og:type": "website",
+              "og:url": "https://facturea.io/es/terminos"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 94
+    },
+    "/es/privacidad": {
+      "page": "/es/privacidad",
+      "score": 80,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "title": "Políticas de Privacidad - Facturea.io",
+            "length": 37,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "description": "Políticas de privacidad y protección de datos de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+            "length": 131,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "políticas de privacidad, protección de datos, facturea, factoring Paraguay, datos personales",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Políticas de Privacidad - Facturea.io",
+              "og:description": "Políticas de privacidad y protección de datos de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay.",
+              "og:type": "website",
+              "og:url": "https://facturea.io/es/privacidad"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 100
+    },
+    "/en/terms": {
+      "page": "/en/terms",
+      "score": 75,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": true,
+          "score": 20,
+          "maxScore": 20,
+          "details": {
+            "title": "Terms and Conditions - Facturea.io",
+            "length": 34,
+            "checks": {
+              "exists": true,
+              "minLength": true,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": false,
+          "score": 15,
+          "maxScore": 20,
+          "details": {
+            "description": "Terms and conditions of use for Facturea.io - The first fintech for electronic invoice advances in Paraguay.",
+            "length": 108,
+            "checks": {
+              "exists": true,
+              "minLength": false,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "terms and conditions, facturea, factoring Paraguay, privacy policies",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Terms and Conditions - Facturea.io",
+              "og:description": "Terms and conditions of use for Facturea.io - The first fintech for electronic invoice advances in Paraguay.",
+              "og:type": "website",
+              "og:url": "https://facturea.io/en/terms"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 94
+    },
+    "/en/privacy": {
+      "page": "/en/privacy",
+      "score": 70,
+      "maxScore": 80,
+      "tests": {
+        "title": {
+          "name": "Title Tag",
+          "passed": false,
+          "score": 15,
+          "maxScore": 20,
+          "details": {
+            "title": "Privacy Policy - Facturea.io",
+            "length": 28,
+            "checks": {
+              "exists": true,
+              "minLength": false,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "description": {
+          "name": "Meta Description",
+          "passed": false,
+          "score": 15,
+          "maxScore": 20,
+          "details": {
+            "description": "Privacy policy and data protection of Facturea.io - The first fintech for electronic invoice advances in Paraguay.",
+            "length": 114,
+            "checks": {
+              "exists": true,
+              "minLength": false,
+              "maxLength": true,
+              "containsKeywords": true
+            }
+          }
+        },
+        "keywords": {
+          "name": "Meta Keywords",
+          "passed": true,
+          "score": 10,
+          "maxScore": 10,
+          "details": {
+            "keywords": "privacy policy, data protection, facturea, factoring Paraguay, personal data",
+            "checks": {
+              "exists": true,
+              "containsRequired": true
+            }
+          }
+        },
+        "openGraph": {
+          "name": "Open Graph Tags",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "found": {
+              "og:title": "Privacy Policy - Facturea.io",
+              "og:description": "Privacy policy and data protection of Facturea.io - The first fintech for electronic invoice advances in Paraguay.",
+              "og:type": "website",
+              "og:url": "https://facturea.io/en/privacy"
+            },
+            "missing": []
+          }
+        },
+        "technical": {
+          "name": "Technical SEO",
+          "passed": true,
+          "score": 15,
+          "maxScore": 15,
+          "details": {
+            "checks": {
+              "lang": true,
+              "viewport": true,
+              "charset": true
+            }
+          }
+        }
+      },
+      "issues": [],
+      "recommendations": [],
+      "percentage": 88
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

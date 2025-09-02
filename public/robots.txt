@@ -1,0 +1,27 @@
+# Robots.txt para Facturea.io
+# Permite que todos los motores de búsqueda indexen el sitio
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://facturea.io/sitemap.xml
+
+# Crawl delay (opcional, puede ayudar con bots agresivos)
+Crawl-delay: 1
+
+# Disallow específico para archivos que no queremos indexar
+Disallow: /api/
+Disallow: /_astro/
+Disallow: /scripts/
+Disallow: /src/
+
+# Permitir crawling de recursos importantes
+Allow: /assets/
+Allow: /images/
+Allow: /fonts/
+
+# Comentarios para desarrollo
+# Para bloquear completamente durante desarrollo, descomenta:
+# User-agent: *
+# Disallow: /

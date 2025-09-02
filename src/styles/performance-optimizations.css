@@ -1,0 +1,275 @@
+/* ✅ OPTIMIZACIONES DE PERFORMANCE ULTRA-AGRESIVAS PARA MÁXIMO RENDIMIENTO */
+
+/* Optimizaciones de GPU y compositing ultra-agresivas */
+.scrolling { 
+  will-change: scroll-position; 
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimizaciones de layout crítico */
+* { 
+  box-sizing: border-box; 
+  contain: layout style;
+}
+
+/* Optimizaciones de paint y compositing ultra-agresivas */
+.hero-animate, .animate-on-scroll, .intersection-observer {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force GPU acceleration */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  contain: layout style paint;
+}
+
+/* Animaciones nativas ultra-optimizadas */
+.hero-animate { 
+  opacity: 0; 
+  transform: translateY(20px) translateZ(0); 
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Reducido de 0.4s */
+  contain: layout style paint;
+}
+
+.hero-animate.loaded { 
+  opacity: 1; 
+  transform: translateY(0) translateZ(0); 
+}
+
+/* Optimizaciones de scroll ultra-agresivas */
+html { 
+  scroll-behavior: smooth; 
+  scroll-padding-top: 80px;
+}
+
+/* Optimizaciones de animaciones ultra-agresivas */
+.animate-on-scroll { 
+  opacity: 0; 
+  transform: translateY(30px) translateZ(0); 
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Reducido de 0.4s */
+  contain: layout style paint;
+}
+
+.animate-on-scroll.visible { 
+  opacity: 1; 
+  transform: translateY(0) translateZ(0); 
+}
+
+/* Optimizaciones de imágenes ultra-agresivas */
+img { 
+  max-width: 100%; 
+  height: auto; 
+  image-rendering: -webkit-optimize-contrast; 
+  image-rendering: crisp-edges;
+  contain: layout style paint;
+}
+
+/* Optimizaciones de fuentes ultra-agresivas */
+@font-face { 
+  font-family: 'VisbyCF'; 
+  src: url('/src/assets/fonts/visbycf-regular.woff2') format('woff2'); 
+  font-display: swap; 
+  font-weight: 400; 
+  font-style: normal; 
+  font-display: optional; 
+}
+
+/* Optimizaciones de botones ultra-agresivas */
+button, a { 
+  transition: all 0.15s ease; /* Reducido de 0.2s */
+  will-change: transform; 
+  contain: layout style paint;
+}
+
+/* Optimizaciones de hover ultra-agresivas */
+@media (hover: hover) { 
+  button:hover, a:hover { 
+    transform: translateY(-1px) translateZ(0); 
+  } 
+}
+
+/* Optimizaciones para dispositivos móviles ultra-agresivas */
+@media (max-width: 768px) {
+  .hero-animate { 
+    transition-duration: 0.2s; /* Reducido de 0.3s */
+  }
+  .animate-on-scroll { 
+    transition-duration: 0.2s; /* Reducido de 0.3s */
+  }
+  /* Reducir animaciones en móvil ultra-agresivamente */
+  * { 
+    animation-duration: 0.2s !important; /* Reducido de 0.3s */
+    transition-duration: 0.2s !important; /* Reducido de 0.3s */
+  }
+}
+
+/* Optimizaciones de performance ultra-agresivas */
+.performance-optimized { 
+  contain: layout style paint; 
+  will-change: auto; 
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Optimizaciones de scroll suave ultra-agresivas */
+.smooth-scroll { 
+  scroll-behavior: smooth; 
+  overscroll-behavior: contain;
+}
+
+/* Optimizaciones de carga ultra-agresivas */
+.loading { 
+  opacity: 0; 
+  transition: opacity 0.2s ease; /* Reducido de 0.3s */
+  contain: layout style paint;
+}
+
+.loaded { 
+  opacity: 1; 
+}
+
+/* Optimizaciones de animaciones CSS ultra-agresivas */
+@keyframes fadeInUp { 
+  from { 
+    opacity: 0; 
+    transform: translateY(20px) translateZ(0); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0) translateZ(0); 
+  } 
+}
+
+.fade-in-up { 
+  animation: fadeInUp 0.3s ease forwards; /* Reducido de 0.4s */
+  will-change: transform, opacity; 
+  contain: layout style paint;
+}
+
+/* Optimizaciones de intersection observer ultra-agresivas */
+.intersection-observer { 
+  opacity: 0; 
+  transform: translateY(20px) translateZ(0); 
+  transition: all 0.3s ease; /* Reducido de 0.4s */
+  contain: layout style paint;
+}
+
+.intersection-observer.visible { 
+  opacity: 1; 
+  transform: translateY(0) translateZ(0); 
+}
+
+/* Optimizaciones de layout crítico ultra-agresivas */
+.critical-layout { 
+  contain: layout; 
+  content-visibility: auto; 
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Optimizaciones de paint ultra-agresivas */
+.paint-optimized { 
+  contain: paint; 
+  will-change: auto; 
+}
+
+/* Optimizaciones de compositing ultra-agresivas */
+.composite-optimized { 
+  will-change: transform; 
+  transform: translateZ(0); 
+  backface-visibility: hidden;
+}
+
+/* Optimizaciones de renderizado ultra-agresivas */
+.render-optimized { 
+  contain: layout style paint; 
+  content-visibility: auto; 
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Optimizaciones de scroll performance ultra-agresivas */
+.scroll-optimized { 
+  overscroll-behavior: contain; 
+  scroll-behavior: smooth; 
+  will-change: scroll-position;
+}
+
+/* Optimizaciones de animaciones reducidas ultra-agresivas */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimizaciones de layout shift ultra-agresivas */
+.layout-stable { 
+  min-height: 100px; 
+  contain: layout; 
+  content-visibility: auto;
+}
+
+/* Optimizaciones de paint layers ultra-agresivas */
+.paint-layer { 
+  transform: translateZ(0); 
+  backface-visibility: hidden; 
+  contain: layout style paint;
+}
+
+/* Optimizaciones de stacking context ultra-agresivas */
+.stacking-optimized { 
+  isolation: isolate; 
+  z-index: 1; 
+  contain: layout style paint;
+}
+
+/* Optimizaciones de progressive reveal ultra-agresivas */
+.progressive-reveal-element {
+  opacity: 0;
+  transform: translateY(30px) translateZ(0);
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Reducido de 0.4s */
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+.progressive-reveal-element.revealed {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Optimizaciones de font loading ultra-agresivas */
+.fonts-loaded {
+  font-display: swap;
+}
+
+/* Optimizaciones de critical rendering path */
+.critical {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+  contain: layout style paint;
+}
+
+/* Optimizaciones de non-critical content */
+.non-critical {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 300px;
+  contain: layout style paint;
+}
+
+/* Optimizaciones de lazy loading ultra-agresivas */
+.lazy-load {
+  opacity: 0;
+  transition: opacity 0.2s ease; /* Reducido de 0.3s */
+  contain: layout style paint;
+}
+
+.lazy-load.loaded {
+  opacity: 1;
+}
+
+/* Optimizaciones de performance monitoring */
+.perf-monitor {
+  contain: layout style paint;
+  will-change: auto;
+  content-visibility: auto;
+} 

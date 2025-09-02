@@ -1,0 +1,66 @@
+<!-- Botón flotante para ir hacia arriba -->
+<button 
+    id="scroll-to-top" 
+    class="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-primary via-accent to-secondary text-white transition-all duration-300 opacity-0 pointer-events-none transform scale-90 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-primary/30 sm:w-14 sm:h-14 sm:bottom-10 sm:right-10"
+    aria-label="Ir hacia arriba"
+    style="will-change: transform, opacity;"
+>
+    <!-- Ícono de flecha hacia arriba -->
+    <svg 
+        class="w-6 h-6 mx-auto sm:w-7 sm:h-7" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+    >
+        <path 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M5 10l7-7m0 0l7 7m-7-7v18"
+        />
+    </svg>
+</button>
+
+<script>
+    // Script para el botón flotante
+    (function() {
+        'use strict';
+        
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const scrollThreshold = 300; // Aparece después de 300px de scroll
+        
+        if (!scrollToTopBtn) return;
+        
+        // Función para mostrar/ocultar el botón
+        function toggleScrollButton() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > scrollThreshold) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+            }
+        }
+        
+        // Función para scroll suave hacia arriba
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Event listeners
+        window.addEventListener('scroll', toggleScrollButton, { passive: true });
+        scrollToTopBtn?.addEventListener('click', scrollToTop);
+        
+        // Inicializar estado
+        toggleScrollButton();
+        
+        console.log('Scroll to top button initialized');
+        
+    })();
+</script> 

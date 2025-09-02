@@ -1,0 +1,392 @@
+---
+import "../styles/global.css";
+import "../styles/progressive-reveal.css";
+import "../styles/performance-optimizations.css";
+import HeroVersion2 from "../components/Sections/Hero.astro";
+import AboutSection2 from "../components/Sections/AboutSection2.astro";
+import HowItWorksSection2 from "../components/Sections/HowItWorksSection2.astro";
+import ContactFormSection2 from "../components/Sections/ContactFormSection2.astro";
+import FAQSection2 from "../components/Sections/FAQSection2.astro";
+import FooterSection2 from "../components/Sections/FooterSection2.astro";
+import NavBar from "../components/Sections/navBar.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- <link rel="icon" type="image/svg+xml" href="/logo_primary-color.svg" sizes="any"/> -->
+
+    <!-- SEO Meta Tags -->
+    <title>
+      Facturea.io - Adelanto de Facturas Electrónicas en Paraguay | Liquidez
+      Inmediata
+    </title>
+    <meta
+      name="description"
+      content="La primera fintech de adelanto de facturas electrónicas en Paraguay. Obtené liquidez inmediata sin historial crediticio o invertí en facturas verificadas."
+    />
+    <meta
+      name="keywords"
+      content="factoring Paraguay, adelanto de facturas, liquidez inmediata, inversión en facturas, facturas electrónicas, PYMES Paraguay"
+    />
+    <!-- Google Analytics -->
+    <meta name="google-site-verification" content="UCd9VTAvuwq7Monz_wdb721GZhovfCKaa4kBQORocjU" />
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Facturea.io - Adelanto de Facturas Electrónicas en Paraguay"
+    />
+    <meta
+      property="og:description"
+      content="Conectamos PYMES que necesitan liquidez con inversores que buscan rentabilidad, 100% digital."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://facturea.io" />
+    
+    <!-- Preload critical font only -->
+    <link 
+      rel="preload" 
+      href="/src/assets/fonts/visbycf-regular.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+    />
+    
+    <!-- DNS prefetch para CDNs -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    
+    <!-- Critical CSS inline para evitar FOUC -->
+    <style>
+      /* Critical CSS inline para hero y navegación */
+      .hero-animate { opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+      .hero-animate.loaded { opacity: 1; transform: translateY(0); }
+      .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.4s ease, transform 0.4s ease; }
+      .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+      .scrolling { will-change: scroll-position; }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+    </style>
+  </head>
+
+  <body class="antialiased font-visby">
+    <!-- Header -->
+    <header
+      class="fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-sm bg-white/95 border-lightGray"
+    >
+      <NavBar />
+    </header>
+
+    <!-- Hero Section -->
+    <HeroVersion2 />
+
+    <!-- ¿Por qué elegir Facturea? -->
+    <AboutSection2 />
+
+    <!-- ¿Cómo funciona? - Versión moderna con tabs -->
+    <HowItWorksSection2 />
+
+    <!-- Formulario de Contacto - Versión moderna v2 -->
+    <section id="contacto">
+      <ContactFormSection2 />
+    </section>
+
+    <!-- FAQ - Versión moderna v2 -->
+    <section id="faq">
+      <FAQSection2 />
+    </section>
+
+    <!-- Footer - Versión moderna v2 -->
+    <FooterSection2 />
+
+    <!-- ✅ SCRIPT ULTRA-OPTIMIZADO PARA MÍNIMO MAIN-THREAD WORK -->
+    <script>
+      // ✅ Variables globales optimizadas - sin let/const para evitar hoisting
+      var navInitialized = false;
+      var scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+      var isScrolling = false;
+      var animationsLoaded = false;
+      
+      // ✅ Función para cargar scripts con lazy loading ultra-optimizada
+      function loadScriptLazy(src: string, callback: () => void) {
+        if (document.querySelector('script[src="' + src + '"]')) {
+          if (callback) callback();
+          return;
+        }
+        
+        var script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        script.defer = true;
+        
+        if (callback) {
+          script.onload = callback;
+        }
+        
+        document.head.appendChild(script);
+      }
+      
+      // ✅ Navegación activa ultra-optimizada con RAF
+      function initActiveNavOptimized() {
+        if (navInitialized) return;
+        
+        var sections = document.querySelectorAll("section[id]");
+        var navLinks = document.querySelectorAll('nav a[href^="#"]');
+        var ticking = false;
+        var lastScrollY = window.scrollY;
+
+        function updateActiveNavLink() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              var scrollPosition = lastScrollY + 100;
+              var currentSection = '';
+              
+              for (var i = 0; i < sections.length; i++) {
+                var section = sections[i];
+                var sectionTop = (section as HTMLElement).offsetTop;
+                var sectionHeight = (section as HTMLElement).offsetHeight;
+                var sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight && sectionId) {
+                  currentSection = sectionId;
+                  break;
+                }
+              }
+              
+              for (var j = 0; j < navLinks.length; j++) {
+                var link = navLinks[j];
+                link.classList.remove('active');
+                var href = link.getAttribute('href');
+                if (href === '#' + currentSection) {
+                  link.classList.add('active');
+                }
+              }
+              
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
+
+        // Throttled scroll listener
+        function throttledScroll() {
+          lastScrollY = window.scrollY;
+          if (!ticking) {
+            requestAnimationFrame(updateActiveNavLink);
+            ticking = true;
+          }
+        }
+
+        window.addEventListener('scroll', throttledScroll, { passive: true });
+        updateActiveNavLink(); // Initial call
+        navInitialized = true;
+      }
+      
+      // ✅ Scroll to top ultra-optimizado
+      function initScrollToTopOptimized() {
+        var scrollToTopBtn = document.getElementById('scrollToTop') as HTMLElement | null;
+        if (!scrollToTopBtn) return;
+        
+        var isVisible = false;
+        
+        function toggleScrollButton() {
+          var scrolled = window.pageYOffset;
+          
+          if (scrolled > 300 && !isVisible) {
+            scrollToTopBtn!.style.display = 'block';
+            scrollToTopBtn!.style.opacity = '0';
+            setTimeout(function() {
+              scrollToTopBtn!.style.opacity = '1';
+            }, 10);
+            isVisible = true;
+          } else if (scrolled <= 300 && isVisible) {
+            scrollToTopBtn!.style.opacity = '0';
+            setTimeout(function() {
+              scrollToTopBtn!.style.display = 'none';
+            }, 300);
+            isVisible = false;
+          }
+        }
+        
+        window.addEventListener('scroll', toggleScrollButton, { passive: true });
+        
+        scrollToTopBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+      
+      // ✅ Smooth scroll ultra-optimizado
+      function initSmoothScrollOptimized() {
+        var links = document.querySelectorAll('a[href^="#"]');
+        
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var targetId = (this as HTMLAnchorElement).getAttribute('href');
+            if (!targetId) return;
+            
+            var targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+              var offsetTop = (targetElement as HTMLElement).offsetTop - 80;
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          });
+        }
+      }
+      
+      // ✅ Animaciones CSS nativas ultra-optimizadas
+      function initCSSAnimations() {
+        if (animationsLoaded) return;
+        
+        // Hero animations con IntersectionObserver nativo
+        var heroElements = document.querySelectorAll('#hero h1, #hero p, #hero .bg-primary');
+        for (var i = 0; i < heroElements.length; i++) {
+          var el = heroElements[i];
+          el.classList.add('hero-animate');
+          el.style.transitionDelay = (i * 0.1) + 's';
+          
+          var observer = new IntersectionObserver(function(entries) {
+            for (var j = 0; j < entries.length; j++) {
+              var entry = entries[j];
+              if (entry.isIntersecting) {
+                entry.target.classList.add('loaded');
+                observer.unobserve(entry.target);
+              }
+            }
+          }, { threshold: 0.1 });
+          
+          observer.observe(el);
+        }
+        
+        // Scroll animations para secciones
+        var sections = ['beneficios', 'como-funciona', 'formulario', 'faq'];
+        for (var k = 0; k < sections.length; k++) {
+          var sectionId = sections[k];
+          var section = document.getElementById(sectionId);
+          if (!section) continue;
+          
+          var elements = section.querySelectorAll('.grid > div, .space-y-4 > div, form');
+          for (var l = 0; l < elements.length; l++) {
+            var element = elements[l];
+            element.classList.add('animate-on-scroll');
+            
+            var sectionObserver = new IntersectionObserver(function(entries) {
+              for (var m = 0; m < entries.length; m++) {
+                var entry = entries[m];
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  sectionObserver.unobserve(entry.target);
+                }
+              }
+            }, { threshold: 0.1 });
+            
+            sectionObserver.observe(element);
+          }
+        }
+        
+        animationsLoaded = true;
+      }
+      
+      // ✅ Inicialización ultra-optimizada
+      function initUltraOptimized() {
+        // Funcionalidades críticas inmediatas
+        initActiveNavOptimized();
+        initScrollToTopOptimized();
+        initSmoothScrollOptimized();
+        
+        // Animaciones CSS nativas inmediatas
+        if ('IntersectionObserver' in window) {
+          initCSSAnimations();
+        }
+        
+        // Cargar animaciones avanzadas solo en desktop y en tiempo libre
+        if (window.innerWidth > 768 && 'requestIdleCallback' in window) {
+          requestIdleCallback(function() {
+            loadScriptLazy('/src/scripts/optimized-animations.js', function() {
+              // Callback vacío
+            });
+          }, { timeout: 3000 });
+        } else if (window.innerWidth > 768) {
+          setTimeout(function() {
+            loadScriptLazy('/src/scripts/optimized-animations.js', function() {
+              // Callback vacío
+            });
+          }, 2000);
+        }
+      }
+      
+      // ✅ Inicialización cuando el DOM esté listo
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initUltraOptimized);
+      } else {
+        initUltraOptimized();
+      }
+      
+      // ✅ Scroll optimization ultra-agresiva
+      window.addEventListener('scroll', function() {
+        if (!isScrolling) {
+          isScrolling = true;
+          document.body.classList.add('scrolling');
+        }
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          isScrolling = false;
+          document.body.classList.remove('scrolling');
+          
+          // Cleanup en tiempo libre
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(function() {
+              if (window.gc) window.gc();
+            }, { timeout: 2000 });
+          }
+        }, 50); // Ultra-reducido
+      }, { passive: true });
+      
+      // ✅ Optimizaciones adicionales ultra-agresivas
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(function() {
+          // Preload de imágenes críticas
+          var criticalImages = document.querySelectorAll('img[data-critical]');
+          for (var i = 0; i < criticalImages.length; i++) {
+            var img = criticalImages[i] as HTMLImageElement;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+            }
+          }
+          
+          // Optimizar fuentes
+          if ('fonts' in document) {
+            document.fonts.ready.then(function() {
+              document.body.classList.add('fonts-loaded');
+            });
+          }
+        }, { timeout: 5000 });
+      }
+    </script>
+    
+    <!-- ✅ Scripts optimizados -->
+    <script src="/src/scripts/progressive-reveal.js"></script>
+    
+    <!-- ✅ Scripts de testing solo en desarrollo -->
+    {import.meta.env.DEV && (
+      <>
+        <script src="/src/scripts/test-progressive-reveal.js"></script>
+        <script src="/src/scripts/progressive-reveal-tests.js"></script>
+      </>
+    )}
+
+    <!-- Scroll to Top Button -->
+    <ScrollToTop />
+  </body>
+</html>

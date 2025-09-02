@@ -1,0 +1,81 @@
+/* ===== HERO CONFIGURACIÓN CSS - CARGA CONDICIONAL ===== */
+/* Este archivo maneja la carga de estilos según el dispositivo y preferencias */
+
+/* Configuración base para todos los dispositivos */
+.hero-section {
+  /* Asegurar que el hero section tenga las propiedades básicas */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Configuración para dispositivos de alta resolución */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-animation {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Configuración para dispositivos que prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .hero-animation,
+  .fade-in-text,
+  .fade-in-button,
+  .parallax-element {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .hero-animation {
+    opacity: 1 !important;
+  }
+}
+
+/* Configuración para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .parallax-element:hover {
+    transform: none !important;
+  }
+}
+
+/* Configuración para dispositivos con poca memoria */
+@media (max-device-memory: 4) {
+  .parallax-element:nth-child(n+2) {
+    display: none;
+  }
+}
+
+/* Reducir cantidad de elementos en móvil */
+@media (max-width: 768px) {
+  .parallax-element:nth-child(n+3) {
+    display: none;
+  }
+}
+
+/* Configuración para conexiones lentas */
+@media (prefers-reduced-data: reduce) {
+  .hero-animation {
+    display: none;
+  }
+}
+
+/* Configuración para modo oscuro (si se implementa en el futuro) */
+@media (prefers-color-scheme: dark) {
+  /* Aquí se pueden agregar estilos para modo oscuro */
+}
+
+/* Configuración para dispositivos con pantalla pequeña y alta densidad */
+@media (max-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  .hero-animation {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+/* Configuración para dispositivos con pantalla grande y baja densidad */
+@media (min-width: 1920px) and (max-resolution: 96dpi) {
+  .hero-animation {
+    width: 1000px;
+    height: 800px;
+  }
+} 

@@ -1,0 +1,204 @@
+---
+import "../styles/global.css";
+import "../styles/progressive-reveal.css";
+import { privacyContent } from "../../data/privacy.js";
+import NavBar from "../components/Sections/navBar.astro";
+import ScrollToTop from "../components/ScrollToTop.astro";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO Meta Tags -->
+    <title>Políticas de Privacidad - Facturea.io</title>
+    <meta
+      name="description"
+      content="Políticas de privacidad y protección de datos de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay."
+    />
+    <meta
+      name="keywords"
+      content="políticas de privacidad, protección de datos, facturea, factoring Paraguay, datos personales"
+    />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Políticas de Privacidad - Facturea.io"
+    />
+    <meta
+      property="og:description"
+      content="Políticas de privacidad y protección de datos de Facturea.io - La primera fintech de adelanto de facturas electrónicas en Paraguay."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://facturea.io/privacidad" />
+    
+    <!-- Preload Visby CF Fonts para mejor performance -->
+    <link 
+      rel="preload" 
+      href="/src/assets/fonts/visbycf-regular.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+    />
+    <link 
+      rel="preload" 
+      href="/src/assets/fonts/visbycf-bold.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+    />
+  </head>
+
+  <body class="antialiased bg-gray-50 font-visby">
+    <!-- Header -->
+    <header
+      class="fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-sm bg-white/95 border-lightGray"
+    >
+      <NavBar />
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-b from-white to-gray-50">
+      <div class="container px-4 mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl text-center">
+          <h1 class="mb-6 text-4xl font-bold text-gray-900 sm:text-5xl lg:text-6xl">
+            Políticas de <span class="text-primary">Privacidad</span>
+          </h1>
+          <p class="text-lg text-gray-600 sm:text-xl">
+            Última actualización: {new Date().toLocaleDateString('es-ES', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contenido de Políticas de Privacidad -->
+    <section class="py-12 bg-white">
+      <div class="container px-4 mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl">
+          <!-- Navegación de secciones -->
+          <div class="sticky top-24 z-40 p-4 mb-8 bg-white rounded-lg border border-gray-200 shadow-sm">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900">Índice</h3>
+            <nav class="flex flex-wrap gap-2">
+              {privacyContent.sections.map((section, index) => (
+                <a
+                  href={`#${section.id}`}
+                  class="px-3 py-1 text-sm rounded-md transition-colors text-primary bg-primary/10 hover:bg-primary/20"
+                >
+                  {index + 1}. {section.title.split('.')[1]?.trim() || section.title}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          <!-- Contenido de las secciones -->
+          <div class="space-y-12">
+            {privacyContent.sections.map((section, sectionIndex) => (
+              <div id={section.id} class="scroll-mt-32">
+                <h2 class="mb-6 text-2xl font-bold text-gray-900 sm:text-3xl">
+                  {section.title}
+                </h2>
+                <div class="max-w-none prose prose-lg">
+                  {section.content.map((paragraph, paragraphIndex) => (
+                    <p class="mb-4 leading-relaxed text-gray-700">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Botón de regreso -->
+          <div class="mt-12 text-center">
+            <a
+              href="/"
+              class="inline-flex items-center px-6 py-3 text-white rounded-lg transition-colors bg-primary hover:bg-primary/90"
+            >
+              <svg class="mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              Volver al inicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-white bg-gray-900">
+      <div class="container px-4 mx-auto sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl text-center">
+          <p class="text-gray-400">
+            © {new Date().getFullYear()} Facturea.io. Todos los derechos reservados.
+          </p>
+          <p class="mt-2 text-sm text-gray-500">
+            Para consultas sobre estas políticas, contactanos en{' '}
+            <a href="mailto:info@facturea.io" class="text-primary hover:underline">
+              info@facturea.io
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <ScrollToTop />
+
+    <style>
+      /* Estilos específicos para la página de políticas de privacidad */
+      .prose p {
+        margin-bottom: 1rem;
+        line-height: 1.7;
+      }
+      
+      .prose h2 {
+        color: #1f2937;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      
+      /* Smooth scroll para navegación */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Estilos para enlaces internos */
+      a[href^="#"] {
+        scroll-margin-top: 8rem;
+      }
+    </style>
+
+    <script>
+      // Smooth scroll para navegación interna
+      document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a[href^="#"]');
+        
+        links.forEach(link => {
+          link.addEventListener('click', (e: Event) => {
+            e.preventDefault();
+            
+            const targetId = (e.target as HTMLAnchorElement).getAttribute('href');
+            const targetElement = document.querySelector(targetId || '');
+            
+            if (targetElement) {
+              targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html> 

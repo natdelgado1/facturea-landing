@@ -1,0 +1,268 @@
+---
+import "../styles/global.css";
+import "../styles/progressive-reveal.css";
+import "../styles/404.css";
+import { error404Data } from "../../data/404.js";
+import logoColor from '../assets/logo_primary_color.svg';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- SEO Meta Tags -->
+    <title>{error404Data.seo.title}</title>
+    <meta name="description" content={error404Data.seo.description} />
+    <meta name="keywords" content={error404Data.seo.keywords} />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={error404Data.seo.title} />
+    <meta property="og:description" content={error404Data.seo.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://facturea.io/404" />
+    
+    <!-- Preload Visby CF Fonts -->
+    <link 
+      rel="preload" 
+      href="/src/assets/fonts/visbycf-regular.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+    />
+    <link 
+      rel="preload" 
+      href="/src/assets/fonts/visbycf-bold.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin
+    />
+  </head>
+
+  <body class="overflow-x-hidden relative min-h-screen antialiased bg-gradient-to-br from-gray-50 via-white to-blue-50 font-visby">
+    
+    <!-- Partículas flotantes de fondo -->
+    <div class="floating-particle"></div>
+    <div class="floating-particle"></div>
+    <div class="floating-particle"></div>
+    
+    <!-- Header simplificado -->
+    <header class="fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-sm bg-white/95 border-lightGray">
+      <nav class="shadow-lg">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-16 sm:h-18 md:h-20">
+            <!-- LOGO -->
+            <div class="flex flex-shrink-0 items-center">
+              <a href="/">
+                <img src={logoColor.src} alt="Logo Facturea.io" class="w-auto h-6" loading="eager"/>
+              </a>
+            </div>
+            
+            <!-- Botón volver al inicio -->
+            <div class="hidden md:block">
+              <a href="/" class="flex gap-2 justify-center items-center px-6 py-3 font-medium text-center text-white bg-gradient-to-r rounded-lg transition-colors duration-300 from-primary via-secondary to-accent hover:bg-secondary">
+                Volver al inicio
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/>
+                  <path d="m21 3-9 9"/>
+                  <path d="M15 3h6v6"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="pt-20 pb-16">
+      <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        
+        <!-- Sección principal del error -->
+        <section class="py-16 text-center">
+          <div class="mx-auto max-w-4xl">
+            
+            <!-- Código de error animado -->
+            <div class="mb-8 fade-in-up">
+              <h1 class="text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r md:text-9xl from-primary via-secondary to-accent error-code">
+                {error404Data.errorCode}
+              </h1>
+            </div>
+            
+            <!-- Título y subtítulo -->
+            <div class="mb-8 space-y-4 fade-in-up" style="animation-delay: 0.2s;">
+              <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+                {error404Data.title}
+              </h2>
+              <p class="mx-auto max-w-2xl text-xl text-gray-600 md:text-2xl">
+                {error404Data.subtitle}
+              </p>
+            </div>
+            
+            <!-- Descripción -->
+            <p class="mx-auto mb-12 max-w-3xl text-lg text-gray-500 fade-in-up" style="animation-delay: 0.4s;">
+              {error404Data.description}
+            </p>
+            
+            <!-- Botones de acción -->
+            <div class="flex flex-col gap-4 justify-center items-center mb-16 sm:flex-row fade-in-up" style="animation-delay: 0.6s;">
+              <a 
+                href={error404Data.actions.primary.href}
+                class="flex gap-2 justify-center items-center px-8 py-4 font-medium text-center text-white bg-gradient-to-r rounded-lg shadow-lg transition-all duration-300 from-primary via-secondary to-accent hover:bg-secondary hover:scale-105 hover:shadow-xl gradient-button shimmer-effect"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
+                {error404Data.actions.primary.text}
+              </a>
+              
+              <a 
+                href={error404Data.actions.secondary.href}
+                class="flex gap-2 justify-center items-center px-8 py-4 font-medium text-center rounded-lg border-2 transition-all duration-300 text-primary border-primary hover:bg-primary hover:text-white hover:scale-105 shimmer-effect"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <path d="M12 17h.01"/>
+                </svg>
+                {error404Data.actions.secondary.text}
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Enlaces rápidos -->
+        <section class="py-16">
+          <div class="mx-auto max-w-6xl">
+            <div class="mb-12 text-center fade-in-up" style="animation-delay: 0.8s;">
+              <h3 class="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
+                Enlaces útiles
+              </h3>
+              <p class="text-lg text-gray-600">
+                Explora nuestras secciones principales
+              </p>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {error404Data.quickLinks.map((link, index) => (
+                <a 
+                  href={link.href}
+                  class="p-6 bg-white rounded-xl border border-gray-100 shadow-md transition-all duration-300 group hover:shadow-lg hover:scale-105 hover:border-primary/20 quick-link-card fade-in-up"
+                  style={`animation-delay: ${1 + index * 0.1}s;`}
+                >
+                  <div class="flex flex-col items-center space-y-4 text-center">
+                    <!-- Icono -->
+                    <div class="flex justify-center items-center w-12 h-12 bg-gradient-to-r rounded-lg transition-transform duration-300 from-primary to-secondary group-hover:scale-110 icon-bounce">
+                      {link.icon === 'star' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                        </svg>
+                      )}
+                      {link.icon === 'play' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                      )}
+                      {link.icon === 'help-circle' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"/>
+                          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                          <path d="M12 17h.01"/>
+                        </svg>
+                      )}
+                      {link.icon === 'message-circle' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                      )}
+                    </div>
+                    
+                    <!-- Contenido -->
+                    <div>
+                      <h4 class="text-lg font-semibold text-gray-900 transition-colors duration-300 group-hover:text-primary">
+                        {link.title}
+                      </h4>
+                      <p class="mt-2 text-sm text-gray-600">
+                        {link.description}
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- Mensaje de ayuda -->
+        <section class="py-16">
+          <div class="mx-auto max-w-4xl text-center fade-in-up" style="animation-delay: 1.5s;">
+            <div class="p-8 bg-gradient-to-r rounded-2xl from-primary/10 via-secondary/10 to-accent/10 md:p-12 glass-effect">
+              <h3 class="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
+                {error404Data.helpMessage}
+              </h3>
+              <p class="mb-8 text-lg text-gray-600">
+                Estamos aquí para ayudarte a encontrar lo que necesitas
+              </p>
+              <a 
+                href="#contacto"
+                class="inline-flex gap-2 justify-center items-center px-8 py-4 font-medium text-center text-white bg-gradient-to-r rounded-lg shadow-lg transition-all duration-300 from-primary via-secondary to-accent hover:bg-secondary hover:scale-105 gradient-button shimmer-effect"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                Contactar soporte
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer simplificado -->
+    <footer class="py-8 text-white bg-gray-900">
+      <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="text-center">
+          <p class="text-gray-400">
+            © 2024 Facturea.io. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Script para animaciones -->
+    <script>
+      // Animación de entrada para los elementos
+      document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }
+          });
+        }, observerOptions);
+
+        // Observar elementos para animar
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        animatedElements.forEach(el => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(20px)';
+          el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+          observer.observe(el);
+        });
+      });
+    </script>
+
+  </body>
+</html> 

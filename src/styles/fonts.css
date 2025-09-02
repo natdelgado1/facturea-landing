@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'VisbyCF';
+    src: url('/src/assets/fonts/visbycf-regular.woff2') format('woff2'),
+         url('/src/assets/fonts/visbycf-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'VisbyCF';
+    src: url('/src/assets/fonts/visbycf-bold.woff2') format('woff2'),
+         url('/src/assets/fonts/visbycf-bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
