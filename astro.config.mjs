@@ -12,6 +12,9 @@ export default defineConfig({
     inlineStylesheets: 'auto'
   },
   vite: {
+    preview: {
+      allowedHosts: ['facturea-landing.nataliadelgado.dev']
+    },
     css: {
       // Optimización de CSS ultra-agresiva
       postcss: {
