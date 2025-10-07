@@ -21,27 +21,27 @@ export const faq = {
     },
     {
       question: "¿Cuánto tarda en llegar la liquidez?",
-      answer: "Menos de 24 horas tras la confirmación de un inversor. El proceso es completamente digital y automatizado, por lo que una vez que un inversor financia tu factura, el dinero se transfiere directamente a tu cuenta."
+      answer: "Menos de 24 horas tras la confirmación de un comprador. El proceso es completamente digital y automatizado, por lo que una vez que un comprador financia tu factura, el dinero se transfiere directamente a tu cuenta."
     },
     {
       question: "¿Quién financia las facturas?",
       answer: "Inversores registrados en nuestra plataforma que buscan rentabilizar su capital ocioso de manera segura. Todos los inversores pasan por un proceso de verificación y cada factura es validada antes de ser publicada."
     },
     {
-      question: "¿Qué gano como inversor?",
+      question: "¿Qué gano como comprador?",
       answer: "Generás ingresos pasivos al financiar facturas verificadas. Podés elegir las facturas que se ajusten a tu perfil de riesgo y rentabilidad. Los retornos promedio están entre 12% y 28% anual."
     },
     {
       question: "¿Es seguro para mi negocio?",
-      answer: "Es muy simple: completá el formulario en esta página, elegí tu rol (Empresa o inversor), y nuestro equipo se contactará contigo en menos de 24 horas para guiarte en el proceso de verificación y configuración de tu cuenta."
+      answer: "Es muy simple: completá el formulario en esta página, elegí tu rol (Comercio o comprador), y nuestro equipo se contactará contigo en menos de 24 horas para guiarte en el proceso de verificación y configuración de tu cuenta."
     },
     {
       question: "¿Puedo adelantar facturas de cualquier monto?",
       answer: "Sí, manejamos facturas desde G$ 500.000 hasta G$ 500.000.000. El límite depende de la disponibilidad de inversores para cada rango de monto y el historial de tu empresa en la plataforma."
     },
     {
-      question: "¿Cómo me registro como Empresa o inversor?",
-      answer: "Es muy simple: completá el formulario en esta página, elegí tu rol (empresa o inversor), y nuestro equipo se contactará contigo en menos de 24 horas para guiarte en el proceso de verificación y configuración de tu cuenta."
+      question: "¿Cómo me registro como Empresa o comprador?",
+      answer: "Es muy simple: completá el formulario en esta página, elegí tu rol (Comercio o comprador), y nuestro equipo se contactará contigo en menos de 24 horas para guiarte en el proceso de verificación y configuración de tu cuenta."
     },
     {
       question: "¿Qué comisiones cobran?",

@@ -3,10 +3,10 @@ export const HowItWorks = {
     title: "¿Cómo",
     title2: "funciona?",
     description: "Tres pasos simples para",
-    description2: "facturadores e inversores",
-    tab1: "Para Empresas",
-    tab2: "Para Inversores",
-    inverseTab1: "Inversores",
+    description2: "facturadores y compradores",
+    tab1: "Para Comercios",
+    tab2: "Para Compradores",
+    inverseTab1: "Compradores",
     tab1Body: [
         {
             title: "Creá tu cuenta",

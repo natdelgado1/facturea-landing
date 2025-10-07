@@ -18,11 +18,11 @@ export const contact = {
     userTypeLabel: "¿Qué tipo de cuenta buscas?",
     userTypes: {
       empresa: {
-        label: "Empresa",
+        label: "Comercio",
         description: "Necesito liquidez inmediata"
       },
       inversor: {
-        label: "Inversor", 
+        label: "Comprador", 
         description: "Quiero rentabilizar capital"
       }
     },

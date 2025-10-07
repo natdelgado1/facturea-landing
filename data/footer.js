@@ -3,7 +3,7 @@ export const footer = {
   logoAlt: "Logo de Facturea.io",
 
   // Descripción principal
-  description: "La primera fintech de adelanto de facturas electrónicas en Paraguay. Conectamos PYMEs que necesitan liquidez con inversores que buscan rentabilidad.",
+  description: "La primera fintech de adelanto de facturas electrónicas en Paraguay. Conectamos PYMEs que necesitan liquidez con compradores que buscan rentabilidad.",
 
   // Redes sociales
   socialMedia: [
