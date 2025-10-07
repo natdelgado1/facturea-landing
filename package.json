@@ -6,9 +6,9 @@
     "node": ">=19.0.0"
   },
   "scripts": {
-    "dev": "astro dev --host",
+    "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro preview --host",
     "astro": "astro",
     "analyze": "node scripts/analyze-bundle.js",
     "build:analyze": "npm run build && npm run analyze",
