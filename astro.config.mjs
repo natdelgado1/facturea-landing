@@ -13,10 +13,10 @@ export default defineConfig({
   },
   vite: {
     preview: {
-      allowedHosts: ['facturea-landing.nataliadelgado.dev']
+      allowedHosts: ['facturea-landing.nataliadelgado.dev',"facturea.io","www.facturea.io"]
     },
     server: {
-      allowedHosts: ['facturea-landing.nataliadelgado.dev']
+      allowedHosts: ['facturea-landing.nataliadelgado.dev',"facturea.io","www.facturea.io"]
     },
     css: {
       // Optimización de CSS ultra-agresiva
