@@ -10,7 +10,6 @@
     "build": "astro build",
     "preview": "astro preview --host",
     "astro": "astro",
-    "start": "astro preview --host",
     "analyze": "node scripts/analyze-bundle.js",
     "build:analyze": "npm run build && npm run analyze",
     "analyze-bundle": "node scripts/analyze-bundle.js",
