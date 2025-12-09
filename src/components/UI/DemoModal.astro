@@ -1,0 +1,659 @@
+---
+// Componente modal para solicitar demo
+---
+
+<!-- EmailJS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<!-- Modal para Demo -->
+<div 
+    id="demo-modal" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="demo-modal-title" 
+    aria-describedby="demo-modal-description"
+    class="fixed inset-0 z-[99999] opacity-0 invisible transition-all duration-300 p-5"
+>
+    <!-- Overlay con backdrop blur -->
+    <div 
+        class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300"
+        id="modal-overlay"
+        aria-hidden="true"
+    ></div>
+    
+    <!-- Contenedor del modal posicionado dinámicamente -->
+    <div 
+        id="modal-content-wrapper"
+        class="absolute w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl transition-all duration-300 scale-90 opacity-0"
+        style="max-width: min(448px, calc(100vw - 40px));"
+    >
+        <header class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 id="demo-modal-title" class="text-2xl font-bold text-gray-900">
+                Solicitar Demo
+            </h2>
+            <button 
+                type="button"
+                class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors text-2xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" 
+                id="close-modal"
+                aria-label="Cerrar modal de solicitud de demo"
+            >
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </header>
+        
+        <main class="p-6">
+            <p id="demo-modal-description" class="sr-only">
+                Complete el formulario para solicitar una demostración de Facturea
+            </p>
+            
+            <form id="demo-form" class="space-y-4" novalidate>
+                <fieldset class="space-y-2">
+                    <legend class="sr-only">Información de contacto</legend>
+                    
+                    <div class="space-y-2">
+                        <label for="demo-name" class="block text-sm font-medium text-gray-700">
+                            Nombre completo
+                            <span class="text-red-500" aria-label="requerido">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="demo-name" 
+                            name="name" 
+                            required 
+                            autocomplete="name"
+                            placeholder="Tu nombre completo"
+                            aria-required="true"
+                            aria-invalid="false"
+                            aria-describedby="demo-name-error"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                        />
+                        <span id="demo-name-error" class="hidden text-sm text-red-600" role="alert"></span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="demo-email" class="block text-sm font-medium text-gray-700">
+                            Correo electrónico
+                            <span class="text-red-500" aria-label="requerido">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="demo-email" 
+                            name="email" 
+                            required 
+                            autocomplete="email"
+                            placeholder="tu@empresa.com"
+                            aria-required="true"
+                            aria-invalid="false"
+                            aria-describedby="demo-email-error"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                        />
+                        <span id="demo-email-error" class="hidden text-sm text-red-600" role="alert"></span>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="space-y-2">
+                    <legend class="block text-sm font-medium text-gray-700 mb-2">
+                        Tipo de cuenta
+                        <span class="text-red-500" aria-label="requerido">*</span>
+                    </legend>
+                    <select 
+                        id="account-type" 
+                        name="accountType" 
+                        required 
+                        aria-required="true"
+                        aria-invalid="false"
+                        aria-describedby="account-type-error"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                    >
+                        <option value="">Selecciona una opción</option>
+                        <option value="empresa">Empresa</option>
+                        <option value="inversor">Inversor</option>
+                    </select>
+                    <span id="account-type-error" class="hidden text-sm text-red-600" role="alert"></span>
+                </fieldset>
+                
+                <div class="flex gap-3 pt-4" role="group" aria-label="Acciones del formulario">
+                    <button 
+                        type="button" 
+                        class="flex-1 px-4 py-3 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                        id="cancel-demo"
+                    >
+                        Cancelar
+                    </button>
+                    <button 
+                        type="submit" 
+                        class="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all duration-200 font-medium relative pointer-events-auto focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        id="submit-demo"
+                        aria-busy="false"
+                    >
+                        <span class="btn-text">Enviar Solicitud</span>
+                        <span class="btn-loading hidden" aria-hidden="true">Enviando...</span>
+                    </button>
+                </div>
+            </form>
+            
+            <div 
+                id="demo-message" 
+                class="mt-4 p-4 rounded-lg text-center font-medium hidden" 
+                role="alert" 
+                aria-live="polite" 
+                aria-atomic="true"
+            ></div>
+        </main>
+    </div>
+</div>
+
+<style>
+    /* Estado activo del modal */
+    #demo-modal.active {
+        @apply opacity-100 visible;
+    }
+
+    #demo-modal.active #modal-overlay {
+        @apply opacity-100;
+    }
+
+    #demo-modal.active #modal-content-wrapper {
+        @apply scale-100 opacity-100;
+    }
+    
+    /* Aplicar backdrop blur a toda la página cuando el modal está activo */
+    body.modal-open {
+        overflow: hidden;
+    }
+    
+    body.modal-open > *:not(#demo-modal) {
+        filter: blur(4px);
+        transition: filter 0.3s ease;
+    }
+    
+    /* Estilos para campos con error */
+    input[aria-invalid="true"],
+    select[aria-invalid="true"] {
+        @apply border-red-500 focus:ring-red-500;
+    }
+
+    /* Estado de carga del botón */
+    #submit-demo.loading {
+        @apply pointer-events-none;
+    }
+
+    #submit-demo.loading .btn-text {
+        @apply hidden;
+    }
+
+    #submit-demo.loading .btn-loading {
+        @apply block;
+    }
+
+    /* Mensajes de éxito y error */
+    #demo-message.message-success {
+        @apply bg-green-100 text-green-800 border border-green-200;
+    }
+
+    #demo-message.message-error {
+        @apply bg-red-100 text-red-800 border border-red-200;
+    }
+
+    /* Reducir motion para accesibilidad */
+    @media (prefers-reduced-motion: reduce) {
+        #demo-modal,
+        #demo-modal > div,
+        #demo-modal * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+</style>
+
+<script>
+    // Configuración de EmailJS
+    const DEMO_EMAILJS_CONFIG = {
+        serviceId: "service_7itbzvb",
+        templateId: "template_35ska4s",
+        publicKey: "BGqmhQGFDVXPevxYQ"
+    };
+
+    // Variables para el modal
+    let demoModal: HTMLElement | null = null;
+    let demoForm: HTMLFormElement | null = null;
+    let submitButton: HTMLButtonElement | null = null;
+    let messageContainer: HTMLElement | null = null;
+    let modalContentWrapper: HTMLElement | null = null;
+
+    // Calcular posición del modal cerca del botón
+    function calculateModalPosition(button: HTMLElement): { top: number; left: number } {
+        if (!modalContentWrapper) return { top: 0, left: 0 };
+        
+        const rect = button.getBoundingClientRect();
+        const scrollY = window.scrollY;
+        const scrollX = window.scrollX;
+        
+        // Detectar si es móvil (ancho menor a 768px)
+        const isMobile = window.innerWidth < 768;
+        
+        // Obtener dimensiones reales del modal
+        const modalRect = modalContentWrapper.getBoundingClientRect();
+        const modalWidth = modalRect.width || Math.min(448, window.innerWidth - 40);
+        const modalHeight = modalRect.height || Math.min(window.innerHeight * 0.9, 600);
+        const spacing = 16; // Espacio entre botón y modal
+        const margin = 20; // Margen mínimo desde los bordes
+        
+        // En móvil, centrar horizontalmente siempre
+        let left: number;
+        if (isMobile) {
+            // Centrar horizontalmente en móvil
+            left = scrollX + (window.innerWidth / 2) - (modalWidth / 2);
+        } else {
+            // En desktop, posicionar cerca del botón
+            left = rect.left + scrollX + (rect.width / 2) - (modalWidth / 2);
+            
+            // Ajustar si se sale por la derecha
+            if (left + modalWidth + margin > window.innerWidth + scrollX) {
+                left = window.innerWidth + scrollX - modalWidth - margin;
+            }
+            
+            // Ajustar si se sale por la izquierda
+            if (left < scrollX + margin) {
+                left = scrollX + margin;
+            }
+        }
+        
+        // Calcular posición vertical
+        let top = rect.bottom + scrollY + spacing;
+        
+        // Si no cabe debajo, poner arriba
+        if (top + modalHeight + margin > scrollY + window.innerHeight) {
+            top = rect.top + scrollY - modalHeight - spacing;
+            // Si tampoco cabe arriba, centrar verticalmente
+            if (top < scrollY + margin) {
+                top = scrollY + (window.innerHeight / 2) - (modalHeight / 2);
+            }
+        }
+        
+        // Asegurar que no se salga por arriba
+        if (top < scrollY + margin) {
+            top = scrollY + margin;
+        }
+        
+        return { top, left };
+    }
+
+    // Inicializar modal cuando se cargue la página
+    function initDemoModal() {
+        demoModal = document.getElementById('demo-modal');
+        modalContentWrapper = document.getElementById('modal-content-wrapper');
+        demoForm = document.getElementById('demo-form') as HTMLFormElement;
+        submitButton = document.getElementById('submit-demo') as HTMLButtonElement;
+        messageContainer = document.getElementById('demo-message');
+
+        // Event listeners
+        const demoBtn = document.getElementById('demo-btn');
+        const closeBtn = document.getElementById('close-modal');
+        const cancelBtn = document.getElementById('cancel-demo');
+
+        if (demoBtn) {
+            demoBtn.addEventListener('click', openDemoModal);
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeDemoModal);
+        }
+
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', closeDemoModal);
+        }
+
+        if (demoModal) {
+            demoModal.setAttribute('aria-hidden', 'true');
+            const overlay = document.getElementById('modal-overlay');
+            
+            // Cerrar al hacer clic en el overlay
+            if (overlay) {
+                overlay.addEventListener('click', closeDemoModal);
+            }
+            
+            // Cerrar con tecla Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && demoModal?.classList.contains('active')) {
+                    closeDemoModal();
+                }
+            });
+        }
+        
+        // Ajustar posición del modal al hacer scroll o resize
+        function adjustModalPosition() {
+            if (demoModal?.classList.contains('active') && modalContentWrapper) {
+                const triggerButton = document.getElementById('demo-btn') as HTMLElement;
+                if (triggerButton) {
+                    const position = calculateModalPosition(triggerButton);
+                    modalContentWrapper.style.top = `${position.top}px`;
+                    modalContentWrapper.style.left = `${position.left}px`;
+                    modalContentWrapper.style.transform = 'none';
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', adjustModalPosition, { passive: true });
+        window.addEventListener('resize', adjustModalPosition, { passive: true });
+
+        if (demoForm) {
+            demoForm.addEventListener('submit', handleDemoSubmit);
+        }
+
+        console.log('✅ Modal de demo inicializado correctamente');
+    }
+
+    // Abrir modal
+    function openDemoModal() {
+        console.log('📖 Abriendo modal de demo');
+        if (!demoModal || !modalContentWrapper) return;
+        
+        // Activar modal primero para obtener dimensiones reales
+        demoModal.classList.add('active');
+        demoModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+        
+        // Obtener el botón que activó el modal
+        const triggerButton = document.getElementById('demo-btn') as HTMLElement;
+        
+        // Esperar un frame para que el modal se renderice y obtener dimensiones reales
+        requestAnimationFrame(() => {
+            if (triggerButton && modalContentWrapper) {
+                // Calcular posición cerca del botón
+                const position = calculateModalPosition(triggerButton);
+                
+                // Aplicar posición
+                modalContentWrapper.style.top = `${position.top}px`;
+                modalContentWrapper.style.left = `${position.left}px`;
+                modalContentWrapper.style.transform = 'none';
+            } else if (modalContentWrapper) {
+                // Fallback: centrar si no se encuentra el botón
+                modalContentWrapper.style.top = '50%';
+                modalContentWrapper.style.left = '50%';
+                modalContentWrapper.style.transform = 'translate(-50%, -50%)';
+            }
+        });
+        
+        // Aplicar blur a toda la página excepto el modal
+        const allElements = Array.from(document.body.children) as HTMLElement[];
+        allElements.forEach((el) => {
+            if (el.id !== 'demo-modal') {
+                el.style.filter = 'blur(4px)';
+                el.style.transition = 'filter 0.3s ease';
+            }
+        });
+        
+        // Focus trap: enfocar el primer elemento del formulario
+        const firstInput = demoForm?.querySelector('input, select, button') as HTMLElement;
+        if (firstInput) {
+            setTimeout(() => firstInput.focus(), 150);
+        }
+    }
+
+    // Establecer error de campo
+    function setFieldError(fieldId: string, message: string) {
+        const field = document.getElementById(fieldId) as HTMLElement;
+        const errorSpan = document.getElementById(`${fieldId}-error`) as HTMLElement;
+        
+        if (field) {
+            field.setAttribute('aria-invalid', 'true');
+            field.classList.add('border-red-500');
+        }
+        
+        if (errorSpan) {
+            errorSpan.textContent = message;
+            errorSpan.classList.remove('hidden');
+        }
+    }
+    
+    // Limpiar error de campo
+    function clearFieldError(fieldId: string) {
+        const field = document.getElementById(fieldId) as HTMLElement;
+        const errorSpan = document.getElementById(`${fieldId}-error`) as HTMLElement;
+        
+        if (field) {
+            field.setAttribute('aria-invalid', 'false');
+            field.classList.remove('border-red-500');
+        }
+        
+        if (errorSpan) {
+            errorSpan.classList.add('hidden');
+        }
+    }
+
+    // Validar formulario
+    function validateForm(): boolean {
+        if (!demoForm) return false;
+        
+        const nameInput = demoForm.querySelector('#demo-name') as HTMLInputElement;
+        const emailInput = demoForm.querySelector('#demo-email') as HTMLInputElement;
+        const accountSelect = demoForm.querySelector('#account-type') as HTMLSelectElement;
+        
+        let isValid = true;
+        
+        // Validar nombre
+        if (!nameInput.value.trim()) {
+            setFieldError('demo-name', 'El nombre es requerido');
+            isValid = false;
+        } else {
+            clearFieldError('demo-name');
+        }
+        
+        // Validar email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailInput.value.trim()) {
+            setFieldError('demo-email', 'El correo electrónico es requerido');
+            isValid = false;
+        } else if (!emailRegex.test(emailInput.value)) {
+            setFieldError('demo-email', 'Ingrese un correo electrónico válido');
+            isValid = false;
+        } else {
+            clearFieldError('demo-email');
+        }
+        
+        // Validar tipo de cuenta
+        if (!accountSelect.value) {
+            setFieldError('account-type', 'Seleccione un tipo de cuenta');
+            isValid = false;
+        } else {
+            clearFieldError('account-type');
+        }
+        
+        return isValid;
+    }
+
+    // Resetear formulario
+    function resetDemoForm() {
+        if (demoForm) {
+            demoForm.reset();
+            // Limpiar errores de validación
+            clearFieldError('demo-name');
+            clearFieldError('demo-email');
+            clearFieldError('account-type');
+        }
+        if (submitButton) {
+            submitButton.classList.remove('loading');
+            submitButton.setAttribute('aria-busy', 'false');
+        }
+        if (messageContainer) {
+            messageContainer.classList.add('hidden');
+            messageContainer.className = 'mt-4 p-4 rounded-lg text-center font-medium hidden';
+            messageContainer.textContent = '';
+        }
+        // Resetear estilos del modal (no necesario con flexbox, pero por si acaso)
+        if (modalContentWrapper) {
+            modalContentWrapper.style.top = '';
+            modalContentWrapper.style.left = '';
+            modalContentWrapper.style.transform = '';
+        }
+    }
+
+    // Cerrar modal
+    function closeDemoModal() {
+        console.log('📖 Cerrando modal de demo');
+        if (!demoModal) return;
+        
+        // Desactivar modal
+        demoModal.classList.remove('active');
+        demoModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        
+        // Remover blur de todos los elementos
+        const allElements = Array.from(document.body.children) as HTMLElement[];
+        allElements.forEach((el) => {
+            if (el.id !== 'demo-modal') {
+                el.style.filter = '';
+            }
+        });
+        
+        resetDemoForm();
+        
+        // Devolver el foco al botón que abrió el modal
+        const demoBtn = document.getElementById('demo-btn');
+        if (demoBtn) {
+            demoBtn.focus();
+        }
+    }
+
+    // Enviar formulario
+    async function handleDemoSubmit(e: Event) {
+        e.preventDefault();
+        
+        console.log('📧 Enviando solicitud de demo...');
+        
+        if (!submitButton || !messageContainer || !demoForm) return;
+
+        // Validar formulario
+        if (!validateForm()) {
+            messageContainer.textContent = 'Por favor, complete todos los campos correctamente.';
+            messageContainer.className = 'mt-4 p-4 rounded-lg text-center font-medium message-error';
+            messageContainer.classList.remove('hidden');
+            return;
+        }
+
+        // Mostrar estado de carga
+        submitButton.classList.add('loading');
+        submitButton.setAttribute('aria-busy', 'true');
+        messageContainer.classList.add('hidden');
+
+        try {
+            // Obtener datos del formulario
+            const formData = new FormData(demoForm!);
+            const name = formData.get('name') as string;
+            const email = formData.get('email') as string;
+            const accountType = formData.get('accountType') as string;
+
+            console.log('📧 Datos del formulario:', { name, email, accountType });
+
+            // Verificar que EmailJS esté disponible
+            if (typeof emailjs === 'undefined') {
+                throw new Error('EmailJS no está disponible');
+            }
+
+            // Inicializar EmailJS
+            emailjs.init(DEMO_EMAILJS_CONFIG.publicKey);
+
+            // Preparar datos para el email
+            const emailData = {
+                name: name,
+                to_email: email,
+                account_type: accountType === 'empresa' ? 'Empresa' : 'Inversor',
+                user_email: email,
+                message: `Solicitud de demo de ${name} para cuenta tipo: ${accountType === 'empresa' ? 'Empresa' : 'Inversor'}`,
+                timestamp: new Date().toLocaleString('es-ES')
+            };
+
+            console.log('📧 Enviando email con datos:', emailData);
+
+            // Enviar email
+            const response = await emailjs.send(
+                DEMO_EMAILJS_CONFIG.serviceId,
+                DEMO_EMAILJS_CONFIG.templateId,
+                emailData
+            );
+
+            console.log('✅ Email enviado exitosamente:', response);
+
+            // Mostrar mensaje de éxito
+            showDemoMessage('¡Solicitud enviada correctamente! Te contactaremos pronto para agendar tu demo.', 'success');
+
+            // Cerrar modal después de 3 segundos y mostrar notificación
+            setTimeout(() => {
+                closeDemoModal();
+                showSuccessNotification();
+            }, 3000);
+
+        } catch (error) {
+            console.error('❌ Error al enviar email:', error);
+            showDemoMessage('Error al enviar la solicitud. Por favor, inténtalo de nuevo.', 'error');
+        } finally {
+            submitButton.classList.remove('loading');
+            submitButton.setAttribute('aria-busy', 'false');
+        }
+    }
+
+    // Mostrar mensaje
+    function showDemoMessage(message: string, type: 'success' | 'error') {
+        if (!messageContainer) return;
+
+        messageContainer.textContent = message;
+        messageContainer.className = `mt-4 p-4 rounded-lg text-center font-medium message-${type}`;
+        messageContainer.classList.remove('hidden');
+    }
+
+    // Mostrar notificación de éxito (toast)
+    function showSuccessNotification() {
+        // Crear elemento de notificación
+        const notification = document.createElement('div');
+        notification.className = 'success-notification';
+        notification.innerHTML = `
+            <div class="flex items-center gap-3">
+                <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div>
+                    <h4 class="m-0 text-base font-semibold">¡Solicitud enviada!</h4>
+                    <p class="mt-1 mb-0 text-sm opacity-90">Te contactaremos pronto para agendar tu demo</p>
+                </div>
+            </div>
+        `;
+
+        // Agregar estilos con Tailwind
+        notification.className = 'fixed top-5 right-5 z-[10001] max-w-[350px] min-w-[300px] bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-xl shadow-lg transform translate-x-[400px] transition-all duration-300';
+
+        // Agregar al DOM
+        document.body.appendChild(notification);
+
+        // Animar entrada
+        setTimeout(() => {
+            notification.classList.remove('translate-x-[400px]');
+            notification.classList.add('translate-x-0');
+        }, 100);
+
+        // Auto remover después de 5 segundos
+        setTimeout(() => {
+            notification.classList.remove('translate-x-0');
+            notification.classList.add('translate-x-[400px]');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 5000);
+    }
+
+    // Inicializar modal cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDemoModal);
+    } else {
+        initDemoModal();
+    }
+    
+    // También inicializar en astro:page-load para SPA
+    document.addEventListener('astro:page-load', initDemoModal);
+</script>
+

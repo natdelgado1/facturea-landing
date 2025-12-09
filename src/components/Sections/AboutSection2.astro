@@ -32,102 +32,62 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             </p>
 
             <!-- Grid de propuestas de valor -->
-            <div class="grid gap-6 mb-16 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 sm:mb-20">
+            <div class="grid gap-6 mb-16 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 sm:mb-20" role="list">
                 {about.items.map((item, index) => (
-                    <div class="h-full cursor-pointer gsap-card group" data-index={index}>
+                    <article 
+                        class="h-full cursor-pointer gsap-card group" 
+                        data-index={index}
+                        role="listitem"
+                        aria-labelledby={`feature-title-${index}`}
+                    >
                         <div class="card-wrapper">
-                            <div class="card-hover-bg"></div>
+                            <div class="card-hover-bg" aria-hidden="true"></div>
                             <div class="card-content">
-                                <div class="icon-container group-hover:scale-110">
+                                <div class="icon-container group-hover:scale-110" aria-hidden="true">
                                     <svg class="w-8 h-8 text-white sm:w-10 sm:h-10 very-short:w-6 very-short:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                     </svg>
                                 </div>
-                                <div class="counter-display gsap-counter" data-target={item.counterValue} data-suffix={item.counterSuffix}>
-                                    <span class="counter-value">0</span><span class="counter-suffix">{item.counterSuffix}</span>
+                                <div class="counter-display gsap-counter" data-target={item.counterValue} data-suffix={item.counterSuffix} aria-label={`${item.counterValue} ${item.counterSuffix}`}>
+                                    <span class="counter-value" aria-hidden="true">0</span><span class="counter-suffix" aria-hidden="true">{item.counterSuffix}</span>
                                 </div>
-                                <h3 class="mb-3 text-xl font-bold text-gray-900 sm:text-2xl sm:mb-4">{item.title}</h3>
+                                <h3 id={`feature-title-${index}`} class="mb-3 text-xl font-bold text-gray-900 sm:text-2xl sm:mb-4">{item.title}</h3>
                                 <p class="text-sm leading-relaxed text-gray-600 sm:text-base">{item.description}</p>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 ))}
             </div>
 
             <!-- CTA buttons -->
-            <div class="mt-12 gsap-cta sm:mt-16">
-                <div class="flex flex-col gap-4 justify-center items-center sm:flex-row">
-                    <a class="btn btn--primary gsap-btn-primary" href={about.linkPrimaryButton} target="_blank" rel="noopener noreferrer">
+            <nav class="mt-12 gsap-cta sm:mt-16" aria-label="Acciones principales">
+                <div class="flex flex-col gap-4 justify-center items-center sm:flex-row" role="group" aria-label="Botones de llamada a la acción">
+                    <a 
+                        class="btn btn--primary gsap-btn-primary" 
+                        href={about.linkPrimaryButton} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label={`${about.textPrimaryButton} - Se abre en una nueva ventana`}
+                    >
                         {about.textPrimaryButton}
                     </a>
-                    <button class="btn btn--secondary gsap-btn-secondary" id="demo-btn">
+                    <button 
+                        type="button"
+                        class="btn btn--secondary gsap-btn-secondary cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" 
+                        id="demo-btn"
+                        aria-label="Abrir formulario para solicitar una demostración"
+                    >
                         {about.textSecondaryButton}
                     </button>
                 </div>
-            </div>
+            </nav>
 
             
         </div>
     </div>
+  
 </section>
 
-<!-- Modal para Demo -->
-<div id="demo-modal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title">Solicitar Demo</h3>
-            <button class="modal-close" id="close-modal">&times;</button>
-        </div>
-        
-        <form id="demo-form" class="modal-form">
-            <div class="form-group">
-                <label for="demo-name">Nombre completo</label>
-                <input 
-                    type="text" 
-                    id="demo-name" 
-                    name="name" 
-                    required 
-                    placeholder="Tu nombre completo"
-                    class="form-input"
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="demo-email">Correo electrónico</label>
-                <input 
-                    type="email" 
-                    id="demo-email" 
-                    name="email" 
-                    required 
-                    placeholder="tu@empresa.com"
-                    class="form-input"
-                />
-            </div>
-            
-            <div class="form-group">
-                <label for="account-type">Tipo de cuenta</label>
-                <select id="account-type" name="accountType" required class="form-select">
-                    <option value="">Selecciona una opción</option>
-                    <option value="empresa">Empresa</option>
-                    <option value="inversor">Inversor</option>
-                </select>
-            </div>
-            
-            <div class="form-actions">
-                <button type="button" class="btn-cancel" id="cancel-demo">Cancelar</button>
-                <button type="submit" class="btn-submit" id="submit-demo">
-                    <span class="btn-text">Enviar Solicitud</span>
-                    <span class="btn-loading">Enviando...</span>
-                </button>
-            </div>
-        </form>
-        
-        <div id="demo-message" class="message-container"></div>
-    </div>
-</div>
-
-<!-- EmailJS CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <style>
     /* Elementos decorativos flotantes */
@@ -221,101 +181,6 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
     .gsap-card,
     .gsap-cta {
         /* Los estados iniciales los maneja JavaScript directamente */
-    }
-
-    /* Estilos del Modal */
-    .modal-overlay {
-        @apply fixed inset-0 bg-black/50 backdrop-blur-sm opacity-0 invisible transition-all duration-300;
-        z-index: 99999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    .modal-overlay.active {
-        @apply opacity-100 visible;
-    }
-
-    .modal-content {
-        @apply w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 transition-all duration-300;
-        transform: scale(0.9);
-        position: relative;
-        z-index: 100000;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-
-    .modal-overlay.active .modal-content {
-        transform: scale(1);
-    }
-
-    .modal-header {
-        @apply flex justify-between items-center mb-6;
-    }
-
-    .modal-title {
-        @apply text-2xl font-bold text-gray-900;
-    }
-
-    .modal-close {
-        @apply w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors text-2xl;
-    }
-
-    .modal-form {
-        @apply space-y-4;
-    }
-
-    .form-group {
-        @apply space-y-2;
-    }
-
-    .form-group label {
-        @apply block text-sm font-medium text-gray-700;
-    }
-
-    .form-input, .form-select {
-        @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200;
-    }
-
-    .form-actions {
-        @apply flex gap-3 pt-4;
-    }
-
-    .btn-cancel {
-        @apply flex-1 px-4 py-3 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium;
-    }
-
-    .btn-submit {
-        @apply flex-1 px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-lg hover:shadow-lg transition-all duration-200 font-medium relative;
-    }
-
-    .btn-submit.loading {
-        @apply pointer-events-none;
-    }
-
-    .btn-loading {
-        @apply hidden;
-    }
-
-    .btn-submit.loading .btn-text {
-        @apply hidden;
-    }
-
-    .btn-submit.loading .btn-loading {
-        @apply block;
-    }
-
-    .message-container {
-        @apply mt-4 p-4 rounded-lg text-center font-medium hidden;
-    }
-
-    .message-success {
-        @apply bg-green-100 text-green-800 border border-green-200;
-    }
-
-    .message-error {
-        @apply bg-red-100 text-red-800 border border-red-200;
     }
 
     /* Reducir motion para accesibilidad */
@@ -514,262 +379,6 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
         animationsInitialized = false;
         animationsReady = false;
     });
-
-    // ===== FUNCIONALIDAD DEL MODAL DE DEMO =====
-    
-    // Configuración de EmailJS (usar la misma configuración del formulario de contacto)
-    const DEMO_EMAILJS_CONFIG = {
-        serviceId: "service_7itbzvb",
-        templateId: "template_35ska4s", // Crear nuevo template para demo
-        publicKey: "BGqmhQGFDVXPevxYQ"
-    };
-
-    // Variables para el modal
-    let demoModal: HTMLElement | null = null;
-    let demoForm: HTMLFormElement | null = null;
-    let submitButton: HTMLButtonElement | null = null;
-    let messageContainer: HTMLElement | null = null;
-
-    // Inicializar modal cuando se cargue la página
-    function initDemoModal() {
-        demoModal = document.getElementById('demo-modal');
-        demoForm = document.getElementById('demo-form') as HTMLFormElement;
-        submitButton = document.getElementById('submit-demo') as HTMLButtonElement;
-        messageContainer = document.getElementById('demo-message');
-
-        // Event listeners
-        const demoBtn = document.getElementById('demo-btn');
-        const closeBtn = document.getElementById('close-modal');
-        const cancelBtn = document.getElementById('cancel-demo');
-
-        if (demoBtn) {
-            demoBtn.addEventListener('click', openDemoModal);
-        }
-
-        if (closeBtn) {
-            closeBtn.addEventListener('click', closeDemoModal);
-        }
-
-        if (cancelBtn) {
-            cancelBtn.addEventListener('click', closeDemoModal);
-        }
-
-        if (demoModal) {
-            demoModal.addEventListener('click', (e) => {
-                if (e.target === demoModal) {
-                    closeDemoModal();
-                }
-            });
-        }
-
-        if (demoForm) {
-            demoForm.addEventListener('submit', handleDemoSubmit);
-        }
-
-        console.log('✅ Modal de demo inicializado correctamente');
-    }
-
-    // Abrir modal
-    function openDemoModal() {
-        console.log('📖 Abriendo modal de demo');
-        if (demoModal) {
-            demoModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    // Cerrar modal
-    function closeDemoModal() {
-        console.log('📖 Cerrando modal de demo');
-        if (demoModal) {
-            demoModal.classList.remove('active');
-            document.body.style.overflow = '';
-            resetDemoForm();
-        }
-    }
-
-    // Resetear formulario
-    function resetDemoForm() {
-        if (demoForm) {
-            demoForm.reset();
-        }
-        if (submitButton) {
-            submitButton.classList.remove('loading');
-        }
-        if (messageContainer) {
-            messageContainer.classList.add('hidden');
-            messageContainer.className = 'message-container hidden';
-        }
-    }
-
-    // Enviar formulario
-    async function handleDemoSubmit(e: Event) {
-        e.preventDefault();
-        
-        console.log('📧 Enviando solicitud de demo...');
-        
-        if (!submitButton || !messageContainer) return;
-
-        // Mostrar estado de carga
-        submitButton.classList.add('loading');
-        messageContainer.classList.add('hidden');
-
-        try {
-            // Obtener datos del formulario
-            const formData = new FormData(demoForm!);
-            const name = formData.get('name') as string;
-            const email = formData.get('email') as string;
-            const accountType = formData.get('accountType') as string;
-
-            console.log('📧 Datos del formulario:', { name, email, accountType });
-
-            // Verificar que EmailJS esté disponible
-            if (typeof emailjs === 'undefined') {
-                throw new Error('EmailJS no está disponible');
-            }
-
-            // Inicializar EmailJS
-            emailjs.init(DEMO_EMAILJS_CONFIG.publicKey);
-
-            // Preparar datos para el email
-            const emailData = {
-                name: name,
-                to_email: email,
-                account_type: accountType === 'empresa' ? 'Empresa' : 'Inversor',
-                user_email: email,
-                message: `Solicitud de demo de ${name} para cuenta tipo: ${accountType === 'empresa' ? 'Empresa' : 'Inversor'}`,
-                timestamp: new Date().toLocaleString('es-ES')
-            };
-
-            console.log('📧 Enviando email con datos:', emailData);
-
-            // Enviar email
-            const response = await emailjs.send(
-                DEMO_EMAILJS_CONFIG.serviceId,
-                DEMO_EMAILJS_CONFIG.templateId,
-                emailData
-            );
-
-            console.log('✅ Email enviado exitosamente:', response);
-
-            // Mostrar mensaje de éxito
-            showDemoMessage('¡Solicitud enviada correctamente! Te contactaremos pronto para agendar tu demo.', 'success');
-
-            // Cerrar modal después de 3 segundos y mostrar notificación
-            setTimeout(() => {
-                closeDemoModal();
-                showSuccessNotification();
-            }, 3000);
-
-        } catch (error) {
-            console.error('❌ Error al enviar email:', error);
-            showDemoMessage('Error al enviar la solicitud. Por favor, inténtalo de nuevo.', 'error');
-        } finally {
-            submitButton.classList.remove('loading');
-        }
-    }
-
-    // Mostrar mensaje
-    function showDemoMessage(message: string, type: 'success' | 'error') {
-        if (!messageContainer) return;
-
-        messageContainer.textContent = message;
-        messageContainer.className = `message-container message-${type}`;
-        messageContainer.classList.remove('hidden');
-    }
-
-    // Mostrar notificación de éxito (toast)
-    function showSuccessNotification() {
-        // Crear elemento de notificación
-        const notification = document.createElement('div');
-        notification.className = 'success-notification';
-        notification.innerHTML = `
-            <div class="notification-content">
-                <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <div class="notification-text">
-                    <h4>¡Solicitud enviada!</h4>
-                    <p>Te contactaremos pronto para agendar tu demo</p>
-                </div>
-            </div>
-        `;
-
-        // Agregar estilos inline para la notificación
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
-            z-index: 10001;
-            transform: translateX(400px);
-            transition: all 0.3s ease;
-            max-width: 350px;
-            min-width: 300px;
-        `;
-
-        // Estilos para el contenido
-        const style = document.createElement('style');
-        style.textContent = `
-            .notification-content {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            .notification-icon {
-                width: 24px;
-                height: 24px;
-                flex-shrink: 0;
-            }
-            .notification-text h4 {
-                margin: 0;
-                font-size: 16px;
-                font-weight: 600;
-            }
-            .notification-text p {
-                margin: 4px 0 0 0;
-                font-size: 14px;
-                opacity: 0.9;
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Agregar al DOM
-        document.body.appendChild(notification);
-
-        // Animar entrada
-        setTimeout(() => {
-            notification.style.transform = 'translateX(0)';
-        }, 100);
-
-        // Auto remover después de 5 segundos
-        setTimeout(() => {
-            notification.style.transform = 'translateX(400px)';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-                if (style.parentNode) {
-                    style.parentNode.removeChild(style);
-                }
-            }, 300);
-        }, 5000);
-    }
-
-    // Función legacy para mantener compatibilidad
-    function handleEventDemo() {
-        openDemoModal();
-    }
-
-    // Inicializar modal cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', initDemoModal);
-    
-    // También inicializar en astro:page-load para SPA
-    document.addEventListener('astro:page-load', initDemoModal);
 
     console.log('📋 Script de animaciones cargado, esperando inicialización...');
 </script>

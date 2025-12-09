@@ -137,19 +137,24 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 
     /* Cards optimizadas con GPU acceleration */
     .card-wrapper {
-        @apply overflow-hidden relative p-6 h-full bg-gradient-to-br from-white to-gray-50 rounded-2xl border border-gray-200 transition-all duration-300 sm:rounded-3xl sm:p-8;
+        @apply relative p-6 h-full bg-gradient-to-br from-white to-gray-50 rounded-2xl border border-gray-200 transition-all duration-300 sm:rounded-3xl sm:p-8;
         transform: translate3d(0, 0, 0); /* GPU acceleration */
         will-change: transform; /* Optimización para animaciones */
+        /* Sombra sutil por defecto */
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        overflow: hidden; /* Mantener overflow hidden para contenido */
     }
 
     .card-wrapper:hover {
         @apply shadow-2xl;
-        transform: translate3d(0, -4px, 0) scale(1.02); /* GPU acceleration */
+        transform: translate3d(0, -4px, 0); /* Solo elevación, sin scale */
+        /* El borde se mantiene igual, solo cambia la sombra y el fondo */
     }
 
     .card-hover-bg {
-        @apply absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 from-primary/5 to-accent/5;
+        @apply absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 from-primary/5 to-accent/5 rounded-2xl sm:rounded-3xl;
         will-change: opacity; /* Optimización para transiciones */
+        z-index: 1;
     }
 
     .group:hover .card-hover-bg {
@@ -178,6 +183,7 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
     
     .tab-content-modern {
         @apply transition-all duration-500 ease-in-out;
+
     }
     
     /* Estilos para morphing en badges */
