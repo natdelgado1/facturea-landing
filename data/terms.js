@@ -591,7 +591,7 @@ export const termsContent = {
         id: "contacto",
         title: "10. Décima Parte. Contacto.",
         content: [
-          `En caso de que el Usuario tenga alguna queja o reclamo respeto de el servicio, podrá contactarse a la dirección de correo electrónico: info@facturea.io`
+          `En caso de que el Usuario tenga alguna queja o reclamo respeto de el servicio, podrá contactarse a la dirección de correo electrónico: hola@facturea.io`
         ]
       },
       {

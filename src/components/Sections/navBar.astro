@@ -1,22 +1,29 @@
 ---
 import logoColor from '../../assets/logo_primary_color.svg';
 
+// Detectar si estamos en la página principal
+const isHomePage = Astro.url.pathname === '/';
+
 const navBar = [
     {
         name: 'Inicio',
-        href: '#inicio',
+        href: isHomePage ? '#inicio' : '/',
+        dataHref: '#inicio',
     },
     {
         name: 'Sobre Facturea',
-        href: '#por-que-facturea',
+        href: isHomePage ? '#por-que-facturea' : '/#por-que-facturea',
+        dataHref: '#por-que-facturea',
     },
     {
         name: 'Contacto',
-        href: '#contacto',
+        href: isHomePage ? '#contacto' : '/#contacto',
+        dataHref: '#contacto',
     },
     {
         name: 'FAQ',
-        href: '#faq',
+        href: isHomePage ? '#faq' : '/#faq',
+        dataHref: '#faq',
     }
 ];
 
@@ -29,18 +36,20 @@ const navBar = [
             
             <!-- LOGO (Siempre visible) -->
             <div class="flex flex-shrink-0 items-center">
-                <img src={logoColor.src} alt="Logo Facturea.io" class="w-auto h-6"   loading="eager"/>
+                <a href="/" class="flex items-center">
+                    <img src={logoColor.src} alt="Logo Facturea.io" class="w-auto h-6"   loading="eager"/>
+                </a>
             </div>
             
             <!-- MENÚ DESKTOP (Oculto en móvil) -->
             <div class="hidden md:block">
                 <div class="flex items-baseline ml-10 space-x-4 sm:ml-6">
                     {
-                        navBar.map((item: { name: string; href: string }) => (
+                        navBar.map((item: { name: string; href: string; dataHref: string }) => (
                             <a 
                                 href={item.href}  
                                 class="relative px-3 py-2 font-medium rounded-md nav-link sm:px-2 sm:py-2 sm:text-md lg:text-base xl:text-xl 2xl:text-2xl"
-                                data-href={item.href}
+                                data-href={item.dataHref}
                             >
                                 {item.name}
                                 <!-- Sprite del subrayado activo (invisible por defecto) -->
@@ -82,7 +91,7 @@ const navBar = [
                 <a
                     href={item.href}
                     class="block px-3 py-2 font-medium text-gray-700 rounded-md transition-colors duration-200 hover:text-primary nav-link"
-                    data-href={item.href}
+                    data-href={item.dataHref}
                 >
                     {item.name}
                 </a>
@@ -257,11 +266,27 @@ const navBar = [
         });
 
         // Smooth scrolling para enlaces de navegación
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"], a[href^="/"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
                 const href = anchor.getAttribute('href');
-                if (href) {
+                if (!href) return;
+                
+                const isHomePage = window.location.pathname === '/';
+                
+                // Si el enlace es solo "/" (inicio), permitir navegación normal
+                if (href === '/') {
+                    return;
+                }
+                
+                // Si el enlace contiene hash y estamos en otra página, permitir navegación normal
+                // (para que navegue a la página principal con el hash)
+                if (href.includes('#') && !isHomePage) {
+                    return;
+                }
+                
+                // Si el enlace es un hash relativo y estamos en la página principal, hacer scroll suave
+                if (href.startsWith('#')) {
+                    e.preventDefault();
                     const target = document.querySelector(href);
                     if (target) {
                         const headerHeight = document.querySelector('header')?.offsetHeight || 0;
