@@ -4,6 +4,7 @@ import "../styles/progressive-reveal.css";
 import { termsContent } from "../../data/terms.js";
 import NavBar from "../components/Sections/navBar.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
+import Analytics from "../components/Analytics.astro";
 ---
 
 <!doctype html>
@@ -52,6 +53,9 @@ import ScrollToTop from "../components/ScrollToTop.astro";
       type="font/woff2" 
       crossorigin
     />
+    
+    <!-- Google Analytics -->
+    <Analytics />
   </head>
 
   <body class="antialiased bg-gray-50 font-visby">

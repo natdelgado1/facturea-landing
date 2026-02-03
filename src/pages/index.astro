@@ -11,6 +11,7 @@ import FooterSection2 from "../components/Sections/FooterSection2.astro";
 import NavBar from "../components/Sections/navBar.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import DemoModal from "../components/UI/DemoModal.astro";
+import Analytics from "../components/Analytics.astro";
 ---
 
 <!doctype html>
@@ -63,6 +64,10 @@ import DemoModal from "../components/UI/DemoModal.astro";
     <!-- DNS prefetch para CDNs -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+
+    <!-- Google Analytics -->
+    <Analytics />
 
     <!-- Critical CSS inline para evitar FOUC -->
     <style>
