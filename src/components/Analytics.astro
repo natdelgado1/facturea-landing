@@ -13,11 +13,11 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
   <>
     <!-- Google tag (gtag.js) -->
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-    <script>
+    <script is:inline define:vars={{ gaId }}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', `${gaId}`, {
+      gtag('config', gaId, {
         page_title: document.title,
         page_location: window.location.href,
         send_page_view: true
@@ -29,12 +29,12 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
 <!-- Google Tag Manager -->
 {gtmId && (
   <>
-    <script>
+    <script is:inline define:vars={{ gtmId }}>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer',`${gtmId}`);
+      })(window,document,'script','dataLayer',gtmId);
     </script>
   </>
 )}
@@ -42,10 +42,10 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
 <!-- Hotjar (opcional) -->
 {hotjarId && (
   <>
-    <script>
+    <script is:inline define:vars={{ hotjarId }}>
       (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:`${hotjarId}`,hjsv:6};
+        h._hjSettings={hjid:hotjarId,hjsv:6};
         a=o.getElementsByTagName('head')[0];
         r=o.createElement('script');r.async=1;
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
@@ -58,7 +58,7 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
 <!-- Facebook Pixel (opcional) -->
 {facebookPixelId && (
   <>
-    <script>
+    <script is:inline define:vars={{ facebookPixelId }}>
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -67,7 +67,7 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', `${facebookPixelId}`);
+      fbq('init', facebookPixelId);
       fbq('track', 'PageView');
     </script>
     <noscript>
@@ -156,16 +156,84 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     }
   }
 
-  // Tracking de formularios
+  // Tracking de formularios y eventos clave
   document.addEventListener('DOMContentLoaded', function() {
+    
+    // ============================================
+    // 🎯 EVENTO CLAVE 1: Formulario de Contacto
+    // ============================================
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
       contactForm.addEventListener('submit', function() {
+        trackEvent('generate_lead', 'Conversion', 'Formulario de Contacto', 1);
         trackEvent('form_submit', 'Contact', 'Contact Form', 1);
+        console.log('📊 Analytics: Formulario de contacto enviado');
       });
     }
 
+    // ============================================
+    // 🎯 EVENTO CLAVE 2: Solicitar Demo
+    // ============================================
+    const demoForm = document.getElementById('demo-form');
+    if (demoForm) {
+      demoForm.addEventListener('submit', function() {
+        trackEvent('generate_lead', 'Conversion', 'Solicitar Demo', 2);
+        trackEvent('demo_request', 'Conversion', 'Demo Form Submitted', 1);
+        console.log('📊 Analytics: Demo solicitada');
+      });
+    }
+
+    // Botón para abrir modal de demo
+    const demoBtn = document.getElementById('demo-btn');
+    if (demoBtn) {
+      demoBtn.addEventListener('click', function() {
+        trackEvent('open_demo_modal', 'Engagement', 'Demo Button Click', 1);
+        console.log('📊 Analytics: Modal de demo abierto');
+      });
+    }
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 3: Explorar Factoring (Hero)
+    // ============================================
+    const heroSection = document.getElementById('inicio');
+    if (heroSection) {
+      const heroButton = heroSection.querySelector('button');
+      if (heroButton) {
+        heroButton.addEventListener('click', function() {
+          trackEvent('cta_click', 'Conversion', 'Explorar Factoring', 3);
+          trackEvent('hero_cta', 'Engagement', 'Hero Button Click', 1);
+          console.log('📊 Analytics: Botón Explorar Factoring clickeado');
+        });
+      }
+    }
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 4: Iniciar Sesión
+    // ============================================
+    const loginLinks = document.querySelectorAll('a[href*="app.facturea.io"]');
+    loginLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        trackEvent('login_click', 'Conversion', 'Iniciar Sesión', 4);
+        trackEvent('outbound_click', 'Navigation', 'App Facturea', 1);
+        console.log('📊 Analytics: Click en Iniciar Sesión');
+      });
+    });
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 5: Selección de tipo de usuario
+    // ============================================
+    const userTypeInputs = document.querySelectorAll('.user-type-input');
+    userTypeInputs.forEach(input => {
+      input.addEventListener('change', function() {
+        const userType = (this as HTMLInputElement).value;
+        trackEvent('user_type_selected', 'Engagement', userType === 'empresa' ? 'Facturador' : 'Inversor', 1);
+        console.log('📊 Analytics: Tipo de usuario seleccionado -', userType);
+      });
+    });
+
+    // ============================================
     // Tracking de clicks en botones principales
+    // ============================================
     const ctaButtons = document.querySelectorAll('button[class*="bg-gradient"], a[class*="bg-gradient"]');
     ctaButtons.forEach(button => {
       button.addEventListener('click', function() {
@@ -174,7 +242,9 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
       });
     });
 
+    // ============================================
     // Tracking de scroll
+    // ============================================
     let scrollDepth = 0;
     window.addEventListener('scroll', function() {
       const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
@@ -185,12 +255,31 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
       }
     });
 
+    // ============================================
     // Tracking de tiempo en página
+    // ============================================
     let startTime = Date.now();
     window.addEventListener('beforeunload', function() {
       const timeOnPage = Math.round((Date.now() - startTime) / 1000);
       trackEvent('time_on_page', 'Engagement', 'Page View', timeOnPage);
     });
+
+    // ============================================
+    // Tracking de secciones vistas
+    // ============================================
+    const sections = document.querySelectorAll('section[id]');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          trackEvent('section_view', 'Engagement', sectionId, 1);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    console.log('📊 Google Analytics: Eventos clave configurados');
   });
 
   // Exponer función global para tracking manual
