@@ -10,12 +10,12 @@ const heroAnimation =
 import { heroData } from "../../../data/hero";
 ---
 
-<script defer  src={cdn} type="module"></script>
+<script defer src={cdn} type="module"></script>
 
 <!-- Hero Section - Versión 2: Inspirada en diseño moderno -->
 <section
   id="inicio"
-  class="flex overflow-hidden relative flex-col items-center pt-20 h-screen bg-gradient-to-b from-gray-50 to-white hero-section sm:pt-24 md:pt-28 lg:flex-row lg:px-8 "
+  class="flex overflow-hidden relative flex-col items-center pt-20 h-screen bg-gradient-to-b from-gray-50 to-white hero-section sm:pt-24 md:pt-28 lg:flex-row lg:px-8"
 >
   <div class="container top-0 px-4 sm:px-6 h-fit">
     <div class="mx-auto max-w-5xl text-center lg:text-start">
@@ -34,7 +34,11 @@ import { heroData } from "../../../data/hero";
       </h1>
 
       <!-- Descripción centrada y minimalista -->
-      <p class="px-4 mx-auto mb-12 max-w-3xl text-lg font-light leading-relaxed text-gray-500 sm:text-xl md:text-xl lg:text-2xl xl:text-2xl sm:mb-16 sm:px-0 xl:mx-0">
+      <!-- En Hero.astro, línea 37 -->
+      <p
+        class="px-4 mx-auto mb-12 max-w-3xl text-lg font-light leading-relaxed text-gray-500 sm:text-xl md:text-xl lg:text-2xl xl:text-2xl sm:mb-16 sm:px-0 xl:mx-0"
+        style="opacity: 1 !important;"
+      >
         {heroData.text5}<br class="hidden sm:block" />
         <span class="sm:hidden"> </span>{heroData.text6}
       </p>
@@ -71,11 +75,13 @@ import { heroData } from "../../../data/hero";
     class="hero-animation"
     speed="0.8"
     autoplay
-    loading="eager"
+    loading="lazy"
     loop
     intermission="0"
     direction="1"
-    style="will-change: transform;"></dotlottie-wc>
+    style="will-change: transform;"
+    alt="Animación de Facturea"
+    optimized="true"></dotlottie-wc>
 
   <!-- Elementos flotantes estilo moderno - Responsive -->
   <!-- Círculo grande superior derecha -->
@@ -124,17 +130,17 @@ import { heroData } from "../../../data/hero";
     // Función para cargar CSS de typewriter de forma condicional
     function loadTypewriterCSS() {
       // Verificar si el usuario prefiere menos movimiento
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return; // No cargar animaciones si el usuario prefiere menos movimiento
       }
 
       // Cargar CSS de typewriter solo si es necesario
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/src/styles/hero-typewriter.css';
-      link.media = 'print';
-      link.onload = function() {
-        link.media = 'all';
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "/src/styles/hero-typewriter.css";
+      link.media = "print";
+      link.onload = function () {
+        link.media = "all";
       };
       document.head.appendChild(link);
     }
