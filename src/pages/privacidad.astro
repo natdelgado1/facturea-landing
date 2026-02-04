@@ -5,6 +5,7 @@ import { privacyContent } from "../../data/privacy.js";
 import NavBar from "../components/Sections/navBar.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import Analytics from "../components/Analytics.astro";
+import StructuredData from "../components/StructuredData.astro";
 ---
 
 <!doctype html>
@@ -56,6 +57,9 @@ import Analytics from "../components/Analytics.astro";
     
     <!-- Google Analytics -->
     <Analytics />
+    
+    <!-- Datos Estructurados (Schema.org) -->
+    <StructuredData />
   </head>
 
   <body class="antialiased bg-gray-50 font-visby">

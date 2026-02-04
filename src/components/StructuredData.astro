@@ -1,0 +1,85 @@
+---
+// Componente para datos estructurados (Schema.org)
+// Mejora el SEO y ayuda a Google a entender mejor el sitio
+---
+
+<!-- Organization Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Facturea.io",
+  "url": "https://facturea.io",
+  "logo": "https://facturea.io/src/assets/logo_primary_color.svg",
+  "description": "Líder en Factoring Electrónico en Paraguay. Conectamos PYMEs con inversores para acelerar tu flujo de caja.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "hola@facturea.io",
+    "availableLanguage": ["Spanish", "English"]
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/facturea",
+    "https://www.facebook.com/facturea"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "PY",
+    "addressLocality": "Asunción"
+  }
+})} />
+</script>
+
+<!-- WebSite Schema -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Facturea.io",
+  "url": "https://facturea.io",
+  "description": "La primera fintech de adelanto de facturas electrónicas en Paraguay",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Facturea.io"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://facturea.io/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+})} />
+</script>
+
+<!-- BreadcrumbList Schema (para navegación) -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://facturea.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Sobre Facturea",
+      "item": "https://facturea.io/#por-que-facturea"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Contacto",
+      "item": "https://facturea.io/#contacto"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "FAQ",
+      "item": "https://facturea.io/#faq"
+    }
+  ]
+})} />
+</script>

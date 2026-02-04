@@ -12,6 +12,7 @@ import NavBar from "../components/Sections/navBar.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
 import DemoModal from "../components/UI/DemoModal.astro";
 import Analytics from "../components/Analytics.astro";
+import StructuredData from "../components/StructuredData.astro";
 ---
 
 <!doctype html>
@@ -68,6 +69,9 @@ import Analytics from "../components/Analytics.astro";
 
     <!-- Google Analytics -->
     <Analytics />
+
+    <!-- Datos Estructurados (Schema.org) para SEO y Sitelinks -->
+    <StructuredData />
 
     <!-- Critical CSS inline para evitar FOUC -->
     <style>
