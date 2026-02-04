@@ -113,25 +113,27 @@ import StructuredData from "../components/StructuredData.astro";
   <body class="antialiased font-visby">
     <NavBar />
 
-    <!-- Hero Section -->
-    <HeroVersion2 />
+    <main>
+      <!-- Hero Section -->
+      <HeroVersion2 />
 
-    <!-- ¿Por qué elegir Facturea? -->
-    <AboutSection2 />
-    <!-- Modal para Demo -->
-    <DemoModal />
-    <!-- ¿Cómo funciona? - Versión moderna con tabs -->
-    <HowItWorksSection2 />
+      <!-- ¿Por qué elegir Facturea? -->
+      <AboutSection2 />
+      <!-- Modal para Demo -->
+      <DemoModal />
+      <!-- ¿Cómo funciona? - Versión moderna con tabs -->
+      <HowItWorksSection2 />
 
-    <!-- Formulario de Contacto - Versión moderna v2 -->
-    <section id="contacto">
-      <ContactFormSection2 />
-    </section>
+      <!-- Formulario de Contacto - Versión moderna v2 -->
+      <section id="contacto">
+        <ContactFormSection2 />
+      </section>
 
-    <!-- FAQ - Versión moderna v2 -->
-    <section id="faq">
-      <FAQSection2 />
-    </section>
+      <!-- FAQ - Versión moderna v2 -->
+      <section id="faq">
+        <FAQSection2 />
+      </section>
+    </main>
 
     <!-- Footer - Versión moderna v2 -->
     <FooterSection2 />
@@ -348,37 +350,43 @@ import StructuredData from "../components/StructuredData.astro";
         animationsLoaded = true;
       }
 
-      // ✅ Inicialización ultra-optimizada
+      // ✅ Inicialización ultra-optimizada - Dividida en chunks para evitar tareas largas
       function initUltraOptimized() {
-        // Funcionalidades críticas inmediatas
+        // Funcionalidades críticas inmediatas (chunk 1)
         initActiveNavOptimized();
         initScrollToTopOptimized();
-        initSmoothScrollOptimized();
+        
+        // Chunk 2 - Usar setTimeout para dividir tareas
+        setTimeout(function() {
+          initSmoothScrollOptimized();
+          
+          // Chunk 3 - Animaciones en tiempo libre
+          if ("requestIdleCallback" in window) {
+            requestIdleCallback(function() {
+              if ("IntersectionObserver" in window) {
+                initCSSAnimations();
+              }
+            }, { timeout: 100 });
+          } else {
+            setTimeout(function() {
+              if ("IntersectionObserver" in window) {
+                initCSSAnimations();
+              }
+            }, 50);
+          }
+        }, 0);
 
-        // Animaciones CSS nativas inmediatas
-        if ("IntersectionObserver" in window) {
-          initCSSAnimations();
-        }
-
-        // Cargar animaciones avanzadas solo en desktop y en tiempo libre
-        if (window.innerWidth > 768 && "requestIdleCallback" in window) {
-          requestIdleCallback(
-            function () {
-              loadScriptLazy(
-                "/src/scripts/optimized-animations.js",
-                function () {
-                  // Callback vacío
-                },
-              );
-            },
-            { timeout: 3000 },
-          );
-        } else if (window.innerWidth > 768) {
-          setTimeout(function () {
-            loadScriptLazy("/src/scripts/optimized-animations.js", function () {
-              // Callback vacío
-            });
-          }, 2000);
+        // Cargar animaciones avanzadas solo en desktop y en tiempo libre (chunk 4)
+        if (window.innerWidth > 768) {
+          const loadAdvancedAnimations = function() {
+            loadScriptLazy("/src/scripts/optimized-animations.js", function() {});
+          };
+          
+          if ("requestIdleCallback" in window) {
+            requestIdleCallback(loadAdvancedAnimations, { timeout: 3000 });
+          } else {
+            setTimeout(loadAdvancedAnimations, 2000);
+          }
         }
       }
 
@@ -443,15 +451,15 @@ import StructuredData from "../components/StructuredData.astro";
       }
     </script>
 
-    <!-- ✅ Scripts optimizados -->
-    <script src="/src/scripts/progressive-reveal.js"></script>
+    <!-- ✅ Scripts optimizados - Defer para no bloquear renderizado -->
+    <script src="/src/scripts/progressive-reveal.js" defer></script>
 
     <!-- ✅ Scripts de testing solo en desarrollo -->
     {
       import.meta.env.DEV && (
         <>
-          <script src="/src/scripts/test-progressive-reveal.js" />
-          <script src="/src/scripts/progressive-reveal-tests.js" />
+          <script src="/src/scripts/test-progressive-reveal.js" defer />
+          <script src="/src/scripts/progressive-reveal-tests.js" defer />
         </>
       )
     }
