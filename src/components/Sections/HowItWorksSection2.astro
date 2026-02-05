@@ -33,12 +33,26 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 
             <!-- Tabs modernos - Responsive -->
             <div class="flex justify-center mb-12 gsap-tabs sm:mb-6">
-                <div class="p-1 w-full max-w-lg bg-white rounded-xl border border-gray-200 shadow-xl sm:rounded-2xl sm:p-0 sm:max-w-none sm:w-auto">
-                    <button id="tab-facturador-btn" class="px-4 py-3 w-full text-base font-bold rounded-lg transition-all duration-300 sm:w-auto sm:px-8 sm:py-4 sm:rounded-xl sm:text-lg tab-btn active-tab">
+                <div class="p-1 w-full max-w-lg bg-white rounded-xl border border-gray-200 shadow-xl sm:rounded-2xl sm:p-0 sm:max-w-none sm:w-auto" role="tablist" aria-label="Seleccionar tipo de usuario">
+                    <button 
+                        id="tab-facturador-btn" 
+                        class="px-4 py-3 w-full text-base font-bold rounded-lg transition-all duration-300 sm:w-auto sm:px-8 sm:py-4 sm:rounded-xl sm:text-lg tab-btn active-tab"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="content-facturador"
+                        aria-label={`Ver información para ${HowItWorks.tab1}`}
+                    >
                         <span class="sm:hidden">{HowItWorks.tab1}</span>
                         <span class="hidden sm:inline">{HowItWorks.tab1}</span>
                     </button>
-                    <button id="tab-inversor-btn" class="px-4 py-3 mt-1 w-full text-base font-bold rounded-lg transition-all duration-300 sm:w-auto sm:px-8 sm:py-4 sm:rounded-xl sm:text-lg tab-btn inactive-tab sm:mt-0">
+                    <button 
+                        id="tab-inversor-btn" 
+                        class="px-4 py-3 mt-1 w-full text-base font-bold rounded-lg transition-all duration-300 sm:w-auto sm:px-8 sm:py-4 sm:rounded-xl sm:text-lg tab-btn inactive-tab sm:mt-0"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="content-inversor"
+                        aria-label={`Ver información para ${HowItWorks.tab2}`}
+                    >
                         <span class="sm:hidden">{HowItWorks.tab2}</span>
                         <span class="hidden sm:inline">{HowItWorks.tab2}</span>
                     </button>
@@ -46,7 +60,12 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             </div>
 
             <!-- Contenido Facturador -->
-            <div id="content-facturador" class="tab-content-modern">
+            <div 
+              id="content-facturador" 
+              class="tab-content-modern"
+              role="tabpanel"
+              aria-labelledby="tab-facturador-btn"
+            >
                 <div class="grid gap-6 mx-auto max-w-5xl h-full sm:grid-cols-2 lg:grid-cols-3 sm:gap-8">
                     {HowItWorks.tab1Body.map((item, index) => (
                         <div class="h-full group gsap-card" data-index={index}>
@@ -76,7 +95,12 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             </div>
 
             <!-- Contenido Inversor -->
-            <div id="content-inversor" class="hidden tab-content-modern">
+            <div 
+              id="content-inversor" 
+              class="hidden tab-content-modern"
+              role="tabpanel"
+              aria-labelledby="tab-inversor-btn"
+            >
                 <div class="grid gap-6 mx-auto max-w-5xl sm:grid-cols-2 lg:grid-cols-3 sm:gap-8">
                     {HowItWorks.tab2Body.map((item, index) => (
                         <div class="h-full group gsap-card" data-index={index}>

@@ -56,7 +56,13 @@ import faq from "@/data/faq.json";
         {
           faq.faqs.map((item, index) => (
             <div class="overflow-hidden bg-gradient-to-br from-white to-gray-50 rounded-2xl border border-gray-200 shadow-sm transition-all duration-500 faq-item hover:shadow-xl progressive-reveal-element" data-delay={700 + (index * 50)}>
-              <button class="flex justify-between items-center px-8 py-6 w-full text-xl font-bold text-left text-gray-900 transition-all duration-300 faq-question hover:bg-gray-50 focus:outline-none focus:bg-gray-50">
+              <button 
+                id={`faq-question-${index}`}
+                class="flex justify-between items-center px-8 py-6 w-full text-xl font-bold text-left text-gray-900 transition-all duration-300 faq-question hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
+                aria-label={`${item.question} - Mostrar respuesta`}
+                aria-expanded="false"
+                aria-controls={`faq-answer-${index}`}
+              >
                 <span>{item.question}</span>
                 <!-- Icono cruz (+) por defecto -->
                 <svg
@@ -86,7 +92,11 @@ import faq from "@/data/faq.json";
                   <path d="M5 12h14" />
                 </svg>
               </button>
-              <div class="hidden px-8 pb-6 mt-3 faq-answer">
+              <div 
+                id={`faq-answer-${index}`}
+                class="hidden px-8 pb-6 mt-3 faq-answer"
+                aria-labelledby={`faq-question-${index}`}
+              >
                 <div class="pl-6 border-l-4 border-secondary">
                   <p class="text-lg leading-relaxed text-gray-700 text-start">
                     {item.answer}

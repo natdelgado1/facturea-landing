@@ -32,12 +32,11 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             </p>
 
             <!-- Grid de propuestas de valor -->
-            <div class="grid gap-6 mb-16 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 sm:mb-20" role="list">
+            <div class="grid gap-6 mb-16 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8 sm:mb-20">
                 {about.items.map((item, index) => (
                     <article 
                         class="h-full cursor-pointer gsap-card group" 
                         data-index={index}
-                        role="listitem"
                         aria-labelledby={`feature-title-${index}`}
                     >
                         <div class="card-wrapper">
