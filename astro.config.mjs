@@ -9,9 +9,15 @@ export default defineConfig({
   integrations: [tailwind()],
   build: {
     // Habilitar minificación ultra-agresiva
+    // Inline CSS pequeño automáticamente, archivos grandes se cargan normalmente
     inlineStylesheets: 'auto'
   },
   vite: {
+    resolve: {
+      alias: {
+        '@': new URL('./src', import.meta.url).pathname
+      }
+    },
     preview: {
       allowedHosts: ['facturea-landing.nataliadelgado.dev',"facturea.io","www.facturea.io"]
     },

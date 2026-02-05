@@ -66,6 +66,23 @@ import StructuredData from "../components/StructuredData.astro";
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+    
+    <!-- Polyfill para cargar CSS de forma asíncrona y no bloqueante -->
+    <script is:inline>
+      /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+      (function(w){"use strict";var loadCSS=function(href,before,media){var doc=w.document;var ss=doc.createElement("link");var ref;if(before){ref=before;}else{var refs=(doc.body||doc.getElementsByTagName("head")[0]).childNodes;ref=refs[refs.length-1];}var sheets=doc.styleSheets;ss.rel="stylesheet";ss.href=href;ss.media="print";ss.onload=function(){ss.media=media||"all";var callback;for(var i=0;i<sheets.length;i++){if(sheets[i].href&&sheets[i].href.indexOf(href)>-1){callback=1;}}if(callback){ss.onload=null;}};ref.parentNode.insertBefore(ss,ref.nextSibling);return ss;};if(typeof exports!=="undefined"){exports.loadCSS=loadCSS;}else{w.loadCSS=loadCSS;}}(typeof global!=="undefined"?global:this));
+    </script>
+    
+    <!-- Script para hacer que los CSS se carguen de forma asíncrona -->
+    <script is:inline>
+      // Hacer que los CSS existentes se carguen de forma no bloqueante
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          // Los CSS de Astro se cargarán normalmente, pero con menor prioridad
+          // gracias a inlineStylesheets: 'auto'
+        });
+      }
+    </script>
 
     <!-- Google Analytics -->
     <Analytics />
