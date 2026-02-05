@@ -62,10 +62,20 @@ import StructuredData from "../components/StructuredData.astro";
       crossorigin
     />
 
-    <!-- DNS prefetch para CDNs -->
+    <!-- Preconnect para orígenes críticos (establece conexión temprana) -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin />
+    <link rel="preconnect" href="https://unpkg.com" crossorigin />
+    <link rel="preconnect" href="https://lottie.host" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://api.emailjs.com" crossorigin />
+    
+    <!-- DNS prefetch para CDNs menos críticos -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="//www.google.com" />
+    <link rel="dns-prefetch" href="//www.gstatic.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
     
     <!-- Polyfill para cargar CSS de forma asíncrona y no bloqueante -->
     <script is:inline>

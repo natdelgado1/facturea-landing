@@ -4,9 +4,42 @@ import Badge from "../UI/Badge.astro";
 import TitleSecundary from "../UI/TitleSecundary.astro";
 ---
 
-<!-- Scripts necesarios -->
+<!-- Scripts necesarios - Carga diferida para no bloquear renderizado -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
-<script src="https://www.google.com/recaptcha/api.js?render=6Ld3L44rAAAAAFx1NlnmlugKLAZ_r2sRbl48KQ3d" async defer></script>
+<!-- reCAPTCHA se carga solo cuando el formulario está visible -->
+<script>
+  // Cargar reCAPTCHA solo cuando sea necesario (cuando el usuario interactúa con el formulario)
+  function loadRecaptcha() {
+    if (document.querySelector('script[src*="recaptcha"]')) return; // Ya cargado
+    
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js?render=6Ld3L44rAAAAAFx1NlnmlugKLAZ_r2sRbl48KQ3d';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+  
+  // Cargar cuando el formulario esté visible o cuando el usuario interactúe
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      // Usar IntersectionObserver para cargar cuando el formulario sea visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadRecaptcha();
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '100px' });
+      
+      observer.observe(contactForm);
+      
+      // También cargar si el usuario interactúa con el formulario
+      contactForm.addEventListener('focus', loadRecaptcha, { once: true, capture: true });
+    }
+  });
+</script>
 
 <!-- Formulario de Contacto - Diseño Original -->
 <section class="overflow-hidden relative pt-8 bg-gradient-to-b from-gray-50 to-white sm:pt-12 md:pt-16 lg:pt-20">
