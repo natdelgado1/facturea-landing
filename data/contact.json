@@ -1,0 +1,62 @@
+{
+  "badgeText": "Empezá tu transformación financiera",
+  "title": "¡Facturea",
+  "titleBold": "es para vos!",
+  "description": "Completá el formulario y un especialista te contactará para resolver todas tus",
+  "descriptionBold": "preguntas",
+  "description2": "sobre",
+  "descriptionBold2": "Facturea",
+  "form": {
+    "userTypeLabel": "¿Qué tipo de cuenta buscas?",
+    "userTypes": {
+      "empresa": {
+        "label": "Comercio",
+        "description": "Necesito liquidez inmediata"
+      },
+      "inversor": {
+        "label": "Comprador",
+        "description": "Quiero rentabilizar capital"
+      }
+    },
+    "fields": {
+      "fullName": {
+        "label": "Nombre completo",
+        "placeholder": "Tu nombre completo"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "tu@email.com"
+      },
+      "message": {
+        "label": "Contanos sobre tu situación",
+        "placeholder": "¿Qué necesitas? ¿Cuál es tu objetivo financiero?"
+      }
+    },
+    "terms": {
+      "text": "Acepto los",
+      "termsLink": "términos y condiciones",
+      "and": "y la",
+      "privacyLink": "política de privacidad"
+    },
+    "submitButton": "Quiero que me contacten",
+    "confirmationMessage": "Nos contactaremos contigo en menos de 24 horas"
+  },
+  "contactInfo": {
+    "email": {
+      "label": "Email",
+      "value": "hola@facturea.io"
+    },
+    "phone": {
+      "label": "Teléfono",
+      "value": "+595 971 03 456"
+    },
+    "location": {
+      "label": "Ubicación",
+      "value": "Asunción, Paraguay"
+    }
+  },
+  "animation": {
+    "title": "Transformá tu realidad financiera",
+    "description": "Conectamos empresas e inversores de manera simple y segura"
+  }
+}

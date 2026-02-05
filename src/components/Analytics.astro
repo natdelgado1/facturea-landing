@@ -2,7 +2,8 @@
 // Componente de Analytics para tracking y métricas
 // Incluye Google Analytics, Google Tag Manager y métricas personalizadas
 
-const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+// Fallback para Google Analytics si no está configurada la variable de entorno
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-J0698JN1ZK';
 const gtmId = import.meta.env.PUBLIC_GTM_ID;
 const hotjarId = import.meta.env.PUBLIC_HOTJAR_ID;
 const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
@@ -20,7 +21,11 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
       gtag('config', gaId, {
         page_title: document.title,
         page_location: window.location.href,
-        send_page_view: true
+        send_page_view: true,
+        // Configuración adicional para mejorar el tracking
+        anonymize_ip: true,
+        allow_google_signals: true,
+        allow_ad_personalization_signals: true
       });
     </script>
   </>

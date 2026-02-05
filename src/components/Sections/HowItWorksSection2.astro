@@ -1,6 +1,6 @@
 ---
 import Badge from "../UI/Badge.astro";
-import { HowItWorks } from "../../../data/HowItWorks.js";
+import HowItWorks from "../../../data/HowItWorks.json";
 import TitlePrimary from "../UI/TitlePrimary.astro";
 ---
 
@@ -256,7 +256,7 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 </style>
 
 <!-- ✅ Script de tabs - Carga inmediata (crítico para funcionalidad) -->
-<script src="/src/scripts/how-it-works-tabs.js" defer></script>
+<script src="/scripts/how-it-works-tabs.js" defer></script>
 
 <!-- ✅ Script de animaciones - Lazy loading cuando la sección es visible -->
 <script is:inline>

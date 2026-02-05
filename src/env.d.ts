@@ -27,4 +27,14 @@ declare global {
     onRecaptchaCallback: () => void;
     onRecaptchaExpired: () => void;
   }
+  
+  // Tipos para Performance API
+  interface PerformanceEntry {
+    value?: number;
+    hadRecentInput?: boolean;
+    processingStart?: number;
+  }
+  
+  // Función global gtag
+  function gtag(...args: any[]): void;
 } 

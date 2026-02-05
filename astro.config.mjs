@@ -108,10 +108,9 @@ export default defineConfig({
           manualChunks: {
             // Separar librerías grandes
             gsap: ['gsap'],
-            lenis: ['lenis'],
-            // Separar componentes por funcionalidad
-            animations: ['/src/scripts/optimized-animations.js'],
-            progressive: ['/src/scripts/progressive-reveal.js']
+            lenis: ['lenis']
+            // Nota: Los scripts en public/scripts/ se sirven como archivos estáticos
+            // y no necesitan ser incluidos en manualChunks
           }
         }
       }

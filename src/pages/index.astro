@@ -379,7 +379,7 @@ import StructuredData from "../components/StructuredData.astro";
         // Cargar animaciones avanzadas solo en desktop y en tiempo libre (chunk 4)
         if (window.innerWidth > 768) {
           const loadAdvancedAnimations = function() {
-            loadScriptLazy("/src/scripts/optimized-animations.js", function() {});
+            loadScriptLazy("/scripts/optimized-animations.js", function() {});
           };
           
           if ("requestIdleCallback" in window) {
@@ -452,7 +452,7 @@ import StructuredData from "../components/StructuredData.astro";
     </script>
 
     <!-- ✅ Scripts optimizados - Defer para no bloquear renderizado -->
-    <script src="/src/scripts/progressive-reveal.js" defer></script>
+    <script src="/scripts/progressive-reveal.js" defer></script>
 
     <!-- ✅ Scripts de testing solo en desarrollo -->
     {
