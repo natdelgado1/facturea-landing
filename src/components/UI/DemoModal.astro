@@ -14,9 +14,9 @@
     aria-describedby="demo-modal-description"
     class="fixed inset-0 z-[99999] opacity-0 invisible transition-all duration-300 p-5"
 >
-    <!-- Overlay con backdrop blur -->
+    <!-- Overlay: solo backdrop-filter aquí (no filter en <main>, el modal está dentro y se borraba entero) -->
     <div 
-        class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300"
+        class="absolute inset-0 z-0 bg-slate-900/45 backdrop-blur-sm transition-opacity duration-300 supports-[backdrop-filter]:bg-slate-900/35"
         id="modal-overlay"
         aria-hidden="true"
     ></div>
@@ -24,7 +24,7 @@
     <!-- Contenedor del modal posicionado dinámicamente -->
     <div 
         id="modal-content-wrapper"
-        class="absolute w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl transition-all duration-300 scale-90 opacity-0"
+        class="absolute z-10 w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl transition-all duration-300 scale-90 opacity-0"
         style="max-width: min(448px, calc(100vw - 40px));"
     >
         <header class="flex justify-between items-center p-6 border-b border-gray-200">
@@ -162,11 +162,6 @@
     /* Aplicar backdrop blur a toda la página cuando el modal está activo */
     body.modal-open {
         overflow: hidden;
-    }
-    
-    body.modal-open > *:not(#demo-modal) {
-        filter: blur(4px);
-        transition: filter 0.3s ease;
     }
     
     /* Estilos para campos con error */
@@ -379,15 +374,6 @@
             }
         });
         
-        // Aplicar blur a toda la página excepto el modal
-        const allElements = Array.from(document.body.children) as HTMLElement[];
-        allElements.forEach((el) => {
-            if (el.id !== 'demo-modal') {
-                el.style.filter = 'blur(4px)';
-                el.style.transition = 'filter 0.3s ease';
-            }
-        });
-        
         // Focus trap: enfocar el primer elemento del formulario
         const firstInput = demoForm?.querySelector('input, select, button') as HTMLElement;
         if (firstInput) {
@@ -503,14 +489,6 @@
         demoModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
         document.body.style.overflow = '';
-        
-        // Remover blur de todos los elementos
-        const allElements = Array.from(document.body.children) as HTMLElement[];
-        allElements.forEach((el) => {
-            if (el.id !== 'demo-modal') {
-                el.style.filter = '';
-            }
-        });
         
         resetDemoForm();
         

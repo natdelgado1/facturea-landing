@@ -4,8 +4,8 @@
   "boldText": "frecuentes",
   "description": "Todo lo que necesitás saber sobre",
   "descriptionBold1": "adelanto de facturas",
-  "descriptionAnd": "e",
-  "descriptionBold2": "inversiones",
+  "descriptionAnd": "y",
+  "descriptionBold2": "compras de facturas a créditos",
   "descriptionEnd": "en Paraguay",
   "faqs": [
     {
@@ -18,7 +18,7 @@
     },
     {
       "question": "¿Quién financia las facturas?",
-      "answer": "Inversores registrados en nuestra plataforma que buscan rentabilizar su capital ocioso de manera segura. Todos los inversores pasan por un proceso de verificación y cada factura es validada antes de ser publicada."
+      "answer": "Compradores registrados en nuestra plataforma que buscan rentabilizar su capital ocioso de manera segura. Todos los compradores pasan por un proceso de verificación y cada factura es validada antes de ser publicada."
     },
     {
       "question": "¿Qué gano como comprador?",
@@ -30,20 +30,20 @@
     },
     {
       "question": "¿Puedo adelantar facturas de cualquier monto?",
-      "answer": "Sí, manejamos facturas desde G$ 500.000 hasta G$ 500.000.000. El límite depende de la disponibilidad de inversores para cada rango de monto y el historial de tu empresa en la plataforma."
+      "answer": "Sí, manejamos facturas de montos variables."
     },
     {
-      "question": "¿Cómo me registro como Empresa o comprador?",
+      "question": "¿Cómo me registro como Empresa o Comprador?",
       "answer": "Es muy simple: completá el formulario en esta página, elegí tu rol (Comercio o comprador), y nuestro equipo se contactará contigo en menos de 24 horas para guiarte en el proceso de verificación y configuración de tu cuenta."
     },
     {
       "question": "¿Qué comisiones cobran?",
-      "answer": "Para los empresas, aplicamos una comisión competitiva y transparente sobre el monto adelantado. Para los inversores, no hay comisiones de registro ni de mantenimiento."
+      "answer": "Para los empresas, aplicamos una comisión competitiva y transparente sobre el monto adelantado. Para los compradores, no hay comisiones de registro ni de mantenimiento."
     }
   ],
   "cta": {
     "title": "¿Tenés más preguntas?",
-    "description": "Nuestro equipo está disponible para resolver todas tus dudas sobre factoring e inversiones",
+    "description": "Nuestro equipo está disponible para resolver todas tus dudas sobre factoring y compras de facturas a créditos",
     "buttons": {
       "support": "Contactar Soporte",
       "whatsapp": "Correo: hola@facturea.io"

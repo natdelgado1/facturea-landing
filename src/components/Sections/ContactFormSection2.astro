@@ -333,13 +333,14 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
 </style>
 
 <script>
-  // Interfaz global para TypeScript
-  interface Window {
-    grecaptcha: any;
-    emailjs: any;
-    onRecaptchaCallback: () => void;
-    onRecaptchaExpired: () => void;
-  }
+  /** Extensión del DOM Window (evita declarar `interface Window`, que choca con el tipo global). */
+  type WindowWithRecaptcha = Window & {
+    grecaptcha?: any;
+    onRecaptchaCallback?: () => void;
+    onRecaptchaExpired?: () => void;
+  };
+
+  const win = window as unknown as WindowWithRecaptcha;
 
   // Variables globales para reCAPTCHA
   let recaptchaResponse: string | null = null;
@@ -355,8 +356,8 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
   const RECAPTCHA_SITE_KEY = import.meta.env.RECAPTCHA_SITE_KEY || "6Ld3L44rAAAAAFx1NlnmlugKLAZ_r2sRbl48KQ3d";
 
   // Funciones de callback para reCAPTCHA (deben ser globales)
-  window.onRecaptchaCallback = function() {
-    recaptchaResponse = window.grecaptcha.getResponse();
+  win.onRecaptchaCallback = function () {
+    recaptchaResponse = win.grecaptcha.getResponse();
     console.log('reCAPTCHA completado exitosamente');
     
     // Remover cualquier mensaje de error de reCAPTCHA
@@ -366,7 +367,7 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
     }
   };
 
-  window.onRecaptchaExpired = function() {
+  win.onRecaptchaExpired = function () {
     recaptchaResponse = null;
     console.log('reCAPTCHA expirado - se requiere nueva verificación');
     
@@ -484,10 +485,10 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
 
   // Función para inicializar reCAPTCHA v3
   function initializeRecaptcha() {
-    if (window.grecaptcha && window.grecaptcha.ready) {
+    if (win.grecaptcha && win.grecaptcha.ready) {
       try {
-        window.grecaptcha.ready(function() {
-          window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'})
+        win.grecaptcha.ready(function () {
+          win.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "submit" })
             .then(function(token: string) {
               recaptchaResponse = token;
               console.log('reCAPTCHA v3 ejecutado exitosamente');
@@ -692,7 +693,7 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
 
     // Inicializar reCAPTCHA cuando esté disponible
     const checkRecaptcha = setInterval(() => {
-      if (window.grecaptcha && window.grecaptcha.render) {
+      if (win.grecaptcha && win.grecaptcha.render) {
         clearInterval(checkRecaptcha);
         initializeRecaptcha();
       }
@@ -701,7 +702,7 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
     // Timeout para evitar bucle infinito
     setTimeout(() => {
       clearInterval(checkRecaptcha);
-      if (!window.grecaptcha) {
+      if (!win.grecaptcha) {
         console.error('reCAPTCHA no se pudo cargar');
         showMessage('Error al cargar reCAPTCHA. Por favor, recarga la página.', false);
       }
@@ -791,7 +792,7 @@ import TitleSecundary from "../UI/TitleSecundary.astro";
         // Ejecutar reCAPTCHA v3 automáticamente
         if (!recaptchaResponse) {
           try {
-            window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'})
+            win.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "submit" })
               .then(function(token: string) {
                 recaptchaResponse = token;
                 // Continuar con el envío del formulario
