@@ -307,7 +307,7 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
             if (entry.isIntersecting) {
               // Cargar script de animaciones cuando la sección es visible
               const script = document.createElement('script');
-              script.src = '/src/scripts/how-it-works-animations.js';
+              script.src = '/scripts/how-it-works-animations.js';
               script.defer = true;
               script.async = true;
               document.head.appendChild(script);
@@ -326,7 +326,7 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
         // Cargar después de un delay
         setTimeout(() => {
           const script = document.createElement('script');
-          script.src = '/src/scripts/how-it-works-animations.js';
+          script.src = '/scripts/how-it-works-animations.js';
           script.defer = true;
           script.async = true;
           document.head.appendChild(script);

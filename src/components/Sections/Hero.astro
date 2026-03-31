@@ -3,6 +3,7 @@
 import "../../styles/hero-critical.css";
 // CSS no crítico cargado de forma asíncrona
 import "../../styles/hero.css";
+import "../../styles/hero-typewriter.css";
 const cdn =
   "https://unpkg.com/@lottiefiles/dotlottie-wc@0.6.2/dist/dotlottie-wc.js";
 const heroAnimation =
@@ -128,32 +129,11 @@ import heroData from "@/data/hero.json";
   <script>
     import { initHeroAnimations } from "../../scripts/hero-typewriter";
 
-    // Función para cargar CSS de typewriter de forma condicional
-    function loadTypewriterCSS() {
-      // Verificar si el usuario prefiere menos movimiento
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return; // No cargar animaciones si el usuario prefiere menos movimiento
-      }
-
-      // Cargar CSS de typewriter solo si es necesario
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = "/src/styles/hero-typewriter.css";
-      link.media = "print";
-      link.onload = function () {
-        link.media = "all";
-      };
-      document.head.appendChild(link);
-    }
-
-    // Efecto Typewriter simple y robusto
+    // Efecto Typewriter simple y robusto (CSS empaquetado vía import en frontmatter)
     document.addEventListener("DOMContentLoaded", function () {
       const typewriterTexts = document.querySelectorAll(".typewriter-text");
 
       if (typewriterTexts.length > 0) {
-        // Cargar CSS de typewriter
-        loadTypewriterCSS();
-        // Inicializar el efecto typewriter
         initHeroAnimations();
       }
     });
