@@ -71,48 +71,7 @@ export default defineConfig({
       }
     },
     build: {
-      // Optimizaciones de build ultra-agresivas
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-          pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
-          passes: 3, // Aumentado de 2
-          unsafe: true,
-          unsafe_comps: true,
-          unsafe_Function: true,
-          unsafe_math: true,
-          unsafe_proto: true,
-          unsafe_regexp: true,
-          unsafe_undefined: true,
-          dead_code: true,
-          evaluate: true,
-          hoist_funs: true,
-          hoist_props: true,
-          hoist_vars: true,
-          if_return: true,
-          join_vars: true,
-          loops: true,
-          properties: true,
-          sequences: true,
-          side_effects: true,
-          toplevel: true,
-          typeofs: true,
-          unused: true
-        },
-        mangle: {
-          toplevel: true,
-          eval: true,
-          keep_fnames: false,
-          reserved: []
-        },
-        format: {
-          comments: false,
-          beautify: false
-        }
-      },
-      // Optimizaciones de chunking
+      // Mantener optimizaciones seguras para evitar romper el bundle server
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
@@ -135,13 +94,6 @@ export default defineConfig({
     // Optimizaciones adicionales
     define: {
       'process.env.NODE_ENV': '"production"'
-    },
-    esbuild: {
-      drop: ['console', 'debugger'],
-      legalComments: 'none',
-      minifyIdentifiers: true,
-      minifySyntax: true,
-      minifyWhitespace: true
     }
   }
 });
