@@ -161,6 +161,20 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     }
   }
 
+  // Tracking orientado a valor de negocio (GA4 + GTM)
+  function trackValueEvent(eventName, params = {}) {
+    if (window.gtag) {
+      gtag('event', eventName, params);
+    }
+
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: eventName,
+        ...params
+      });
+    }
+  }
+
   // Tracking de formularios y eventos clave
   document.addEventListener('DOMContentLoaded', function() {
     
@@ -177,47 +191,106 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     }
 
     // ============================================
-    // 🎯 EVENTO CLAVE 2: Solicitar Demo
+    // 🎯 EVENTO CLAVE 2: Ir a Solicitar Demo
     // ============================================
-    const demoForm = document.getElementById('demo-form');
-    if (demoForm) {
-      demoForm.addEventListener('submit', function() {
-        trackEvent('generate_lead', 'Conversion', 'Solicitar Demo', 2);
-        trackEvent('demo_request', 'Conversion', 'Demo Form Submitted', 1);
-        console.log('📊 Analytics: Demo solicitada');
-      });
-    }
-
-    // Botón para abrir modal de demo
-    const demoBtn = document.getElementById('demo-btn');
-    if (demoBtn) {
-      demoBtn.addEventListener('click', function() {
-        trackEvent('open_demo_modal', 'Engagement', 'Demo Button Click', 1);
-        console.log('📊 Analytics: Modal de demo abierto');
-      });
-    }
-
-    // ============================================
-    // 🎯 EVENTO CLAVE 3: Explorar Factoring (Hero)
-    // ============================================
-    const heroSection = document.getElementById('inicio');
-    if (heroSection) {
-      const heroButton = heroSection.querySelector('button');
-      if (heroButton) {
-        heroButton.addEventListener('click', function() {
-          trackEvent('cta_click', 'Conversion', 'Explorar Factoring', 3);
-          trackEvent('hero_cta', 'Engagement', 'Hero Button Click', 1);
-          console.log('📊 Analytics: Botón Explorar Factoring clickeado');
+    const aboutDemoCta = document.getElementById('about-demo-cta');
+    if (aboutDemoCta) {
+      aboutDemoCta.addEventListener('click', function() {
+        trackValueEvent('demo_cta_click', {
+          cta_name: 'solicitar_demo',
+          cta_position: 'about_section',
+          destination: '/solicitar-demo',
+          value: 25,
+          currency: 'USD'
         });
-      }
+        trackValueEvent('cta_click_value', {
+          cta_name: 'solicitar_demo',
+          cta_position: 'about_section',
+          destination: '/solicitar-demo',
+          value: 25,
+          currency: 'USD'
+        });
+      });
     }
 
     // ============================================
-    // 🎯 EVENTO CLAVE 4: Iniciar Sesión
+    // 🎯 EVENTO CLAVE 3: CTA principal Hero - Hablar con asesor
+    // ============================================
+    const heroWhatsappCta = document.getElementById('hero-whatsapp-cta');
+    if (heroWhatsappCta) {
+      heroWhatsappCta.addEventListener('click', function() {
+        trackValueEvent('generate_lead', {
+          lead_type: 'advisor_chat',
+          method: 'whatsapp',
+          cta_position: 'hero_primary',
+          destination: 'wa.me',
+          value: 30,
+          currency: 'USD'
+        });
+        trackValueEvent('cta_click_value', {
+          cta_name: 'hablar_con_asesor',
+          cta_position: 'hero_primary',
+          destination: 'https://wa.me/595973481855',
+          value: 30,
+          currency: 'USD'
+        });
+      });
+    }
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 4: CTA Hero - Crear cuenta gratis
+    // ============================================
+    const heroSignupCta = document.getElementById('hero-signup-cta');
+    if (heroSignupCta) {
+      heroSignupCta.addEventListener('click', function() {
+        trackValueEvent('sign_up', {
+          method: 'hero_signup_cta',
+          cta_position: 'hero_secondary',
+          destination: 'https://app.facturea.io/signup',
+          value: 80,
+          currency: 'USD'
+        });
+        trackValueEvent('cta_click_value', {
+          cta_name: 'crear_cuenta_gratis',
+          cta_position: 'hero_secondary',
+          destination: 'https://app.facturea.io/signup',
+          value: 80,
+          currency: 'USD'
+        });
+      });
+    }
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 5: Botón flotante de WhatsApp
+    // ============================================
+    const floatingWhatsappCta = document.getElementById('whatsapp-float');
+    if (floatingWhatsappCta) {
+      floatingWhatsappCta.addEventListener('click', function() {
+        trackValueEvent('generate_lead', {
+          lead_type: 'advisor_chat',
+          method: 'whatsapp',
+          cta_position: 'floating_button',
+          destination: 'wa.me',
+          value: 20,
+          currency: 'USD'
+        });
+        trackValueEvent('cta_click_value', {
+          cta_name: 'whatsapp_flotante',
+          cta_position: 'floating_button',
+          destination: 'https://wa.me/595973481855',
+          value: 20,
+          currency: 'USD'
+        });
+      });
+    }
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 6: Enlaces a app.facturea.io
     // ============================================
     const loginLinks = document.querySelectorAll('a[href*="app.facturea.io"]');
     loginLinks.forEach(link => {
-      link.addEventListener('click', function() {
+      link.addEventListener('click', () => {
+        if ((link as HTMLAnchorElement).id === 'hero-signup-cta') return;
         trackEvent('login_click', 'Conversion', 'Iniciar Sesión', 4);
         trackEvent('outbound_click', 'Navigation', 'App Facturea', 1);
         console.log('📊 Analytics: Click en Iniciar Sesión');
@@ -225,12 +298,12 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     });
 
     // ============================================
-    // 🎯 EVENTO CLAVE 5: Selección de tipo de usuario
+    // 🎯 EVENTO CLAVE 7: Selección de tipo de usuario
     // ============================================
     const userTypeInputs = document.querySelectorAll('.user-type-input');
     userTypeInputs.forEach(input => {
-      input.addEventListener('change', function() {
-        const userType = (this as HTMLInputElement).value;
+      input.addEventListener('change', () => {
+        const userType = (input as HTMLInputElement).value;
         trackEvent('user_type_selected', 'Engagement', userType === 'empresa' ? 'Facturador' : 'Inversor', 1);
         console.log('📊 Analytics: Tipo de usuario seleccionado -', userType);
       });
@@ -241,8 +314,8 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     // ============================================
     const ctaButtons = document.querySelectorAll('button[class*="bg-gradient"], a[class*="bg-gradient"]');
     ctaButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const buttonText = this.textContent?.trim() || 'CTA Button';
+      button.addEventListener('click', () => {
+        const buttonText = (button as HTMLElement).textContent?.trim() || 'CTA Button';
         trackEvent('button_click', 'Engagement', buttonText, 1);
       });
     });
@@ -288,7 +361,8 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
   });
 
   // Exponer función global para tracking manual
-  window.trackEvent = trackEvent;
+  (window as any).trackEvent = trackEvent;
+  (window as any).trackValueEvent = trackValueEvent;
 </script>
 
 <!-- Google Tag Manager (noscript) -->

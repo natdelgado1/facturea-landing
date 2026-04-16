@@ -1,0 +1,426 @@
+---
+import "../styles/global.css";
+import "../styles/performance-optimizations.css";
+import NavBar from "../components/Sections/navBar.astro";
+import FooterSection2 from "../components/Sections/FooterSection2.astro";
+import Analytics from "../components/Analytics.astro";
+import StructuredData from "../components/StructuredData.astro";
+
+const recaptchaSiteKey =
+  import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ||
+  "6Ld3L44rAAAAAFx1NlnmlugKLAZ_r2sRbl48KQ3d";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Solicitar demo | Facturea</title>
+    <meta
+      name="description"
+      content="Solicitá una demo de Facturea y descubrí cómo acelerar la liquidez de tu empresa con factoring digital."
+    />
+    <meta property="og:title" content="Solicitar demo | Facturea" />
+    <meta
+      property="og:description"
+      content="Completá el formulario y nuestro equipo te contacta para una demo personalizada."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://facturea.io/solicitar-demo" />
+    <link rel="preconnect" href="https://www.google.com" crossorigin />
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+    <Analytics />
+    <StructuredData />
+    {
+      recaptchaSiteKey && (
+        <script
+          async
+          defer
+          src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`}
+        />
+      )
+    }
+  </head>
+  <body class="font-visby antialiased text-gray-900 bg-gradient-to-b from-gray-50 to-white">
+    <NavBar />
+    <main class="pt-24 pb-16 sm:pt-28 sm:pb-24">
+      <section class="px-4 mx-auto max-w-6xl sm:px-6 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-2 lg:gap-16 lg:items-start">
+          <div class="space-y-6">
+            <span
+              class="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full border text-primary border-primary/20 bg-primary/5"
+            >
+              Solicitud de demo
+            </span>
+            <h1 class="text-4xl font-black tracking-tight sm:text-5xl">
+              Agenda una demo y descubre como Facturea impulsa tu flujo de caja
+            </h1>
+            <p class="text-lg leading-relaxed text-gray-600 sm:text-xl">
+              Un asesor te mostrara el proceso completo y tiempos
+              de desembolso para tu empresa.
+            </p>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex gap-3 items-start">
+                <span class="mt-1 w-2 h-2 rounded-full bg-primary"></span>
+                <span>Demostracion guiada con enfoque practico.</span>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span class="mt-1 w-2 h-2 rounded-full bg-secondary"></span>
+                <span>Respuesta en menos de 24 horas hábiles.</span>
+              </li>
+              <li class="flex gap-3 items-start">
+                <span class="mt-1 w-2 h-2 rounded-full bg-accent"></span>
+                <span>Recomendaciones segun tu perfil de empresa o comprador.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-6 bg-white rounded-2xl border border-gray-200 shadow-xl sm:p-8">
+
+            <!-- Panel de éxito (oculto hasta el envío) -->
+            <div
+              id="demo-success-panel"
+              class="hidden flex-col items-center text-center py-6 gap-5"
+            >
+              <div class="flex items-center justify-center w-20 h-20 rounded-full bg-green-100">
+                <svg class="w-10 h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">¡Solicitud enviada!</h3>
+                <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+                  Recibimos tu solicitud. Nuestro equipo te va a contactar en
+                  <strong class="text-gray-700">menos de 24 horas hábiles</strong>.
+                </p>
+              </div>
+              <div class="w-full border-t border-gray-100 pt-5 flex flex-col gap-3">
+                <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold">¿Preferís respuesta inmediata?</p>
+                <a
+                  href="https://wa.me/595973481855"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#25d366] hover:bg-[#1ebe5d] text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  Escribinos por WhatsApp
+                </a>
+                <a
+                  href="/"
+                  class="text-sm text-gray-400 hover:text-gray-600 transition-colors duration-200 underline underline-offset-4"
+                >
+                  Volver al inicio
+                </a>
+              </div>
+            </div>
+
+            <!-- Formulario (se oculta al enviar) -->
+            <div id="demo-form-wrapper">
+              <h2 class="mb-2 text-2xl font-bold">Completa tu solicitud</h2>
+              <p class="mb-6 text-sm text-gray-500">
+                Los campos marcados con * son obligatorios.
+              </p>
+              <p class="mb-6 text-sm font-medium text-primary bg-primary/5 border border-primary/20 rounded-lg px-4 py-3">
+                Actualmente operamos exclusivamente en Paraguay.
+              </p>
+            </div>
+            <form id="demo-page-form" class="space-y-4" novalidate>
+              <div>
+                <label for="demo-name" class="block mb-1 text-sm font-semibold text-gray-700">Nombre completo *</label>
+                <input
+                  id="demo-name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  class="px-4 py-3 w-full rounded-xl border border-gray-300 transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  placeholder="Ej. Natalia Delgado"
+                />
+              </div>
+
+              <div>
+                <label for="demo-email" class="block mb-1 text-sm font-semibold text-gray-700">Correo electronico *</label>
+                <input
+                  id="demo-email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  class="px-4 py-3 w-full rounded-xl border border-gray-300 transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  placeholder="nombre@empresa.com"
+                />
+              </div>
+
+              <div>
+                <label for="demo-phone" class="block mb-1 text-sm font-semibold text-gray-700">Celular *</label>
+                <input
+                  id="demo-phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  autocomplete="tel"
+                  inputmode="numeric"
+                  maxlength="13"
+                  class="px-4 py-3 w-full rounded-xl border border-gray-300 transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  placeholder="0971 123 456"
+                />
+                <p class="mt-1 text-xs text-gray-500">
+                  Formato sugerido: 0971 123 456.
+                </p>
+              </div>
+
+              <div>
+                <label for="demo-company" class="block mb-1 text-sm font-semibold text-gray-700">Empresa (opcional)</label>
+                <input
+                  id="demo-company"
+                  name="company"
+                  type="text"
+                  autocomplete="organization"
+                  class="px-4 py-3 w-full rounded-xl border border-gray-300 transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  placeholder="Ej. Mi Empresa S.A. o tu nombre completo"
+                />
+                <p class="mt-1 text-xs text-gray-500">
+                  Si sos persona natural, podés escribir tu nombre o dejar este campo vacío.
+                </p>
+              </div>
+
+
+              <button
+                id="demo-submit-btn"
+                type="submit"
+                class="px-6 py-3 w-full font-bold text-white bg-gradient-to-r rounded-xl transition-all duration-300 from-primary via-secondary to-accent hover:shadow-xl"
+              >
+                Enviar solicitud de demo
+              </button>
+
+              <p id="demo-form-feedback" class="hidden text-sm font-medium"></p>
+              <p class="text-xs leading-relaxed text-gray-500">
+                Este formulario esta protegido por reCAPTCHA. Aplican la
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline"
+                >Politica de Privacidad</a> y los
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline"
+                >Terminos de Servicio</a> de Google.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <FooterSection2 />
+
+    <script is:inline define:vars={{ recaptchaSiteKey }}>
+      (function () {
+        var form = document.getElementById("demo-page-form");
+        var submitBtn = document.getElementById("demo-submit-btn");
+        var feedback = document.getElementById("demo-form-feedback");
+        var phoneInput = document.getElementById("demo-phone");
+        var successPanel = document.getElementById("demo-success-panel");
+        var formWrapper = document.getElementById("demo-form-wrapper");
+        if (!form || !submitBtn || !feedback) return;
+
+        var started = false;
+        var queryParams = new URLSearchParams(window.location.search);
+        var ctaOrigin = queryParams.get("origin") || "direct";
+
+        function normalizePhoneInput(value) {
+          var digits = value.replace(/\D/g, "");
+          if (digits.startsWith("595")) {
+            digits = digits.slice(3);
+          }
+          if (digits.startsWith("0")) {
+            digits = digits.slice(1);
+          }
+          digits = digits.slice(0, 9);
+          return digits;
+        }
+
+        function formatPhoneMask(value) {
+          var digits = normalizePhoneInput(value);
+          var localNumber = digits ? "0" + digits : "";
+
+          var chunks = [];
+          if (localNumber.length > 0) chunks.push(localNumber.slice(0, 4));
+          if (localNumber.length > 4) chunks.push(localNumber.slice(4, 7));
+          if (localNumber.length > 7) chunks.push(localNumber.slice(7, 10));
+
+          return chunks.join(" ");
+        }
+
+        if (phoneInput) {
+          phoneInput.addEventListener("input", function () {
+            phoneInput.value = formatPhoneMask(phoneInput.value);
+          });
+
+          phoneInput.addEventListener("blur", function () {
+            if (phoneInput.value) {
+              phoneInput.value = formatPhoneMask(phoneInput.value);
+            }
+          });
+        }
+
+        function trackFunnelEvent(eventName, params) {
+          if (window.gtag) {
+            window.gtag("event", eventName, params);
+          }
+          if (window.dataLayer) {
+            window.dataLayer.push({
+              event: eventName,
+              ...params,
+            });
+          }
+        }
+
+        function setFeedback(message, type) {
+          feedback.textContent = message;
+          feedback.classList.remove("hidden", "text-red-600", "text-green-600");
+          feedback.classList.add(type === "error" ? "text-red-600" : "text-green-600");
+        }
+
+        function clearFeedback() {
+          feedback.textContent = "";
+          feedback.classList.add("hidden");
+          feedback.classList.remove("text-red-600", "text-green-600");
+        }
+
+        trackFunnelEvent("demo_page_view", {
+          page_type: "demo_landing",
+          lead_channel: "web",
+          cta_origin: ctaOrigin,
+          value: 5,
+          currency: "USD",
+        });
+
+        form.addEventListener("focusin", function () {
+          if (started) return;
+          started = true;
+          trackFunnelEvent("demo_form_start", {
+            page_type: "demo_landing",
+            cta_origin: ctaOrigin,
+            lead_channel: "web",
+          });
+        });
+
+        form.addEventListener("submit", async function (event) {
+          event.preventDefault();
+          clearFeedback();
+
+          var formData = new FormData(form);
+          var payload = {
+            name: (formData.get("name") || "").toString().trim(),
+            email: (formData.get("email") || "").toString().trim(),
+            phone: (formData.get("phone") || "").toString().trim(),
+            company: (formData.get("company") || "").toString().trim(),
+            monthlyVolume: (formData.get("monthlyVolume") || "").toString().trim(),
+            ctaOrigin: ctaOrigin,
+            recaptchaToken: "",
+          };
+
+          trackFunnelEvent("demo_form_submit_attempt", {
+            page_type: "demo_landing",
+            cta_origin: ctaOrigin,
+            lead_channel: "web",
+            has_phone: !!payload.phone,
+          });
+
+          if (!payload.name || !payload.email || !payload.phone) {
+            setFeedback("Completa nombre, correo y celular para continuar.", "error");
+            trackFunnelEvent("demo_form_error", {
+              error_code: "missing_required_fields",
+              cta_origin: ctaOrigin,
+            });
+            return;
+          }
+
+          var phoneDigits = normalizePhoneInput(payload.phone);
+          if (phoneDigits.length !== 9) {
+            setFeedback("Ingresa un celular valido en formato 0971 123 456.", "error");
+            trackFunnelEvent("demo_form_error", {
+              error_code: "invalid_phone_format",
+              cta_origin: ctaOrigin,
+            });
+            return;
+          }
+          payload.phone = "+595 " + phoneDigits.slice(0, 3) + " " + phoneDigits.slice(3, 6) + " " + phoneDigits.slice(6, 9);
+
+          if (!recaptchaSiteKey || !window.grecaptcha || !window.grecaptcha.execute) {
+            setFeedback("No pudimos validar seguridad. Recarga la pagina e intenta de nuevo.", "error");
+            trackFunnelEvent("demo_form_error", {
+              error_code: "recaptcha_unavailable",
+              cta_origin: ctaOrigin,
+            });
+            return;
+          }
+
+          submitBtn.setAttribute("disabled", "disabled");
+          submitBtn.textContent = "Enviando...";
+
+          try {
+            var recaptchaToken = await window.grecaptcha.execute(recaptchaSiteKey, {
+              action: "demo_submit",
+            });
+            payload.recaptchaToken = recaptchaToken;
+
+            var response = await fetch("/api/lead-demo", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            });
+
+            var result = await response.json();
+            if (!response.ok || !result.ok) {
+              throw new Error(result.errorCode || "lead_submit_failed");
+            }
+
+            form.reset();
+            if (successPanel && formWrapper) {
+              formWrapper.style.display = "none";
+              form.style.display = "none";
+              successPanel.classList.remove("hidden");
+              successPanel.classList.add("flex");
+              successPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+            } else {
+              setFeedback("Solicitud enviada con exito. Nuestro equipo te contactara pronto.", "success");
+            }
+            trackFunnelEvent("generate_lead", {
+              lead_type: "demo_request",
+              lead_channel: "web",
+              cta_origin: ctaOrigin,
+              has_phone: true,
+              value: 120,
+              currency: "USD",
+            });
+          } catch (error) {
+            var errorCode = error && error.message ? error.message : "unknown_error";
+            if (errorCode === "missing_server_env") {
+              setFeedback("El captcha está funcionando, pero falta configurar variables del servidor (Brevo/reCAPTCHA secret).", "error");
+            } else {
+              setFeedback("No pudimos enviar tu solicitud. Intenta nuevamente en unos minutos.", "error");
+            }
+            trackFunnelEvent("demo_form_error", {
+              error_code: errorCode,
+              cta_origin: ctaOrigin,
+            });
+          } finally {
+            submitBtn.removeAttribute("disabled");
+            submitBtn.textContent = "Enviar solicitud de demo";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

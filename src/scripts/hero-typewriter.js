@@ -1,5 +1,17 @@
 export function initHeroAnimations() {
     const typewriterTexts = document.querySelectorAll(".typewriter-text");
+    if (typewriterTexts.length === 0) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        typewriterTexts.forEach((element) => {
+            const full = element.getAttribute("data-text") || "";
+            element.textContent = full;
+            element.classList.add("complete");
+            element.classList.remove("typing");
+        });
+        return;
+    }
+
     let currentIndex = 0;
 
     function typeNextText() {
@@ -40,9 +52,9 @@ export function initHeroAnimations() {
           setTimeout(() => {
             currentIndex++;
             typeNextText();
-          }, 150); // Pausa entre palabras (más rápida)
+          }, 100);
         }
-      }, 50); // Velocidad de escritura (ms por letra) - más rápido
+      }, 38);
     }
 
     // Inicializar todos los elementos como vacíos
@@ -51,6 +63,5 @@ export function initHeroAnimations() {
       element.classList.remove('typing', 'complete');
     });
 
-    // Iniciar la secuencia
-    setTimeout(typeNextText, 500); // Delay inicial
+    setTimeout(typeNextText, 280);
 }

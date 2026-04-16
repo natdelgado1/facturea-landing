@@ -28,6 +28,6 @@
   ],
   "textPrimaryButton": "Empezá Ahora",
   "linkPrimaryButton": "https://app.facturea.io/",
-  "textSecondaryButton": "Solicitar Demo",
-  "linkSecondaryButton": "https://app.facturea.io/"
+  "textSecondaryButton": "Solicitar demo",
+  "linkSecondaryButton": "/solicitar-demo?origin=about_section"
 }

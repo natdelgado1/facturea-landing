@@ -60,24 +60,15 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 
             <!-- CTA buttons -->
             <nav class="mt-12 gsap-cta sm:mt-16" aria-label="Acciones principales">
-                <div class="flex flex-col gap-4 justify-center items-center sm:flex-row" role="group" aria-label="Botones de llamada a la acción">
+                <div class="flex justify-center items-center" role="group" aria-label="Botones de llamada a la acción">
                     <a 
                         class="btn btn--primary gsap-btn-primary" 
-                        href={about.linkPrimaryButton} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        aria-label={`${about.textPrimaryButton} - Se abre en una nueva ventana`}
-                    >
-                        {about.textPrimaryButton}
-                    </a>
-                    <button 
-                        type="button"
-                        class="btn btn--secondary gsap-btn-secondary cursor-pointer relative focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" 
-                        id="demo-btn"
-                        aria-label="Abrir formulario para solicitar una demostración"
+                        id="about-demo-cta"
+                        href={about.linkSecondaryButton}
+                        aria-label="Ir a la página para solicitar una demo"
                     >
                         {about.textSecondaryButton}
-                    </button>
+                    </a>
                 </div>
             </nav>
 

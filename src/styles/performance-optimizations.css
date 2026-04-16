@@ -1,15 +1,21 @@
 /* ✅ OPTIMIZACIONES DE PERFORMANCE ULTRA-AGRESIVAS PARA MÁXIMO RENDIMIENTO */
 
-/* Optimizaciones de GPU y compositing ultra-agresivas */
+/* Optimizaciones de scroll — sin transform en body para no romper position:fixed */
 .scrolling { 
   will-change: scroll-position; 
-  transform: translateZ(0);
-  backface-visibility: hidden;
 }
 
 /* Optimizaciones de layout crítico */
 * { 
   box-sizing: border-box; 
+}
+
+/* contain: layout solo en secciones de contenido, NO en elementos fijos */
+main > section,
+footer,
+.performance-optimized,
+.critical,
+.non-critical {
   contain: layout style;
 }
 
@@ -90,15 +96,16 @@ button, a {
 /* Optimizaciones para dispositivos móviles ultra-agresivas */
 @media (max-width: 768px) {
   .hero-animate { 
-    transition-duration: 0.2s; /* Reducido de 0.3s */
+    transition-duration: 0.2s;
   }
   .animate-on-scroll { 
-    transition-duration: 0.2s; /* Reducido de 0.3s */
+    transition-duration: 0.2s;
   }
-  /* Reducir animaciones en móvil ultra-agresivamente */
-  * { 
-    animation-duration: 0.2s !important; /* Reducido de 0.3s */
-    transition-duration: 0.2s !important; /* Reducido de 0.3s */
+  .fade-in-up,
+  .progressive-reveal-element,
+  .intersection-observer {
+    animation-duration: 0.2s;
+    transition-duration: 0.2s;
   }
 }
 

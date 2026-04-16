@@ -10,7 +10,6 @@ import FAQSection2 from "../components/Sections/FAQSection2.astro";
 import FooterSection2 from "../components/Sections/FooterSection2.astro";
 import NavBar from "../components/Sections/navBar.astro";
 import ScrollToTop from "../components/ScrollToTop.astro";
-import DemoModal from "../components/UI/DemoModal.astro";
 import Analytics from "../components/Analytics.astro";
 import StructuredData from "../components/StructuredData.astro";
 ---
@@ -105,10 +104,10 @@ import StructuredData from "../components/StructuredData.astro";
       /* Critical CSS inline para hero y navegación */
       .hero-animate {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(16px);
         transition:
-          opacity 0.4s ease,
-          transform 0.4s ease;
+          opacity 0.28s ease,
+          transform 0.28s ease;
       }
       .hero-animate.loaded {
         opacity: 1;
@@ -116,10 +115,10 @@ import StructuredData from "../components/StructuredData.astro";
       }
       .animate-on-scroll {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
         transition:
-          opacity 0.4s ease,
-          transform 0.4s ease;
+          opacity 0.28s ease,
+          transform 0.28s ease;
       }
       .animate-on-scroll.visible {
         opacity: 1;
@@ -146,8 +145,6 @@ import StructuredData from "../components/StructuredData.astro";
 
       <!-- ¿Por qué elegir Facturea? -->
       <AboutSection2 />
-      <!-- Modal para Demo -->
-      <DemoModal />
       <!-- ¿Cómo funciona? - Versión moderna con tabs -->
       <HowItWorksSection2 />
 
@@ -172,25 +169,6 @@ import StructuredData from "../components/StructuredData.astro";
       var scrollTimeout: ReturnType<typeof setTimeout> | undefined;
       var isScrolling = false;
       var animationsLoaded = false;
-
-      // ✅ Función para cargar scripts con lazy loading ultra-optimizada
-      function loadScriptLazy(src: string, callback: () => void) {
-        if (document.querySelector('script[src="' + src + '"]')) {
-          if (callback) callback();
-          return;
-        }
-
-        var script = document.createElement("script");
-        script.src = src;
-        script.async = true;
-        script.defer = true;
-
-        if (callback) {
-          script.onload = callback;
-        }
-
-        document.head.appendChild(script);
-      }
 
       // ✅ Navegación activa ultra-optimizada con RAF
       function initActiveNavOptimized() {
@@ -295,59 +273,72 @@ import StructuredData from "../components/StructuredData.astro";
         var links = document.querySelectorAll('a[href^="#"]');
 
         for (var i = 0; i < links.length; i++) {
-          var link = links[i];
-          link.addEventListener("click", function (e) {
-            e.preventDefault();
-            var targetId = (this as HTMLAnchorElement).getAttribute("href");
-            if (!targetId) return;
+          (function (anchor: HTMLAnchorElement) {
+            anchor.addEventListener("click", function (e: MouseEvent) {
+              e.preventDefault();
+              var targetId = anchor.getAttribute("href");
+              if (!targetId) return;
 
-            var targetElement = document.querySelector(targetId);
+              var targetElement = document.querySelector(targetId);
 
-            if (targetElement) {
-              var offsetTop = (targetElement as HTMLElement).offsetTop - 80;
-              window.scrollTo({
-                top: offsetTop,
-                behavior: "smooth",
-              });
-            }
-          });
+              if (targetElement) {
+                var offsetTop = (targetElement as HTMLElement).offsetTop - 80;
+                window.scrollTo({
+                  top: offsetTop,
+                  behavior: "smooth",
+                });
+              }
+            });
+          })(links[i] as HTMLAnchorElement);
         }
       }
 
-      // ✅ Animaciones CSS nativas ultra-optimizadas
+      // ✅ Animaciones CSS: selectores alineados al DOM (#inicio, ids de sección) y un solo observer por tipo (menos trabajo en scroll).
       function initCSSAnimations() {
         if (animationsLoaded) return;
 
-        // Hero animations con IntersectionObserver nativo
-        var heroElements = document.querySelectorAll(
-          "#hero h1, #hero p, #hero .bg-primary",
-        );
-        for (var i = 0; i < heroElements.length; i++) {
-          var el = heroElements[i];
-          el.classList.add("hero-animate");
-          el.style.transitionDelay = i * 0.1 + "s";
-
-          var observer = new IntersectionObserver(
-            function (entries) {
-              for (var j = 0; j < entries.length; j++) {
-                var entry = entries[j];
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("loaded");
-                  observer.unobserve(entry.target);
-                }
+        var heroObserver = new IntersectionObserver(
+          function (entries) {
+            for (var j = 0; j < entries.length; j++) {
+              var entry = entries[j];
+              if (entry.isIntersecting) {
+                entry.target.classList.add("loaded");
+                heroObserver.unobserve(entry.target);
               }
-            },
-            { threshold: 0.1 },
-          );
+            }
+          },
+          { threshold: 0.08, rootMargin: "0px 0px 0px 0px" },
+        );
 
-          observer.observe(el);
+        var heroElements = document.querySelectorAll("#inicio h1, #inicio p");
+        for (var i = 0; i < heroElements.length; i++) {
+          var hel = heroElements[i] as HTMLElement;
+          hel.classList.add("hero-animate");
+          hel.style.transitionDelay = Math.min(i * 0.05, 0.2) + "s";
+          heroObserver.observe(hel);
         }
 
-        // Scroll animations para secciones
-        var sections = ["beneficios", "como-funciona", "formulario", "faq"];
+        var scrollObserver = new IntersectionObserver(
+          function (entries) {
+            for (var m = 0; m < entries.length; m++) {
+              var e = entries[m];
+              if (e.isIntersecting) {
+                e.target.classList.add("visible");
+                scrollObserver.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+        );
+
+        var sections = [
+          "por-que-facturea",
+          "como-funciona",
+          "contacto",
+          "faq",
+        ];
         for (var k = 0; k < sections.length; k++) {
-          var sectionId = sections[k];
-          var section = document.getElementById(sectionId);
+          var section = document.getElementById(sections[k]);
           if (!section) continue;
 
           var elements = section.querySelectorAll(
@@ -356,21 +347,7 @@ import StructuredData from "../components/StructuredData.astro";
           for (var l = 0; l < elements.length; l++) {
             var element = elements[l];
             element.classList.add("animate-on-scroll");
-
-            var sectionObserver = new IntersectionObserver(
-              function (entries) {
-                for (var m = 0; m < entries.length; m++) {
-                  var entry = entries[m];
-                  if (entry.isIntersecting) {
-                    entry.target.classList.add("visible");
-                    sectionObserver.unobserve(entry.target);
-                  }
-                }
-              },
-              { threshold: 0.1 },
-            );
-
-            sectionObserver.observe(element);
+            scrollObserver.observe(element);
           }
         }
 
@@ -402,19 +379,6 @@ import StructuredData from "../components/StructuredData.astro";
             }, 50);
           }
         }, 0);
-
-        // Cargar animaciones avanzadas solo en desktop y en tiempo libre (chunk 4)
-        if (window.innerWidth > 768) {
-          const loadAdvancedAnimations = function() {
-            loadScriptLazy("/scripts/optimized-animations.js", function() {});
-          };
-          
-          if ("requestIdleCallback" in window) {
-            requestIdleCallback(loadAdvancedAnimations, { timeout: 3000 });
-          } else {
-            setTimeout(loadAdvancedAnimations, 2000);
-          }
-        }
       }
 
       // ✅ Inicialización cuando el DOM esté listo
@@ -493,5 +457,59 @@ import StructuredData from "../components/StructuredData.astro";
 
     <!-- Scroll to Top Button -->
     <ScrollToTop />
+
+    <!-- WhatsApp Floating Button -->
+    <a
+      id="whatsapp-float"
+      href="https://wa.me/595973481855?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20el%20factoring%20en%20Facturea"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Contactar por WhatsApp"
+      class="fixed bottom-8 right-6 z-50 flex items-center gap-3 pl-4 pr-5 py-3 text-white rounded-full shadow-lg transition-all duration-300 transform opacity-0 pointer-events-none translate-y-4 sm:bottom-10 sm:right-8 hover:scale-105 hover:shadow-2xl"
+      style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); will-change: transform, opacity;"
+    >
+      <svg class="w-7 h-7 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span class="hidden text-sm font-semibold sm:inline">Chateá con nosotros</span>
+    </a>
+
+    <style>
+      #whatsapp-float.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+      @keyframes wa-pulse {
+        0%, 100% { box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4); }
+        50% { box-shadow: 0 4px 24px rgba(37, 211, 102, 0.7); }
+      }
+      #whatsapp-float.visible {
+        animation: wa-pulse 2.5s ease-in-out infinite;
+      }
+      #whatsapp-float:hover {
+        animation: none;
+        box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+      }
+    </style>
+
+    <script>
+      (function () {
+        var waBtn = document.getElementById("whatsapp-float");
+        if (!waBtn) return;
+
+        var shown = false;
+        function checkScroll() {
+          var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+          if (!shown && scrollY > 400) {
+            waBtn!.classList.add("visible");
+            shown = true;
+            window.removeEventListener("scroll", checkScroll);
+          }
+        }
+        window.addEventListener("scroll", checkScroll, { passive: true });
+        checkScroll();
+      })();
+    </script>
   </body>
 </html>

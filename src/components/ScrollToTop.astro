@@ -1,7 +1,7 @@
 <!-- Botón flotante para ir hacia arriba -->
 <button 
     id="scroll-to-top" 
-    class="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-primary via-accent to-secondary text-white transition-all duration-300 opacity-0 pointer-events-none transform scale-90 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-primary/30 sm:w-14 sm:h-14 sm:bottom-10 sm:right-10"
+    class="fixed bottom-32 right-4 z-50 w-10 h-10 rounded-full bg-gradient-to-r from-primary via-accent to-secondary text-white transition-all duration-300 opacity-0 pointer-events-none transform scale-90 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-primary/30 sm:w-11 sm:h-11 sm:bottom-36 sm:right-6 md:w-12 md:h-12 md:bottom-10 md:right-10"
     aria-label="Ir hacia arriba"
     style="will-change: transform, opacity;"
 >
@@ -31,17 +31,18 @@
         const scrollThreshold = 300; // Aparece después de 300px de scroll
         
         if (!scrollToTopBtn) return;
+        const btn = scrollToTopBtn as HTMLElement;
         
         // Función para mostrar/ocultar el botón
         function toggleScrollButton() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
             if (scrollTop > scrollThreshold) {
-                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
-                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+                btn.classList.remove('opacity-0', 'pointer-events-none', 'scale-90');
+                btn.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
             } else {
-                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
-                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+                btn.classList.add('opacity-0', 'pointer-events-none', 'scale-90');
+                btn.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
             }
         }
         
