@@ -18,6 +18,7 @@
     "vercel-env": "vercel env ls"
   },
   "dependencies": {
+    "@astrojs/node": "^9.4.3",
     "@astrojs/tailwind": "^5.1.2",
     "astro": "^5.11.2",
     "gsap": "^3.13.0",
