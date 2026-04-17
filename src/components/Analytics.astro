@@ -4,6 +4,9 @@
 
 // Fallback para Google Analytics si no está configurada la variable de entorno
 const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-J0698JN1ZK';
+/** Activa GA4 DebugView (informe en tiempo real de depuración). Build: PUBLIC_GA_DEBUG=true. Runtime: ?ga_debug=1 en la URL. */
+const gaDebugBuild =
+  import.meta.env.PUBLIC_GA_DEBUG === 'true' || import.meta.env.DEV === true;
 const gtmId = import.meta.env.PUBLIC_GTM_ID;
 const hotjarId = import.meta.env.PUBLIC_HOTJAR_ID;
 const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
@@ -14,15 +17,20 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
   <>
     <!-- Google tag (gtag.js) -->
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-    <script is:inline define:vars={{ gaId }}>
+    <script is:inline define:vars={{ gaId, gaDebugBuild }}>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       window.gtag = window.gtag || gtag;
       gtag('js', new Date());
+      // DebugView de GA4 solo muestra hits con debug_mode: true (o extensión "Google Analytics Debugger").
+      // Producción: abre el sitio con ?ga_debug=1 para ver eventos en Administrar → DebugView.
+      var gaDebugUrl = /[?&]ga_debug=1(?:&|$)/.test(window.location.search || '');
+      var gaDebug = !!gaDebugBuild || gaDebugUrl;
       gtag('config', gaId, {
         page_title: document.title,
         page_location: window.location.href,
         send_page_view: true,
+        debug_mode: gaDebug,
         // Configuración adicional para mejorar el tracking
         anonymize_ip: true,
         allow_google_signals: true,
