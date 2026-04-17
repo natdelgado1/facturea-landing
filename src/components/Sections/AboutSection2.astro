@@ -61,9 +61,9 @@ import AdvisorCalendarCta from "../AdvisorCalendarCta.astro";
 
             <!-- CTA buttons -->
             <nav class="mt-12 gsap-cta sm:mt-16" aria-label="Acciones principales">
-                <div class="flex flex-col gap-4 justify-center items-center sm:flex-row sm:flex-wrap" role="group" aria-label="Botones de llamada a la acción">
+                <div class="flex flex-col gap-4 justify-center items-stretch sm:flex-row sm:flex-wrap sm:items-center" role="group" aria-label="Botones de llamada a la acción">
                     <a 
-                        class="btn btn--primary gsap-btn-primary" 
+                        class="btn btn--primary gsap-btn-primary inline-flex justify-center items-center" 
                         id="about-demo-cta"
                         href={about.linkSecondaryButton}
                         aria-label="Ir a la página para solicitar una demo"
@@ -73,6 +73,7 @@ import AdvisorCalendarCta from "../AdvisorCalendarCta.astro";
                     <AdvisorCalendarCta
                       position="about_section"
                       variant="outline"
+                      size="section"
                       label="Agendar con asesor"
                     />
                 </div>

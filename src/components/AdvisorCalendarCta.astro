@@ -5,6 +5,12 @@ interface Props {
   /** Identificador estable para analytics y UTM (p. ej. hero_tertiary, demo_column). */
   position: string;
   variant?: "outline" | "link" | "compact";
+  /**
+   * Solo aplica a `variant="outline"`:
+   * - `hero`: misma escala que el CTA secundario del Hero («Crear cuenta gratis»).
+   * - `section`: misma escala que `.btn` en secciones (p. ej. «Solicitar demo»).
+   */
+  size?: "hero" | "section";
   class?: string;
   label?: string;
 }
@@ -12,20 +18,33 @@ interface Props {
 const {
   position,
   variant = "outline",
+  size = "section",
   class: className = "",
   label = "Agendar con un asesor",
 } = Astro.props;
 
 const href = buildAdvisorCalendarUrl(position);
 
+/** Alineado con `hero-signup-cta` en Hero.astro */
+const outlineHero =
+  "flex gap-2 sm:gap-3 justify-center items-center px-5 py-3 w-full text-base font-bold bg-white rounded-xl border-2 transition-all duration-300 transform border-primary/20 text-primary sm:px-7 sm:py-4 sm:text-lg sm:w-auto md:px-10 md:py-5 md:rounded-2xl lg:text-xl hover:shadow-xl hover:scale-105 hover:-translate-y-1 hover:border-primary/40 group";
+
+/** Alineado con `.btn` en AboutSection2 (misma altura que «Solicitar demo»). */
+const outlineSection =
+  "flex gap-2 justify-center items-center px-6 py-3 w-full text-base font-semibold text-primary bg-white border-2 border-primary/20 rounded-xl transition-all duration-300 sm:w-auto sm:px-8 sm:py-4 sm:rounded-2xl sm:text-lg hover:shadow-xl hover:border-primary/40 hover:-translate-y-0.5 group";
+
 const variantClasses: Record<NonNullable<Props["variant"]>, string> = {
-  outline:
-    "inline-flex items-center justify-center gap-2 px-5 py-3 w-full sm:w-auto text-base font-semibold text-primary bg-white border-2 border-primary/25 rounded-xl transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-md",
+  outline: size === "hero" ? outlineHero : outlineSection,
   link:
     "inline-flex items-center gap-1.5 font-semibold text-primary hover:text-secondary underline underline-offset-4 decoration-primary/40 transition-colors",
   compact:
     "inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-secondary transition-colors",
 };
+
+const iconSizeOutline =
+  size === "hero"
+    ? "w-5 h-5 sm:w-6 sm:h-6 shrink-0 transition-transform duration-300 group-hover:scale-110"
+    : "w-5 h-5 sm:w-6 sm:h-6 shrink-0";
 ---
 
 <a
@@ -40,7 +59,11 @@ const variantClasses: Record<NonNullable<Props["variant"]>, string> = {
   <svg
     class:list={[
       "shrink-0",
-      variant === "compact" ? "w-4 h-4" : "w-5 h-5",
+      variant === "compact"
+        ? "w-4 h-4"
+        : variant === "outline"
+          ? iconSizeOutline
+          : "w-5 h-5",
     ]}
     fill="none"
     stroke="currentColor"
