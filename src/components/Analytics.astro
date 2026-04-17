@@ -176,8 +176,10 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
   }
 
   // Tracking de formularios y eventos clave
-  document.addEventListener('DOMContentLoaded', function() {
-    
+  // Los <script> procesados por Astro se ejecutan con defer (módulo): a menudo
+  // llegan DESPUÉS de DOMContentLoaded, y entonces addEventListener('DOMContentLoaded')
+  // nunca dispara → ningún CTA ni calendario envía eventos a GA4.
+  function initAnalyticsEventBindings() {
     // ============================================
     // 🎯 EVENTO CLAVE 1: Formulario de Contacto
     // ============================================
@@ -401,7 +403,13 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     sections.forEach(section => sectionObserver.observe(section));
 
     console.log('📊 Google Analytics: Eventos clave configurados');
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnalyticsEventBindings);
+  } else {
+    initAnalyticsEventBindings();
+  }
 
   // Exponer función global para tracking manual
   (window as any).trackEvent = trackEvent;
