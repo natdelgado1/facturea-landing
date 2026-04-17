@@ -2,8 +2,12 @@
 // Componente de Analytics para tracking y métricas
 // Incluye Google Analytics, Google Tag Manager y métricas personalizadas
 
-// Fallback para Google Analytics si no está configurada la variable de entorno
-const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID || 'G-J0698JN1ZK';
+// ID de medición: en producción DEBE venir de PUBLIC_GA_MEASUREMENT_ID (Vercel / CI).
+// Un fallback fijo envía datos a otra propiedad GA4 y parece “que no funciona” si miras otro flujo.
+const gaFromEnv = (import.meta.env.PUBLIC_GA_MEASUREMENT_ID || '').trim();
+const gaId =
+  gaFromEnv ||
+  (import.meta.env.DEV ? 'G-J0698JN1ZK' : '');
 /** Activa GA4 DebugView (informe en tiempo real de depuración). Build: PUBLIC_GA_DEBUG=true. Runtime: ?ga_debug=1 en la URL. */
 const gaDebugBuild =
   import.meta.env.PUBLIC_GA_DEBUG === 'true' || import.meta.env.DEV === true;
@@ -13,8 +17,10 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
 ---
 
 <!-- Google Analytics 4 -->
-{gaId && (
+{gaId ? (
   <>
+    <!-- Verificación rápida: ver código fuente o consola con ?ga_debug=1 -->
+    <meta name="facturea:ga-measurement-id" content={gaId} />
     <!-- Google tag (gtag.js) -->
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
     <script is:inline define:vars={{ gaId, gaDebugBuild }}>
@@ -36,8 +42,18 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
         allow_google_signals: true,
         allow_ad_personalization_signals: true
       });
+      if (gaDebug) {
+        console.info(
+          '[Facturea GA4] measurement_id en esta página:',
+          gaId,
+          '| Comprueba el mismo ID en GA4 → Administrar → Flujos de datos → tu flujo web.'
+        );
+      }
     </script>
   </>
+) : (
+  <!-- GA4 desactivado: define PUBLIC_GA_MEASUREMENT_ID en el build (p. ej. Vercel Environment Variables). -->
+  <meta name="facturea:ga-measurement-id" content="missing" />
 )}
 
 <!-- Google Tag Manager -->
