@@ -2,6 +2,7 @@
 import about from "@/data/about.json";
 import Badge from "../UI/Badge.astro";
 import TitlePrimary from "../UI/TitlePrimary.astro";
+import AdvisorCalendarCta from "../AdvisorCalendarCta.astro";
 ---
 
 <!-- ¿Por qué elegir Facturea? -->
@@ -60,7 +61,7 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
 
             <!-- CTA buttons -->
             <nav class="mt-12 gsap-cta sm:mt-16" aria-label="Acciones principales">
-                <div class="flex justify-center items-center" role="group" aria-label="Botones de llamada a la acción">
+                <div class="flex flex-col gap-4 justify-center items-center sm:flex-row sm:flex-wrap" role="group" aria-label="Botones de llamada a la acción">
                     <a 
                         class="btn btn--primary gsap-btn-primary" 
                         id="about-demo-cta"
@@ -69,6 +70,11 @@ import TitlePrimary from "../UI/TitlePrimary.astro";
                     >
                         {about.textSecondaryButton}
                     </a>
+                    <AdvisorCalendarCta
+                      position="about_section"
+                      variant="outline"
+                      label="Agendar con asesor"
+                    />
                 </div>
             </nav>
 

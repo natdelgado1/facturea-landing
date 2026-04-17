@@ -1,7 +1,7 @@
 ---
 import logoColor from "../../assets/logo_primary_color.svg";
 import footer from "@/data/footer.json";
-
+import AdvisorCalendarCta from "../AdvisorCalendarCta.astro";
 ---
 
 <!-- Footer - Estilo moderno v2 -->
@@ -94,6 +94,14 @@ import footer from "@/data/footer.json";
                 </li>
               ))
             }
+              <li>
+                <AdvisorCalendarCta
+                  position="footer"
+                  variant="link"
+                  label="Agendar asesor"
+                  class="!inline-flex !items-center !justify-start !font-normal !text-gray-600 hover:!text-primary !no-underline hover:!underline"
+                />
+              </li>
           </ul>
         </div>
 

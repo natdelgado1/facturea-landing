@@ -5,6 +5,7 @@ import NavBar from "../components/Sections/navBar.astro";
 import FooterSection2 from "../components/Sections/FooterSection2.astro";
 import Analytics from "../components/Analytics.astro";
 import StructuredData from "../components/StructuredData.astro";
+import AdvisorCalendarCta from "../components/AdvisorCalendarCta.astro";
 
 const recaptchaSiteKey =
   import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ||
@@ -75,6 +76,17 @@ const recaptchaSiteKey =
                 <span>Recomendaciones segun tu perfil de empresa o comprador.</span>
               </li>
             </ul>
+            <div class="p-5 rounded-2xl border border-primary/20 bg-primary/5">
+              <p class="mb-3 text-sm font-medium text-gray-800 sm:text-base">
+                ¿Querés fijar fecha ya con un asesor?
+              </p>
+              <AdvisorCalendarCta
+                position="demo_column"
+                variant="outline"
+                label="Agendar con un asesor"
+                class="w-full sm:w-auto"
+              />
+            </div>
           </div>
 
           <div class="p-6 bg-white rounded-2xl border border-gray-200 shadow-xl sm:p-8">
@@ -109,6 +121,13 @@ const recaptchaSiteKey =
                   </svg>
                   Escribinos por WhatsApp
                 </a>
+                <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold pt-1">O coordiná un horario</p>
+                <AdvisorCalendarCta
+                  position="demo_success"
+                  variant="outline"
+                  label="Agendar seguimiento"
+                  class="w-full justify-center"
+                />
                 <a
                   href="/"
                   class="text-sm text-gray-400 hover:text-gray-600 transition-colors duration-200 underline underline-offset-4"

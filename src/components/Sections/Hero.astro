@@ -9,6 +9,7 @@ const cdn =
 const heroAnimation =
   "https://lottie.host/e872003e-2131-4525-951d-a12847083467/u2ZFVYHs4r.lottie";
 import heroData from "@/data/hero.json";
+import AdvisorCalendarCta from "../AdvisorCalendarCta.astro";
 ---
 
 <script defer src={cdn} type="module"></script>
@@ -45,7 +46,8 @@ import heroData from "@/data/hero.json";
       </p>
 
       <!-- CTAs del Hero -->
-      <div class="flex flex-col gap-3 items-center mb-12 sm:flex-row sm:gap-4 sm:mb-20 fade-in-button lg:justify-start">
+      <div class="flex flex-col gap-4 items-center mb-12 sm:mb-20 fade-in-button lg:items-start">
+        <div class="flex flex-col gap-3 items-center w-full sm:flex-row sm:gap-4 lg:justify-start">
         <!-- CTA principal: Hablar con asesor (WhatsApp) -->
         <a
           id="hero-whatsapp-cta"
@@ -87,6 +89,13 @@ import heroData from "@/data/hero.json";
               d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
         </a>
+        </div>
+        <AdvisorCalendarCta
+          position="hero_tertiary"
+          variant="outline"
+          label="Elegí un horario con un asesor"
+          class="w-full sm:w-auto"
+        />
       </div>
     </div>
   </div>

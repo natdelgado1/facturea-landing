@@ -1,0 +1,58 @@
+---
+import { buildAdvisorCalendarUrl } from "@/lib/advisorCalendarUrl";
+
+interface Props {
+  /** Identificador estable para analytics y UTM (p. ej. hero_tertiary, demo_column). */
+  position: string;
+  variant?: "outline" | "link" | "compact";
+  class?: string;
+  label?: string;
+}
+
+const {
+  position,
+  variant = "outline",
+  class: className = "",
+  label = "Agendar con un asesor",
+} = Astro.props;
+
+const href = buildAdvisorCalendarUrl(position);
+
+const variantClasses: Record<NonNullable<Props["variant"]>, string> = {
+  outline:
+    "inline-flex items-center justify-center gap-2 px-5 py-3 w-full sm:w-auto text-base font-semibold text-primary bg-white border-2 border-primary/25 rounded-xl transition-all duration-300 hover:border-primary/50 hover:bg-primary/5 hover:shadow-md",
+  link:
+    "inline-flex items-center gap-1.5 font-semibold text-primary hover:text-secondary underline underline-offset-4 decoration-primary/40 transition-colors",
+  compact:
+    "inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-secondary transition-colors",
+};
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[variantClasses[variant], className]}
+  data-advisor-calendar="true"
+  data-cta-position={position}
+  aria-label={`${label} (se abre en una nueva pestaña)`}
+>
+  <svg
+    class:list={[
+      "shrink-0",
+      variant === "compact" ? "w-4 h-4" : "w-5 h-5",
+    ]}
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+    />
+  </svg>
+  <span>{label}</span>
+</a>

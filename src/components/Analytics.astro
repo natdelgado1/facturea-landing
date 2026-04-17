@@ -298,7 +298,50 @@ const facebookPixelId = import.meta.env.PUBLIC_FACEBOOK_PIXEL_ID;
     });
 
     // ============================================
-    // 🎯 EVENTO CLAVE 7: Selección de tipo de usuario
+    // 🎯 EVENTO CLAVE 7: Agendar cita con asesor (Google Calendar)
+    // Delegación: cualquier <a data-advisor-calendar>
+    // ============================================
+    document.addEventListener('click', function (e) {
+      const target = e.target as HTMLElement | null;
+      const link = target && target.closest
+        ? (target.closest('a[data-advisor-calendar]') as HTMLAnchorElement | null)
+        : null;
+      if (!link || link.getAttribute('data-advisor-calendar') !== 'true') return;
+
+      const ctaPosition = link.getAttribute('data-cta-position') || 'unknown';
+      const destination = link.href || '';
+      const pagePath = window.location.pathname || '';
+
+      trackValueEvent('advisor_calendar_click', {
+        cta_name: 'agendar_asesor',
+        cta_position: ctaPosition,
+        page_path: pagePath,
+        destination: destination,
+        booking_method: 'google_calendar',
+        value: 35,
+        currency: 'USD'
+      });
+      trackValueEvent('generate_lead', {
+        lead_type: 'advisor_calendar',
+        method: 'google_calendar',
+        cta_position: ctaPosition,
+        page_path: pagePath,
+        destination: destination,
+        value: 35,
+        currency: 'USD'
+      });
+      trackValueEvent('cta_click_value', {
+        cta_name: 'agendar_asesor',
+        cta_position: ctaPosition,
+        page_path: pagePath,
+        destination: destination,
+        value: 35,
+        currency: 'USD'
+      });
+    }, true);
+
+    // ============================================
+    // 🎯 EVENTO CLAVE 8: Selección de tipo de usuario
     // ============================================
     const userTypeInputs = document.querySelectorAll('.user-type-input');
     userTypeInputs.forEach(input => {
