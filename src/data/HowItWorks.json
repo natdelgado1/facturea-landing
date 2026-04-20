@@ -30,7 +30,7 @@
   "tab2Body": [
     {
       "title": "Creá tu cuenta",
-      "description": "Registrate como inversor con tu cuenta bancaria y define tu perfil de inversión.",
+      "description": "Registrate como comprador con tu cuenta bancaria y define tu perfil.",
       "badge": "Rápido y fácil",
       "icon": "<svg class=\"w-full h-full text-green-600 badge-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\">\r\n                <path class=\"morph-path-check\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M5 13l4 4L19 7\"/>\r\n                <path class=\"opacity-0 morph-path-arrow\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M13 7l5 5-5 5M8 7l5 5-5 5\"/>\r\n            </svg>"
     },
