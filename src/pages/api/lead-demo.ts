@@ -63,6 +63,17 @@ function jsonResponse(status: number, payload: Record<string, unknown>) {
   });
 }
 
+function getEmailMeta(emailValue: string) {
+  return {
+    length: emailValue.length,
+    hasAt: emailValue.includes("@"),
+    hasWhitespace: /\s/.test(emailValue),
+    hasUppercase: /[A-Z]/.test(emailValue),
+    hasNonAscii: /[^\x00-\x7F]/.test(emailValue),
+    atCount: (emailValue.match(/@/g) || []).length,
+  };
+}
+
 async function verifyRecaptcha(
   token: string,
   clientIp: string,
@@ -133,8 +144,14 @@ export const POST: APIRoute = async ({ request }) => {
   const company = (payload.company || "").trim();
   const ctaOrigin = (payload.ctaOrigin || "direct").trim();
   const recaptchaToken = (payload.recaptchaToken || "").trim();
+  // #region agent log
+  fetch("http://127.0.0.1:7242/ingest/3ef5af8d-605d-41e3-b801-a0bfdb9a1b25", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "3ffb4b" }, body: JSON.stringify({ sessionId: "3ffb4b", runId: "pre-fix", hypothesisId: "H1_H2", location: "src/pages/api/lead-demo.ts:payload:normalized", message: "Payload normalizado en API", data: { hasName: !!name, emailMeta: getEmailMeta(email), phoneLength: phone.length, hasRecaptchaToken: !!recaptchaToken, hasCompany: !!company, hasCtaOrigin: !!ctaOrigin }, timestamp: Date.now() }) }).catch(() => {});
+  // #endregion
 
   if (!name || !email || !phone || !recaptchaToken) {
+    // #region agent log
+    fetch("http://127.0.0.1:7242/ingest/3ef5af8d-605d-41e3-b801-a0bfdb9a1b25", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "3ffb4b" }, body: JSON.stringify({ sessionId: "3ffb4b", runId: "pre-fix", hypothesisId: "H2", location: "src/pages/api/lead-demo.ts:validation:missing_required", message: "Validacion required_fields fallida", data: { hasName: !!name, hasEmail: !!email, hasPhone: !!phone, hasRecaptchaToken: !!recaptchaToken }, timestamp: Date.now() }) }).catch(() => {});
+    // #endregion
     return jsonResponse(400, {
       ok: false,
       errorCode: "missing_required_fields",
@@ -145,6 +162,9 @@ export const POST: APIRoute = async ({ request }) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^\+?[0-9\s\-()]{8,20}$/;
   if (!emailRegex.test(email)) {
+    // #region agent log
+    fetch("http://127.0.0.1:7242/ingest/3ef5af8d-605d-41e3-b801-a0bfdb9a1b25", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "3ffb4b" }, body: JSON.stringify({ sessionId: "3ffb4b", runId: "pre-fix", hypothesisId: "H1_H4", location: "src/pages/api/lead-demo.ts:validation:invalid_email", message: "Email rechazado por regex", data: { emailMeta: getEmailMeta(email), sampleShape: email.replace(/[a-zA-Z0-9]/g, "x").slice(0, 40) }, timestamp: Date.now() }) }).catch(() => {});
+    // #endregion
     return jsonResponse(400, {
       ok: false,
       errorCode: "invalid_email_format",
